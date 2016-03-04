@@ -48,7 +48,7 @@ int main() {
     Arr array_1;
 
 
-    cout<<"Podaj, ile liczb wpisać do tablicy, program sprawdzi czas wykonania algorytmu n=n+1 dla podanej wartości:";
+    cout<<"Podaj, ile liczb wpisać do tablicy, program sprawdzi czas wykonania algorytmu n=n+100 dla podanej wartości:";
     cin>>numbers;
 
     first = clock();
