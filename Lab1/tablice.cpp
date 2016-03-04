@@ -25,9 +25,10 @@ void Arr::add_num(int number) {
         new_a[counter]=number;
         delete [] arr;
         arr = new int [counter+1];
-        arr=new_a;
+        for (int i=0; i<counter-1; i++) {
+        arr[i]=new_a[i];
+        }
         delete [] new_a;
-        new_a=NULL;
         counter++;
         cout<<"Powiekszono tablice o 1"<<endl;
         }
