@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
@@ -40,14 +41,22 @@ void Arr::add_num(int number) {
 
 int main() {
 
-    int number, counter=0;
+    int numbers;
+    clock_t first, second;
     Arr array_1;
 
+    cout<<"Podaj, ile liczb wpisać do tablicy, program sprawdzi czas wykonania algorytmu n=n+1 dla podanej wartości:";
+    cin>>numbers;
 
-    while(1) {
-    cout<<"Wpisz numer do tablicy (ma ona wstepny rozmiar 10): ";
-    cin>>number;
-    array_1.add_num(number);
-    }
+    first = clock();
+
+    for(int i=0; i<numbers; i++)
+    array_1.add_num(1);
+
+    second = clock();
+
+    long diff=(long)(second-first);
+
+    cout<<"Czas wykonania dla algorytmu n=n+1 dla "<<numbers<<" liczb wynosi "<<diff<<"ms"<<endl;
 
 }
