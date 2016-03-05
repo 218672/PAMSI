@@ -49,7 +49,7 @@ void Arr::add_num(int number) {
         new_a[counter]=number;
         delete[] arr;
         arr = new int [counter+1];
-        for (int i=0; i<counter-1; i++) {
+        for (int i=0; i<counter; i++) {
         arr[i]=new_a[i];
         }
         delete [] new_a;
