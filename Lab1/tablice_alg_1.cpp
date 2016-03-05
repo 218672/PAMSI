@@ -1,5 +1,5 @@
 #include <iostream>
-#include <time.h>
+#include <sys/time.h>
 
 using namespace std;
 
@@ -9,11 +9,20 @@ using namespace std;
 class Arr {
 
 private:
-int *arr = new int [10];
+int *arr = NULL;
 int counter = 0;
 
 public:
 void add_num(int number);
+
+Arr(int a) {
+
+    arr = new int [a];
+
+    for(int i=0; i<a; i++)
+        arr[i]=0;
+
+}
 
 };
 
@@ -29,36 +38,43 @@ void Arr::add_num(int number) {
         new_a[i]=arr[i];
         }
         new_a[counter]=number;
-        delete [] arr;
+        delete[] arr;
         arr = new int [counter+1];
         for (int i=0; i<counter-1; i++) {
         arr[i]=new_a[i];
         }
         delete [] new_a;
         counter++;
-        cout<<"Powiekszono tablice o 1"<<endl;
         }
+
+}
+
+long double get_ms_time() {
+
+    timeval tv;
+
+    gettimeofday(&tv,NULL);
+
+    return (static_cast<long double>(tv.tv_sec) * 1000UL) + (static_cast<long double>(tv.tv_usec) / 1000UL);
 
 }
 
 int main() {
 
     int numbers;
-    clock_t first, second;
-    Arr array_1;
+    Arr array_1(10);
 
     cout<<"Podaj, ile liczb wpisać do tablicy, program sprawdzi czas wykonania algorytmu n=n+1 dla podanej wartości:";
     cin>>numbers;
 
-    first = clock();
+    long double startTime = get_ms_time();
 
     for(int i=0; i<numbers; i++)
-    array_1.add_num(1);
+    array_1.add_num(0);
 
-    second = clock();
+    long double delta = get_ms_time() - startTime;
 
-    long diff=(long)(second-first);
 
-    cout<<"Czas wykonania dla algorytmu n=n+1 dla "<<numbers<<" liczb wynosi "<<diff<<"ms"<<endl;
+    cout<<"Czas wykonania dla algorytmu n=n+1 dla "<<numbers<<" liczb wynosi "<<delta<<"ms"<<endl;
 
 }
