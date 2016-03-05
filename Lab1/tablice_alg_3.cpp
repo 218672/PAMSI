@@ -16,7 +16,12 @@ int second_counter=0;
 public:
 void add_num(int number);
 
-Arr(int a) {
+Arr(int a);
+~Arr();
+
+};
+
+Arr::Arr(int a) {
 
     arr = new int [a];
 
@@ -25,7 +30,11 @@ Arr(int a) {
 
 }
 
-};
+Arr::~Arr() {
+
+delete []arr;
+
+}
 
 void Arr::add_num(int number) {
 
@@ -64,8 +73,7 @@ long double get_ms_time() {
 int main() {
 
     int numbers;
-    Arr array_1(10);
-
+    Arr *array_1=new Arr(10);
 
     cout<<"Podaj, ile liczb wpisać do tablicy, program sprawdzi czas wykonania algorytmu n=n+100 dla podanej wartości:";
     cin>>numbers;
@@ -73,9 +81,13 @@ int main() {
     long double start_time = get_ms_time();
 
     for(int i=0; i<numbers; i++)
-    array_1.add_num(1);
+    array_1->add_num(0);
 
     long double delta = get_ms_time() - start_time;
 
     cout<<"Czas wykonania dla algorytmu n=n+100 dla "<<numbers<<" liczb wynosi "<<delta<<"ms"<<endl;
+
+    delete array_1;
+
+    return 0;
 }
