@@ -7,11 +7,13 @@ using namespace std;
 // każdorazowego dodania nowego elementu w przypadku pełnej tablicy
 
 class Arr {
-public:
+
+private:
 int *arr = new int [10];
 int counter = 0;
 int second_counter=0;
 
+public:
 void add_num(int number);
 
 };
@@ -36,7 +38,7 @@ void Arr::add_num(int number) {
         delete [] new_a;
         counter++;
         second_counter=second_counter+100;
-        cout<<"Powiekszono tablice o polowe"<<endl;
+        cout<<"Powiekszono tablice o 100"<<endl;
         }
 
 }

@@ -7,11 +7,13 @@ using namespace std;
 // każdorazowego dodania nowego elementu w przypadku pełnej tablicy
 
 class Arr {
-public:
+
+private:
 int *arr = new int [10];
 int counter = 0;
 int second_counter=0;
 
+public:
 void add_num(int number);
 
 };
@@ -47,7 +49,7 @@ int main() {
     clock_t first, second;
     Arr array_1;
 
-    cout<<"Podaj, ile liczb wpisać do tablicy, program sprawdzi czas wykonania algorytmu n=n+1 dla podanej wartości:";
+    cout<<"Podaj, ile liczb wpisać do tablicy, program sprawdzi czas wykonania algorytmu n=2n dla podanej wartości:";
     cin>>numbers;
 
     first = clock();

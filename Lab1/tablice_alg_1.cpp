@@ -7,10 +7,12 @@ using namespace std;
 // każdorazowego dodawania nowego elementu
 
 class Arr {
-public:
+
+private:
 int *arr = new int [10];
 int counter = 0;
 
+public:
 void add_num(int number);
 
 };
