@@ -1,1 +1,3 @@
-bool is_pal(string test);
+#include <string>
+
+bool is_pal(std::string test);
