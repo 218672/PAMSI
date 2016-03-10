@@ -11,6 +11,7 @@
 \maketitle
 
 \begin{flushleft}
+\textbf{Analiza} \newline \newline
 W celu sprawdzenia efektywności różnych metod powiększania tablic dynamicznych podczas ich przepełniania zaimplementowano trzy różne algorytmy wykonujące tę czynność. Zastosowano do nich odpowiednie oznaczenia (gdzie k to rozmiar tablicy): 
 \begin{enumerate}
 \item $k=k+1$ - algorytm powiększający rozmiar tablicy dynamicznej o jeden w przypadku każdego przepełnienia, zapisany w pliku o nazwie tablice\_alg\_1.cpp. 
@@ -31,8 +32,16 @@ $k=k+100$ & 0.00100005 & 0.00700009 & 0.0549999 & 3.010 & 333.233 & 32496.9 & - 
 \end{tabular}
 \end{table}
 
-Jak można zauważyć, z wpisaniem miliarda liczb do tablicy w rozsądnym czasie poradził sobie jedynie algorytm $n=2*n$. Jest to zatem najefektywniejszy z trzech algorytmów. Gorsze wyniki uzyskał algorytm $n=n+100$, który czas alokacji miliona liczb w tablicy miał porównywalny z czasem alokacji miliarda liczb przez algorytm $k=2*k$. Najmniej efektywnie prezentuje się algorytm $k=k+1$, którego czas alokacji stu tysięcy liczb był porównywalny z czasem alokacji miliona liczb przez algorytm $k=k+100$ i miliarda przez algorytm $k=2*n$. Różnice pomiędzy efektywnością zapełniania tablicy i realokacji jej pamięci zaczynają być widoczne już na poziomie tysiąca wczytanych liczb, gdzie różnica w czasie pomiędzy $k=k+1$ a dwoma pozostałymi jest na poziomie dwóch rzędów. Różnica pomiędzy $k=k+100$ a $k=2*k$ uwidoczniła się podczas wczytania dziesięciu tysięcy liczb, gdzie czas wykonania $k=2*k$ był mniejszy o jeden rząd wielkości. Różnice te są efektem częstości realokacji pamięci dynamicznej dla tablicy podczas jej przepełniania się. W przypadku $k=k+1$ po osiągnięciu pierwszego przepełnienia pamięć realokowana jest za każdym powtórzeniem operacji wpisania elementu. Kolejny, efektywniejszy $k=k+100$ ma stały odstęp wykonywania realokacji po pierwszym przepełnieiu, który wynosi 100 wpisanych liczb, czyli realokacja całej pamięci w tablicy jest wykonywana 100 razy rzadziej niż w algorytmie $k=k+1$. Najefektywniejszy z nich, $k=2*n$, z czasem wykonuje coraz mniej realokacji, co przy wzroście ilości danych jedynie działa na jego korzyść, powodując co raz to mniejszą ilość realokacji pamięci.  
+Jak można zauważyć, z wpisaniem miliarda liczb do tablicy w rozsądnym czasie poradził sobie jedynie algorytm $n=2*n$. Jest to zatem najefektywniejszy z trzech algorytmów. Gorsze wyniki uzyskał algorytm $n=n+100$, który czas alokacji miliona liczb w tablicy miał porównywalny z czasem alokacji miliarda liczb przez algorytm $k=2*k$. Najmniej efektywnie prezentuje się algorytm $k=k+1$, którego czas alokacji stu tysięcy liczb był porównywalny z czasem alokacji miliona liczb przez algorytm $k=k+100$ i miliarda przez algorytm $k=2*n$. Różnice pomiędzy efektywnością zapełniania tablicy i realokacji jej pamięci zaczynają być widoczne już na poziomie tysiąca wczytanych liczb, gdzie różnica w czasie pomiędzy $k=k+1$ a dwoma pozostałymi jest na poziomie dwóch rzędów. Różnica pomiędzy $k=k+100$ a $k=2*k$ uwidoczniła się podczas wczytania dziesięciu tysięcy liczb, gdzie czas wykonania $k=2*k$ był mniejszy o jeden rząd wielkości. Różnice te są efektem częstości realokacji pamięci dynamicznej dla tablicy podczas jej przepełniania się. W przypadku $k=k+1$ po osiągnięciu pierwszego przepełnienia pamięć realokowana jest za każdym powtórzeniem operacji wpisania elementu. Kolejny, efektywniejszy $k=k+100$ ma stały odstęp wykonywania realokacji po pierwszym przepełnieiu, który wynosi 100 wpisanych liczb, czyli realokacja całej pamięci w tablicy jest wykonywana 100 razy rzadziej niż w algorytmie $k=k+1$. Najefektywniejszy z nich, $k=2*n$, z czasem wykonuje coraz mniej realokacji, co przy wzroście ilości danych jedynie działa na jego korzyść. \newline
 
+\textbf{Złożoność obliczeniowa} \newline
+
+Średni czas operacji inkrementalnego powiększania rozmiarów tablic w większości przypadków zawiera się w O($n^2$) w przypadku powiększania o const=1 oraz w O($n$) przy powiększaniu o większe stałe, natomiast w przypadku algorytmów podwajających średni czas operacji zawiera się w O($n$). \newline
+
+
+\textbf{Wnioski} \newline
+
+Z powyższej analizy wynika, że algorytmy podwajające rozmiar tablicy są efektywniejsze niż algorytmy inkrementalne.
 \end{flushleft}
 \end{document}
 
