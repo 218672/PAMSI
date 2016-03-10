@@ -9,11 +9,11 @@ using namespace std;
 class Arr {
 
 private:
-int *arr = NULL;
-int counter = 0;
+int *arr = NULL; // wskaźnik na miejsce w pamięci
+int counter = 0; // licznik miejsca
 
 public:
-void add_num(int number);
+void add_num(int number); // dodaje liczbe do tablicy
 
 Arr(int a);
 ~Arr();
@@ -21,7 +21,7 @@ Arr(int a);
 };
 
 Arr::Arr(int a) {
-
+//konstruktor - tablice inicjujemy od razu iloscia miejsc
     arr = new int [a];
 
     for(int i=0; i<a; i++)
@@ -30,18 +30,19 @@ Arr::Arr(int a) {
 }
 
 Arr::~Arr() {
-
+// destruktor - zwalniamy pamiec
 delete []arr;
 
 }
 
 void Arr::add_num(int number) {
 
-    if (counter<10) {
+    if (counter<10) { // jesli niepelna to zapelniaj
         arr[counter]=number;
         counter++;
         }
-    else  {
+    else  { // jesli pelna zrob nowa pomocnicza o wiekszym rozmiarze,
+    // skopiuj stara, uwolnij pamiec ze starej, skopiuj do nowej, uwolnij pamięć z pomocniczej
         int *new_a = new int [counter+1];
         for (int i=0; i<counter-1; i++) {
         new_a[i]=arr[i];
@@ -59,7 +60,7 @@ void Arr::add_num(int number) {
 }
 
 long double get_ms_time() {
-
+// licz czas w ms
     timeval tv;
 
     gettimeofday(&tv,NULL);
