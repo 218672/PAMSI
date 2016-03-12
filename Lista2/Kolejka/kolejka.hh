@@ -10,7 +10,7 @@ template <typename E>
 class SNode {
 friend class Queue<E>;
 
-public:
+private:
 
 E elem;
 SNode<E>* next;

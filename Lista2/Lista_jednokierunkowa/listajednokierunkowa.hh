@@ -14,7 +14,7 @@ template <typename E>
 class SNode {
 friend class SLinkedList<E>;
 
-public:
+private:
 
 E elem;
 SNode<E>* next;
