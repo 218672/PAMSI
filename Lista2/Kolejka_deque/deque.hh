@@ -57,6 +57,18 @@ Node<E>* end;
 };
 
 template <typename E>
+int Deque<E>::size() const {
+Node<E>* v = front;
+int counter=0;
+while(v->next) {
+counter++;
+v=v->next;
+}
+counter++;
+return counter;
+}
+
+template <typename E>
 bool Deque<E>::if_empty() const {
 Node<E>* v = front;
 if (v!=NULL)

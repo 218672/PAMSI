@@ -3,11 +3,24 @@
 
 using namespace std;
 
+bool is_pal(Deque<char>* new_deq) {
+    Deque<char>* check_pal = new_deq;
+}
+
 int main() { // sprawdzam sobie czy wszystko jest okej
 
-    Deque<int>* my_deque = new Deque<int>;
-    int state;
-    const int elem=0, elem1=1; // dodajemy zera, jesli dodano na front lub 1 jesli dodano na back
+    Deque<char>* my_deque = new Deque<char>;
+    int state, state2;
+    const char elem='a', elem1='a'; // dodajemy a, jesli dodano na front lub b jesli dodano na back
+    string pal;
+
+    cout<<"Test kolejki czy sparwdzanie palindromow?"<<endl;
+    cout<<"1. Test kolejki"<<endl;
+    cout<<"2. Sprawdzanie palindromow"<<endl;
+    cin>>state2;
+    switch(state2) {
+
+    case 1:
 
     while(1) {
     cout<<endl;
@@ -17,7 +30,8 @@ int main() { // sprawdzam sobie czy wszystko jest okej
     cout<<"3. Usun element z przodu"<<endl;
     cout<<"4. Usun element z tylu"<<endl;
     cout<<"5. Wyswietl kolejke"<<endl;
-    cout<<"6. Zakoncz testy"<<endl;
+    cout<<"6. Podaj rozmiar kolejki"<<endl;
+    cout<<"7. Zakoncz testy"<<endl;
     cout<<"Twoj wybor: ";
     cin>>state;
             switch(state) {
@@ -37,11 +51,34 @@ int main() { // sprawdzam sobie czy wszystko jest okej
                 my_deque->show_deque();
                 break;
                 case 6:
+                cout<<my_deque->size()<<endl;
+                break;
+                case 7:
                 cout<<"Do zobaczenia"<<endl;
                 delete my_deque;
                 return 0;
                 default:
                 cout<<"Zly wybor!"<<endl;
             }
+    }
+    break;
+
+    case 2:
+    cout<<"Wpisz slowko: "<<endl;
+    cin>>pal;
+
+    for(unsigned int i=0;i<pal.size();i++) {
+    const char element=pal[i];
+    my_deque->add_front(element);
+    }
+
+    if(is_pal(my_deque))
+    cout<<"To jest palindrom"<<endl;
+    else
+    cout<<"To nie jest palindrom"<<endl;
+
+    delete my_deque;
+    return 0;
+
     }
 }
