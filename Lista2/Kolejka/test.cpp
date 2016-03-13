@@ -7,7 +7,7 @@ int main() { // sprawdzam sobie czy wszystko jest okej
 
     Queue<int>* my_queue = new Queue<int>;
     int state;
-    const int elem=0; // dodajemy zera
+    const int elem=1; // dodajemy jedynki
 
     while(1) {
     cout<<endl;
@@ -20,10 +20,10 @@ int main() { // sprawdzam sobie czy wszystko jest okej
     cin>>state;
             switch(state) {
                 case 1:
-                my_queue->add_back(elem);
+                my_queue->add(elem);
                 break;
                 case 2:
-                my_queue->remove_front();
+                my_queue->remove();
                 break;
                 case 3:
                 my_queue->show_queue();
