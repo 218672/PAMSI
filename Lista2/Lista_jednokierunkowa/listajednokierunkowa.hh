@@ -51,8 +51,8 @@ const E& on_front() const; // zwraca pierwszy element
 void add_front(const E& elem); // dodaje element na poczatek
 void remove_front(); // usuwa element z poczatku
 void add_back(const E& elem); // dodaje element na koniec
-void remove_back();
-void show_list() const;
+void remove_back(); // usuwa element z konca
+void show_list() const; // pokazuje liste
 
 private:
 SNode<E>* head; // początek listy
