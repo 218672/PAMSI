@@ -5,6 +5,15 @@ using namespace std;
 
 bool is_pal(Deque<char>* new_deq) {
     Deque<char>* check_pal = new_deq;
+    if(check_pal->size()<=1)
+    return true;
+    else if(check_pal->size()>1 && (check_pal->on_front()==check_pal->on_back())) {
+    check_pal->remove_front();
+    check_pal->remove_back();
+    is_pal(check_pal);
+    }
+    else
+    return false;
 }
 
 int main() { // sprawdzam sobie czy wszystko jest okej

@@ -45,6 +45,7 @@ end=NULL;
 int size() const; // zwraca rozmiar kolejki
 bool if_empty() const; // zwraca true, jesli nie jest pusta
 const E& on_front(); // zwraca pierwszy element
+const E& on_back(); // zwraca ostatni element
 void add_front(const E& elem); // dodaje na początku kolejki
 void add_back(const E& elem); // dodaje na koncu kolejki
 void remove_front(); // usuwa z poczatku kolejki
@@ -55,6 +56,16 @@ private:
 Node<E>* front;
 Node<E>* end;
 };
+
+template <typename E>
+const E& Deque<E>::on_front() {
+return front->elem;
+}
+
+template <typename E>
+const E& Deque<E>::on_back() {
+return end->elem;
+}
 
 template <typename E>
 int Deque<E>::size() const {
