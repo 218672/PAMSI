@@ -1,20 +1,6 @@
 #include <iostream>
+#include "algorytmy.hh"
 #include "struktura.hh"
-
-class Arr_first_type: public DataStructure {
-
-private:
-int *arr = NULL; // wskaźnik na miejsce w pamięci
-int counter = 0; // licznik miejsca
-
-public:
-void add_num(int number); // dodaje liczbe do tablicy
-void init_by_zeros();
-
-Arr_first_type(int a);
-~Arr_first_type();
-
-};
 
 Arr_first_type::Arr_first_type(int a) {
 //konstruktor - tablice inicjujemy od razu iloscia miejsc
@@ -55,30 +41,6 @@ void Arr_first_type::add_num(int number) {
 
 }
 
-void Arr_first_type::init_by_zeros() {
-    int zeros;
-    std::cout<<"Ile wpisać zer?"<<std::endl;
-    std::cin>>zeros;
-    for(int i=0; i<zeros; i++)
-    arr[i]=0;
-}
-
-
-class Arr_second_type: public DataStructure {
-
-private:
-int *arr = NULL; // wskaźnik na miejsce w pamięci
-int counter = 0; // licznik miejsca
-int second_counter=0; // licznik pomocniczy
-
-public:
-void add_num(int number); // dodaje liczbe do tablicy
-void init_by_zeros();
-
-Arr_second_type(int a);
-~Arr_second_type();
-
-};
 
 Arr_second_type::Arr_second_type(int a) {
 //konstruktor - tablice inicjujemy od razu iloscia miejsc
@@ -118,31 +80,6 @@ void Arr_second_type::add_num(int number) {
         counter++;
         }
 }
-
-void Arr_second_type::init_by_zeros() {
-    int zeros;
-    std::cout<<"Ile wpisać zer?"<<std::endl;
-    std::cin>>zeros;
-    for(int i=0; i<zeros; i++)
-    arr[i]=0;
-}
-
-class Arr_third_type: public DataStructure {
-
-private:
-int *arr = NULL; // wskaźnik na miejsce w pamięci
-int counter = 0; // licznik miejsca
-int second_counter=0; // licznik pomocniczy
-
-public:
-void add_num(int number); // dodaje liczbe do tablicy
-void init_by_zeros();
-
-Arr_third_type(int a);
-~Arr_third_type();
-
-
-};
 
 Arr_third_type::Arr_third_type(int a) {
 //konstruktor - tablice inicjujemy od razu iloscia miejsc
@@ -184,15 +121,30 @@ void Arr_third_type::add_num(int number) {
 
 }
 
-void Arr_third_type::init_by_zeros() {
-    int zeros;
-    std::cout<<"Ile wpisać zer?"<<std::endl;
-    std::cin>>zeros;
-    for(int i=0; i<zeros; i++)
-    arr[i]=0;
+long double Timer::get_ms_time() {
+
+    timeval tv;
+
+    gettimeofday(&tv,NULL);
+
+    return (static_cast<long double>(tv.tv_sec)*1000UL) + (static_cast<long double>(tv.tv_usec)/1000UL);
+
 }
 
+void Timer::tim_start() {
 
-int main(){
+time_of_start=get_ms_time();
+
+}
+
+void Timer::tim_stop() {
+
+time_of_stop=get_ms_time();
+
+}
+
+long double Timer::return_time() {
+
+return time_of_stop-time_of_start;
 
 }
