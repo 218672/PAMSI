@@ -1,0 +1,136 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage{geometry}
+\newgeometry{tmargin=1cm, bmargin=1cm, lmargin=1cm, rmargin=1cm}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{enumerate}
+\title{\textbf{PAMSI - Sprawozdanie 2}}
+\author{\textbf{Filip Guzy 218672}}
+
+\begin{document}
+\maketitle
+
+\begin{flushleft}
+\textbf{Implementacja struktur danych} \newline \newline
+W celu efektywniejszej realizacji struktur danych opartych na tablicy dynamicznej stworzono klasę wirtualną (odpowiednik interfejsu w języku Java lub C\#) DataStructure, zawierający metodę wirtualną add\_num() służącą do dodawania pojedynczych elementów do struktury danych (w tym przypadku do tablicy dynamicznej). Zaimplementowano również klasę wirtualną MainTimer zawierającą metody możliwe do wykorzystania przy pomiarach czasu wykonania algorytmów, takie jak: get\_ms\_time() - mierzącą czas w milisekundach w konkretnej chwili wykonywania algorytmów, tim\_start() oraz tim\_stop(), wykonujące pomiary początku i końca danej operacji, a także metodę return\_time() zwracającą czas zmierzony przez wykorzystanie metod stopera. Obie klasy znajdują się w pliku struktura.hh. W pliku algorytmy.hh zawarto klasy dziedziczące po klasach DataStructure oraz MainTimer, które wykorzystują metody klas wirtualnych. Klasa Timer dziedzicząca po klasie MainTimer korzysta z biblioteki systemowej time.h w celu zaimplementowania metod mierzących czas. Programista dzięki metodom wirtualnym klasy opisującej stoper ma możliwość dostosowania sposobów pomiaru czasu do swojego systemu operacyjnego. \newline \newline
+\textbf{Statystyczna analiza efektywności algorytmów} \newline \newline
+W celu uzyskania wartości możliwie najlepiej odzwierciedlających czasy wykonania poszczególnych algorytmów zapełniających tablice powtórzono pomiary dziesięciokrotnie dla każdej ilości danych testowych. Zastosowano odpowiednie oznaczenia dla poszczególnych algorytmów:
+
+\begin{enumerate}
+\item $k=2*k$ - algorytm podwajający rozmiar tablicy dynamicznej w przypadku każdego przepełnienia.
+\item $k=k+100$ - algorytm powiększający rozmiar tablicy dynamicznej o 100 w przypadku każdego przepełnienia.
+\item $k=k+1$ - algorytm powiększający rozmiar tablicy dynamicznej o jeden w przypadku każdego przepełnienia.
+\end{enumerate}
+
+Na wejście programu podano ilość danych do wczytania, a na wyjściu otrzymano czas realizacji operacji (w milisekundach) dla każdego z algorytmów. Wszystkie pomiary przedstawiono w poniższej tabeli.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|} \hline
+Ilość danych & $k=2*k$ & $k=k+100$ & $k=k+1$ \\ \hline
+10 & 0,000999928 & 0 & 0,000999928 \\
+ & 0,00199997 & 0 & 0,000999928 \\
+ & 0,000999928 & 0 & 0,00100005 \\
+ & 0,000999928 & 0,00100005 & 0 \\
+ & 0,00100005 & 0 & 0,00100005 \\
+ & 0,00200009 & 0 & 0 \\
+ & 0,00200009 & 0 & 0,00100005 \\
+ & 0,000999928 & 0,00100005 &  0,000999928 \\
+ & 0,00199997 & 0 & 0 \\
+ & 0,00100005 & 0 & 0,000999928 \\ \hline
+100 & 0,00999999 & 0,000999928 & 0,282 \\
+ & 0,00899994 & 0,00199997 & 0,053 \\
+ & 0,00999999 & 0,00199997 & 0,054 \\
+ & 0,00999999 & 0,00199997 & 0,068 \\
+ & 0,00899994 & 0,00199997 & 0,053 \\
+ & 0,00699997 & 0,00199997 & 0,041 \\
+ & 0,00899994 & 0,00200009 & 0,082 \\
+ & 0,0100001 & 0,000999928 & 0,053 \\
+ & 0,00999999 & 0,00199997 & 0,054 \\
+ & 0,00999999 & 0,00199997 & 0,054 \\ \hline
+\end{tabular}
+\end{table}
+\newpage
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|} \hline
+Ilosc danych & $k=2*k$ & $k=k+100$ & $k=k+1$ \\ \hline
+1000 & 0,028 & 0,0439999 & 3,884 \\
+ & 0,0270001 & 0,064 & 3,08 \\
+ & 0,027 & 0,0450001 & 4,206 \\
+ & 0,027 & 0,0470001 & 3,81 \\
+ & 0,029 & 0,044 & 3,832 \\
+ & 0,028 & 0,046 & 3,932 \\
+ & 0,0300001 & 0,045 & 3,852 \\
+ & 0,028 & 0,046 & 3,062 \\
+ & 0,0280001 & 0,045 & 3,883 \\
+ & 0,028 & 0,044 & 3,01 \\ \hline
+10000 & 0,176 & 3,721 & 277,261 \\
+ & 0,179 & 3,769 & 271,885 \\
+ & 0,204 & 3,056 & 275,169 \\
+ & 0,131 & 2,817 & 274,995 \\
+ & 0,172 & 3,732 & 279,963 \\
+ & 0,179 & 3,752 & 281,165 \\
+ & 0,218 & 3,708 & 291,788 \\
+ & 0,18 & 3,721 & 278,057 \\
+ & 0,175 & 3,708 & 279,129 \\
+ & 0,174 & 3,711 & 298,66 \\ \hline
+100000 & 2,411 & 280,809 & 27325,1 \\
+ & 2,04 & 299,738 & 27259,6 \\
+ & 1,998 & 277,449 & 27388 \\
+ & 2,383 & 279,887 & 26940,4 \\
+ & 2,432 & 274,153 & 27437,9 \\
+ & 2,406 & 274,572 & 27211,1 \\
+ & 2,395 & 288,284 & 27714,9 \\
+ & 2,443 & 278,77 & 27048,1 \\
+ & 2,415 & 272,211 & 27123,8 \\
+ & 2,577 & 275,387 & 27212,2 \\ \hline
+1000000 & 77,995 & 27465,3 & - \\
+ & 53,406 & 27730,6 & - \\
+ & 70,836 & 28001,9 & - \\
+ & 78,013 & 27889,7 & - \\
+ & 18,959 & 27584,7 & - \\
+ & 119,444 & 27458,7 & - \\
+ & 92,748 & 27242,9 & - \\
+ & 79,159 & 27443,6 & - \\
+ & 77,683 & 27439,2 & - \\
+ & 79,407 & 27817,3 & - \\ \hline
+1000000000 & 13407,2 & - & - \\
+ & 16452,4 & - & - \\
+ & 13199,5 & - & - \\
+ & 13211,3 & - & - \\
+ & 13450,6 & - & - \\
+ & 13477,1 & - & - \\
+ & 13339,6 & - & - \\
+ & 13393,6 & - & - \\
+ & 13250,2 & - & - \\
+ & 13239,2 & - & - \\ \hline
+\end{tabular}
+\end{table}
+
+W tabeli nie umieszczono czasów wykonania algorytmów $k=k+1$ dla miliona liczb oraz $k=k+1$ i $k=k+100$ dla miliarda liczb, ponieważ szacowany czas ich wykonania w pierwszym przypadku wynosi 7,5h, natomiast w drugim odpowiednio: 750h ($k=k+1$) i 75h ($k=k+100$) co powoduje, że ich statystyczna ocena byłaby nieefektywna.
+
+\newpage
+
+Stosując średnią arytmetyczną dla każdej serii danych otrzymujemy odpowiednie wartości:
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|} \hline
+Ilosc danych & $k=2*k$ & $k=k+100$ & $k=k+1$ \\ \hline
+10 & 0,0013999932 & 0,00020001 & 0,0006999862 \\ \hline
+100 & 0,009399984 & 0,0017999736 & 0,0794 \\ \hline
+1000 & 0,02800003 & 0,04700001 & 3,6551 \\ \hline
+10000 & 0,1788 & 3,5695 & 280,8071 \\ \hline
+100000 & 2,35 & 280,126 & 27266,11 \\ \hline
+1000000 & 74,765 & 27607,39 & - \\ \hline
+1000000000 & 13642,07 & - & - \\ \hline
+\end{tabular}
+\end{table}
+
+\textbf{Wnioski} \newline \newline
+Z przeprowadzonych pomiarów i po wykonaniu uśrednień można wywnioskować, że dla najmniejszych rozmiarów serii danych (do 10) wszystkie trzy algorytmy prezentują podobną efektywność. Przy nieco większych ilościach (do 1000) zbliżone czasy przedstawiają algorytmy $k=2*k$ oraz $k=k+100$, natomiast mniej efektywny staje się $k=k+1$. Najefektywniejszy dla największych ilości danych jest algorytm $k=2*k$ (do $10^9$). \newline \newline
+Przy większych projektach zespołowych warto wykorzystywać koncepcję interfejsów, ponieważ pozwala ona na implementację danych zgodną z powszechnie przyjętymi wzorcami projektowymi w programowaniu obiektowym, a co w tym najważniejsze umożliwia programistom uniknięcie kłopotów z dziedziczeniem klas w przypadku nagłych potrzeb rozszerzania funkcjonalności projektu.
+
+\end{flushleft}
+
+\end{document}

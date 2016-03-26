@@ -19,11 +19,15 @@ arr_2->add_num(0);
 tim->tim_stop();
 std::cout<<"Czas wykonania algorytmu n=2n dla "<<numbers<<" liczb wynosi: "<<tim->return_time()<<"ms"<<std::endl;
 
+delete arr_1;
+
 tim->tim_start();
 for(int i=0; i<numbers; i++)
 arr_3->add_num(0);
 tim->tim_stop();
 std::cout<<"Czas wykonania algorytmu n=n+100 dla "<<numbers<<" liczb wynosi: "<<tim->return_time()<<"ms"<<std::endl;
+
+delete arr_2;
 
 tim->tim_start();
 for(int i=0; i<numbers; i++)
@@ -31,8 +35,8 @@ arr_1->add_num(0);
 tim->tim_stop();
 std::cout<<"Czas wykonania algorytmu n=n+1 dla "<<numbers<<" liczb wynosi: "<<tim->return_time()<<"ms"<<std::endl;
 
-delete tim;
-delete arr_1;
-delete arr_2;
 delete arr_3;
+
+delete tim;
+
 }
