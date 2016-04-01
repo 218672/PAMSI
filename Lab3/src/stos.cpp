@@ -24,7 +24,7 @@ void Stack::remove(int at) {
         delete old; // usuwamy pierwszy element
     }
     else
-    std::cout<<"Lista jest pusta!"<<std::endl;
+    std::cout<<"Stos jest pusty!"<<std::endl;
 }
 
 int Stack::size() {
@@ -32,7 +32,9 @@ int Stack::size() {
 return 1; // chwilowo
 }
 
-int Stack::get(int i) {
+int Stack::get(int at) {
 
-return 1; // bezuzyteczna
+return 1; // chwilowo
 }
+
+

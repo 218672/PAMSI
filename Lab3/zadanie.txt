@@ -25,7 +25,7 @@ push(element)
 pop()
 size()
 
-
+lista, kolejka, przeszukiwanie listy
 
 
 

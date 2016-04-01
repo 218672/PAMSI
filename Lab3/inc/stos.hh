@@ -19,17 +19,18 @@ class Stack : public IList {
 
 private:
 Node* head; // góra stosu
+int get(int at=0); // funkcja bezuzyteczna, nie uzywamy, at jako bezuzyteczny w stosie parametr jest ustawiany jako domyslny, nie wpisujemy go w wywolaniu
 
 public:
 Stack() {
 head=NULL;
 }
 
-void add(int elem, int at);
-void remove(int at);
+void add(int elem, int at=0); // to samo tutaj z parametrem at, nawet wywolany nie zrobi niczego
+void remove(int at=0); // i tu tez
 int size();
 bool if_empty() const;
-int get(int i);
+
 
 };
 
