@@ -1,13 +1,13 @@
 CXXFLAGS=-g -Iinc -Wall -pedantic -std=c++11
 
-test: test.o algorytmy.o 
-	g++ -Wall -pedantic -std=c++0x -o test test.o algorytmy.o
+test: obj/test.o obj/algorytmy.o 
+	g++ -Wall -pedantic -std=c++0x -o test obj/test.o obj/algorytmy.o
 
-test.o: struktura.hh algorytmy.hh test.cpp 
-	g++ -c ${CXXFLAGS} -o test.o test.cpp
+obj/test.o: inc/struktura.hh inc/algorytmy.hh src/test.cpp 
+	g++ -c ${CXXFLAGS} -o obj/test.o obj/test.cpp
 
-algorytmy.o: struktura.hh algorytmy.hh algorytmy.cpp
-	g++ -c ${CXXFLAGS} -o algorytmy.o algorytmy.cpp
+obj/algorytmy.o: inc/struktura.hh inc/algorytmy.hh src/algorytmy.cpp
+	g++ -c ${CXXFLAGS} -o inc/algorytmy.o src/algorytmy.cpp
 
 clean:
-	rm *.o test
+	rm obj/*.o test
