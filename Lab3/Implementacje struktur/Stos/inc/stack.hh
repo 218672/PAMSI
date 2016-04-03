@@ -4,8 +4,8 @@
 template <typename E>
 class IStack {
 public:
-virtual E push(E elem)=0;
-virtual void pop()=0;
+virtual void push(const E& elem)=0;
+virtual E pop()=0;
 virtual int size()=0;
 
 virtual ~IStack() {};
