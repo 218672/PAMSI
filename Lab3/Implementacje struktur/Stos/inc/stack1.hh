@@ -8,12 +8,12 @@ template <typename E>
 class Stack;
 
 template <typename E>
-class Node {
-friend class Stack<E>;
+class Node { // wezel Stosu
+friend class Stack<E>; // przyznajemy dostep klasie Stack
 
 private:
-E elem;
-Node<E>* next;
+E elem; // element wezla
+Node<E>* next; // wskaznik na nastepny wezel
 
 };
 
@@ -22,6 +22,7 @@ class Stack : public IStack<E> {
 
 private:
 Node<E>* top; // szczyt stosu
+int stack_size=0; // rozmiar stosu
 
 public:
 Stack() { // konstruktor
@@ -31,6 +32,7 @@ top=NULL;
 void push(const E& elem); // dodaje element na szczyt stosu
 E pop(); // zdejmuje i zwraca element ze szczytu stosu
 int size(); // zwraca rozmiar stosu
+void show_stack(); // wyswietla stos
 
 };
 
@@ -40,14 +42,17 @@ void Stack<E>::push(const E& elem) {
     v->elem=elem; // wpisujemy pozadany element
     v->next=top; // wskaznik na poczatek stosu
     top=v; // oznaczamy nowy poczatek stosu
+    stack_size++; // zwiekszamy rozmiar stosu
 }
 
 template <typename E>
 E Stack<E>::pop() {
-    if(size()!=0) {
+/* Metoda wyrzuca wyjatek gdy stos jest pusty */
+    if(size()!=0) { // jesli stos nie jest pusty
         Node<E>* old=top; // wzkaznik na poczatek
         top=old->next; // zmieniamy poczatek stosu
-        return old->elem;
+        stack_size--; // zmniejszamy rozmiar stosu
+        return old->elem; // zwroc zdejmowany element
         delete old; // usuwamy pierwszy element
     }
     else {
@@ -58,20 +63,23 @@ E Stack<E>::pop() {
 
 template <typename E>
 int Stack<E>::size() {
-    int counter=0;
-    Node<E>* tmp = top;
-    if(tmp!=NULL) {
-        counter++;
-        while(tmp->next) {
-        tmp=tmp->next;
-        counter++;
-        }
-    return counter;
-    }
-    else
-        return 0;
+    return stack_size;
 }
 
+template <typename E>
+void Stack<E>::show_stack() {
+    Node<E>* tmp = top; // wskaznik na szczyt
+    if(tmp!=NULL) { // jesli stos nie jest pusty
+        std::cout<<"Elementy stosu: "<<std::endl;
+        std::cout<<tmp->elem<<std::endl;
+        while(tmp->next) { // wyswietlaj wszystkie
+        tmp=tmp->next;
+        std::cout<<tmp->elem<<std::endl;
+        }
+    }
+    else
+        std::cout<<"Stos jest pusty!"<<std::endl;
+}
 
 
 #endif

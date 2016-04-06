@@ -5,7 +5,7 @@
 int main() {
 
 Stack<int>* stack_1 = new Stack<int>;
-int state;
+int state, elem;
 
 std::cout<<"Test stosu."<<std::endl;
 
@@ -15,13 +15,16 @@ std::cout<<"Co chcesz zrobic?"<<std::endl;
 std::cout<<"1. Dodaj element"<<std::endl;
 std::cout<<"2. Zdejmij element"<<std::endl;
 std::cout<<"3. Sprawdz rozmiar stosu"<<std::endl;
-std::cout<<"4. Wyjscie z programu"<<std::endl;
+std::cout<<"4. Pokaz stos"<<std::endl;
+std::cout<<"5. Wyjscie z programu"<<std::endl;
 std::cout<<"Twoj wybor: ";
 std::cin>>state;
 
     switch(state) {
     case 1:
-        stack_1->push(0);
+        std::cout<<"Wpisz element: ";
+        std::cin>>elem;
+        stack_1->push(elem);
         break;
     case 2:
         try {
@@ -35,6 +38,9 @@ std::cin>>state;
         std::cout<<"Rozmiar stosu: "<<stack_1->size()<<std::endl;
         break;
     case 4:
+        stack_1->show_stack();
+        break;
+    case 5:
         std::cout<<"Do widzenia!"<<std::endl;
         delete stack_1;
         return 0;
