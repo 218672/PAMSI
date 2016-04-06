@@ -1,0 +1,72 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage{geometry}
+\newgeometry{tmargin=1cm, bmargin=1cm, lmargin=1cm, rmargin=1cm}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\title{\textbf{PAMSI - Sprawozdanie 3}}
+\author{\textbf{Filip Guzy 218672}}
+
+\begin{document}
+\maketitle
+
+\begin{flushleft}
+\textbf{Implementacja struktur danych} \newline \newline
+W celu realizacji struktur danych takich jak lista, stos i kolejka zaimplementowano trzy interfejsy: IList, IStack oraz IQueue. Zawierają one wirtualne metody opisujące każdą ze struktur. Na bazie interfejsu listy jest możliwe zaimplementowanie dwóch pozostałych typów danych, jednak aby zwiększyć przejrzystość projektowanych struktur lepiej zastosować dla nich oddzielne interfejsy. Jednym z istotnych ograniczeń dla języka C++ jest możliwość dziedziczenia metod tylko po jednym interfejsie, w przeciwieństwie do Javy lub C\#, gdzie programista ma możliwość tworzenia obiektu na bazie kilku interfejsów. Opisy metod oraz sposoby ich działania zostały zawarte w plikach nagłówkowych odpowiednich implementacji ADT. \newline
+
+\textbf{Przeszukiwanie listy} \newline \newline
+W implementacji klasy listy zawarto metodę przeznaczoną do sprawdzania czasu przeszukiwania listy dla dowolnej ilości danych. W celu zbadania złożoności obliczeniowej przeszukiwania list o różnych rozmiarach zmierzono czasy (w milisekundach) wykonania tej czynności dla następujących danych wejściowych: 10, 100, 1000, 1000000, 10000000. Nie wykonano pomiarów dla 1000000000 z powodów nieodpowiedniego zachowania systemu operacyjnego, który zabija proces działania programu. W kilku udanych próbach dla 100000000 danych otrzymano wyniki około 600-700ms. Przyczyny takiego zachowania zostaną wyjaśnione po zweryfikowaniu problemu. Pomiary dla każdej ilości danych wejściowych powtórzono dziesięciokrotnie, a wyniki przedstawiono w poniższej tabeli:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|} \hline
+10 & 100 & 1000 & 1000000 & 10000000 \\ \hline
+0,00199997 & 0,00100005 & 0,00999999 & 6,898 & 70,193 \\
+0,000999928 & 0,000999928 & 0,0140001 & 6,832 & 72,634 \\
+0,00199997 & 0,000999928 & 0,015 & 6,998 & 87,602 \\
+0,00100005 & 0,000999928 & 0,00999999 & 7,009 & 71,251 \\
+0,00100005 & 0,000999928 & 0,0140001 & 7,077 & 69,218 \\
+0,000999928 & 0,000999928 & 0,0129999 & 6,842 & 71,151 \\
+0,00100005 & 0,00100005 & 0,0139999 & 6,978 & 71,436 \\
+0,00100005 & 0,000999928 & 0,0120001 & 6,961 & 68,91 \\
+0,000999928 & 0,000999928 & 0,013 & 7,224 & 71,44 \\
+0,000999928 & 0,000999928 & 0,00800002 & 6,913 & 72,68 \\ \hline
+\end{tabular}
+\end{table}
+
+Dla każdej ilości danych wejściowych wyznaczono średnią arytmetyczną. Wyniki przedstawiono w poniższej tabeli:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|} \hline
+10 & 100 & 1000 & 1000000 & 10000000 \\ \hline
+0,0011999852 & 0,0009999524 & 0,01230001 & 6,9732 & 72,6515 \\ \hline
+\end{tabular}
+\end{table}
+
+Otrzymane dane przedstawiono również na wykresie:
+\begin{figure}
+\centering
+\includegraphics[width=12cm]w
+\label{fig:obrazek w}
+\end{figure} \newline
+
+Aby sprawdzić, czy pomiary są zgodne z założeniami przeanalizowano fragment kodu odpowiedzialny za przeszukanie tablicy: \newline
+
+while(tmp$->$next) $\{$ // przechodzimy wszystkie wezly \newline
+if(tmp$->$elem$>$0) $\{$ \newline
+// jeśli znajdziemy szukany element, robimy jakąś operację, tutaj żadną \newline
+$\}$ \newline
+else // jeżeli nie to \newline
+tmp=tmp$->$next; // zmieniamy węzeł na kolejny \newline
+$\}$ \newline \newline
+
+Wyrażenia warunkowe if i else mają złożoność obliczeniową równą O(1), tak jak operacja zmiany węzła, która następuje po każdym wywołaniu instrukcji else, więc wnętrze pętli while ma złożoność obliczeniową równą O(1). Biorąc pod uwagę pętlę while, która została użyta do przejścia przez wszystkie węzły listy, których jest n, złożoność obliczeniowa całego algorytmu przeszukania powinna wynosić O(n). Tak też jest w rzeczywistości: każde dziesięciokrotne zwiększenie ilości danych wejściowych powoduje dziesięciokrotne zwiększenie czasu wykonania algorytmu, zatem rzeczywista złożoność operacji jest liniowa, czyli zawiera się w O(n). Dysponując możliwością zmierzenia czasu dla większych ilości danych ta zależność byłaby lepiej widoczna na wykresie, jednak biorąc pod uwagę komplikacje z systemem nie udało się tego pokazać.  \newline
+
+\textbf{Wnioski} \newline \newline
+Otrzymane pomiary wskazują na to, że lista została zaimplementowana poprawnie i wszystkie operacje są wykonywane w odpowiednim czasie. Złożoność obliczeniowa algorytmu przeszukiwania listy należy do O(n), zatem jest zgodna z teorią.
+
+\end{flushleft}
+
+\end{document}
