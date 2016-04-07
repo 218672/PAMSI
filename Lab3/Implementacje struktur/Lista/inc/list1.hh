@@ -168,8 +168,6 @@ add(0,1); // dodajemy dana ilosc zer, zlozonosc O(1) kazdej operacji, czyli O(n)
 
 Timer* tim = new Timer(); // stoper
 Node<E>* tmp = front; // wskaznik na poczatek
-std::cout<<sizeof(*tmp)<<std::endl;
-std::cout<<sizeof(tmp)<<std::endl;
 tim->tim_start(); // mierzymy czas
 while(tmp->next) { // przechodzimy wszystkie wezly
 if(tmp->elem>0) {
