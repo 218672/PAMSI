@@ -7,7 +7,7 @@ int main() {
 
 List<int>* list_1 = new List<int>;
 int state, position, elem;
-unsigned long long int numbers;
+int numbers;
 
 std::cout<<"Test listy."<<std::endl;
 

@@ -36,7 +36,7 @@ void add(const E& elem, int i); // dodaje element na wybranym miejscu listy, wyr
 E remove(int i); // zdejmuje element z wybranego miejsca listy, wyrzuca wyjątek jeśli nie ma takiego elementu lub lista jest pusta
 int size(); // zwraca rozmiar listy
 void show_list(); // pokazuje elementy listy
-void test_on(unsigned long long int numbers); // pomiaru czasu przeszukiwania, argumentem jest ilosc danych do wczytania
+void test_on(int numbers); // pomiaru czasu przeszukiwania, argumentem jest ilosc danych do wczytania
 
 };
 
@@ -89,8 +89,9 @@ E List<E>::remove(int i) {
         Node<E>* old=front; // wzkaznik na poczatek
         front=old->next; // zmieniamy poczatek listy
         list_size--;
-        return old->elem;
+        E temp=old->elem;
         delete old; // usuwamy pierwszy element
+        return temp;
     }
     else {
     std::string EmptyListException = "Lista jest pusta!";
@@ -106,8 +107,9 @@ E List<E>::remove(int i) {
             v->next=NULL; // oznaczamy nowy koniec
             end=v;
             list_size--;
-            return e->elem;
+            E temp= e->elem;
             delete e; // zwracamy i usuwamy ostatni
+            return temp;
     }
     else {
     std::string EmptyListException = "Lista jest pusta!";
@@ -122,9 +124,10 @@ E List<E>::remove(int i) {
             Node<E>* tmp = f->next; // przypisujemy gi do tymczasowego
             Node<E>* tmp2 = f->next->next; // przypisujemy gi do tymczasowego
             f->next=tmp2; // przypisujemy go do tymczasowego
-            return tmp->elem; // zwracamy element
+            E temp = tmp->elem;
             list_size--;
             delete tmp; // usuwamy element
+            return temp; // zwracamy element
 
     }
     else {
@@ -159,8 +162,8 @@ void List<E>::show_list() {
 }
 
 template <typename E>
-void List<E>::test_on(unsigned long long int numbers) {
-for(unsigned long long int i=1; i<=numbers; i++)
+void List<E>::test_on(int numbers) {
+for(int i=1; i<=numbers; i++)
 add(0,1); // dodajemy dana ilosc zer, zlozonosc O(1) kazdej operacji, czyli O(n) calego zapelnienia
 
 Timer* tim = new Timer(); // stoper
@@ -177,7 +180,7 @@ tim->tim_stop(); // koniec pomiaru czasu
 
 std::cout<<"Przeszukanie listy "<<numbers<<" elementów trwa "<<tim->return_time()<<"ms"<<std::endl;
 
-for(unsigned long long int i=0; i<numbers; i++)
+for(int i=0; i<numbers; i++)
 remove(1); // kasujemy elementy z poczatku listy, zlozonosc O(1) jednej operacji, czyli O(n) calej
 
 }
