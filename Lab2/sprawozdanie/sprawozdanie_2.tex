@@ -1,4 +1,5 @@
 \documentclass[10pt, a4paper]{article}
+\date{26 marca 2016}
 \usepackage{geometry}
 \newgeometry{tmargin=1cm, bmargin=1cm, lmargin=1cm, rmargin=1cm}
 \usepackage[utf8]{inputenc}
@@ -125,7 +126,10 @@ Ilosc danych & $k=2*k$ & $k=k+100$ & $k=k+1$ \\ \hline
 1000000 & 74,765 & 27607,39 & - \\ \hline
 1000000000 & 13642,07 & - & - \\ \hline
 \end{tabular}
-\end{table}
+\end{table} \newline
+
+Poprawka z dnia 7.04.2016: \newline
+Złożoność obliczeniowa dla algorytmów powiększania o stałe C powinna być kwadratowa, czyli O($n^2$), natomiast złożoność algorytmów podwajających powinna zawierać się w O(n). Jak można zauważyć, tak też jest w rzeczywistości, ponieważ zwiększając ilość danych dziesięciokrotnie czas wykonania algorytmów zwiększających o stałą C rośnie stukrotnie, natomiast algorytmu podwajającego dziesięciokrotnie. Najlepiej widać to dla ilości danych powyżej 1000, gdzie zaczynają pojawiać się różnice pomiędzy ich efektywnością. \newline
 
 \textbf{Wnioski} \newline \newline
 Z przeprowadzonych pomiarów i po wykonaniu uśrednień można wywnioskować, że dla najmniejszych rozmiarów serii danych (do 10) wszystkie trzy algorytmy prezentują podobną efektywność. Przy nieco większych ilościach (do 1000) zbliżone czasy przedstawiają algorytmy $k=2*k$ oraz $k=k+100$, natomiast mniej efektywny staje się $k=k+1$. Najefektywniejszy dla największych ilości danych jest algorytm $k=2*k$ (do $10^9$). \newline \newline
