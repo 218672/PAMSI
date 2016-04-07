@@ -91,7 +91,7 @@ E List<E>::remove(int i) {
         list_size--;
         E temp=old->elem;
         delete old; // usuwamy pierwszy element
-        return temp;
+        return temp; // zwracamy element
     }
     else {
     std::string EmptyListException = "Lista jest pusta!";
@@ -100,7 +100,7 @@ E List<E>::remove(int i) {
     }
     else if(i==size() && i>1) { // jesli usuwamy koncowy, a lista ma wiecej niz jeden element
     Node<E>* v = front; // nowy wezel pokacujacy na poczatek
-    Node<E>* e = end;
+    Node<E>* e = end; // nowy wezek wskazujacy na koniec
     if(size()!=0) { // tylko jesli nie jest pusta
             while(v->next->next)
             v=v->next; // szukamy przedostatniego
@@ -168,6 +168,8 @@ add(0,1); // dodajemy dana ilosc zer, zlozonosc O(1) kazdej operacji, czyli O(n)
 
 Timer* tim = new Timer(); // stoper
 Node<E>* tmp = front; // wskaznik na poczatek
+std::cout<<sizeof(*tmp)<<std::endl;
+std::cout<<sizeof(tmp)<<std::endl;
 tim->tim_start(); // mierzymy czas
 while(tmp->next) { // przechodzimy wszystkie wezly
 if(tmp->elem>0) {
@@ -179,6 +181,8 @@ tmp=tmp->next; // jesli to nie ten co chcemy to idziemy dalej, zlozonosc O(1) je
 tim->tim_stop(); // koniec pomiaru czasu
 
 std::cout<<"Przeszukanie listy "<<numbers<<" elementów trwa "<<tim->return_time()<<"ms"<<std::endl;
+
+delete tim;
 
 for(int i=0; i<numbers; i++)
 remove(1); // kasujemy elementy z poczatku listy, zlozonosc O(1) jednej operacji, czyli O(n) calej
