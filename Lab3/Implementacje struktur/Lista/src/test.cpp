@@ -27,8 +27,20 @@ std::cin>>state;
     case 1:
         std::cout<<"Wpisz element: ";
         std::cin>>elem;
+        while(std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(50, '\n');
+        std::cout << "Wpisujemy tylko liczby typu int! ";
+        std::cin >> elem;
+        }
         std::cout<<"Na ktora pozycje? ";
         std::cin>>position;
+        while(std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(50, '\n');
+        std::cout << "Wpisujemy tylko liczby typu int! ";
+        std::cin >> position;
+        }
         try {
         list_1->add(elem,position);
         }
@@ -39,6 +51,12 @@ std::cin>>state;
     case 2:
         std::cout<<"Z ktorej pozycji? "<<std::endl;
         std::cin>>position;
+        while(std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(50, '\n');
+        std::cout << "Wpisujemy tylko liczby typu int! ";
+        std::cin >> position;
+        }
         try {
         std::cout<<"Zdjety element: "<<list_1->remove(position)<<std::endl;
         }
@@ -55,6 +73,12 @@ std::cin>>state;
     case 5:
         std::cout<<"Ile elementow ma miec przeszukiwana lista? ";
         std::cin>>numbers;
+        while(std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(50, '\n');
+        std::cout << "Wpisujemy tylko liczby typu int! ";
+        std::cin >> numbers;
+        }
         list_1->test_on(numbers);
         break;
     case 6:
