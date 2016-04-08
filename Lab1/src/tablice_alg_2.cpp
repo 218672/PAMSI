@@ -77,6 +77,12 @@ int main() {
 
     cout<<"Podaj, ile liczb wpisać do tablicy, program sprawdzi czas wykonania algorytmu n=2n dla podanej wartości:";
     cin>>numbers;
+    while(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(50, '\n');
+            std::cout << "Wpisujemy tylko liczby typu int! ";
+            std::cin >> numbers;
+        }
 
     long double start_time = get_ms_time();
 
