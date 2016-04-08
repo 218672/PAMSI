@@ -1,7 +1,7 @@
 Opis folderów projektu:
 
 Implementacje struktur:
-Kolejka:
+Lista:
 inc - pliki nagłówkowe zawierające interfejs listy (list.hh) oraz implementacje listy (list1.hh)
 src - plik do testowania struktury test.cpp
 obj - pliki obiektowe projektu
