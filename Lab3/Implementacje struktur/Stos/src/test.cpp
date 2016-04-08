@@ -19,11 +19,23 @@ std::cout<<"4. Pokaz stos"<<std::endl;
 std::cout<<"5. Wyjscie z programu"<<std::endl;
 std::cout<<"Twoj wybor: ";
 std::cin>>state;
+while(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(50, '\n');
+            std::cout<<"Wpisujemy tylko liczby typu int! ";
+            std::cin>>state;
+        }
 
     switch(state) {
     case 1:
         std::cout<<"Wpisz element: ";
         std::cin>>elem;
+        while(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(50, '\n');
+            std::cout << "Wpisujemy tylko liczby typu int! ";
+            std::cin >>elem;
+        }
         stack_1->push(elem);
         break;
     case 2:
