@@ -12,6 +12,12 @@ DataStructure *arr_3 = new Arr_third_type(10);
 int numbers;
 std::cout<<"Podaj ile liczb wpisac do tablicy: ";
 std::cin>>numbers;
+while(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(50, '\n');
+            std::cout << "Wpisujemy tylko liczby typu int! ";
+            std::cin >> numbers;
+        }
 
 tim->tim_start();
 for(int i=0; i<numbers; i++)
