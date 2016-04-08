@@ -70,6 +70,7 @@ void List<E>::add(const E& elem, int i) {
     Node<E>* e = end; // wezel pomocniczy, wskazuje na koniec listy
     if(size()!=0) { // sprawdzamy czy nie jest pusta
     e->next=v; // wklejamy na koniec
+    v->next=NULL;
     end=v; // zmieniiamy koniec
     list_size++;
     }
@@ -78,8 +79,6 @@ void List<E>::add(const E& elem, int i) {
     std::string WrongListIndexException = "Lista nie ma takiego pola, sprawdz najpierw rozmiar!";
     throw WrongListIndexException; // wyrzuca wyjatek jesli blednie wpisano pole
     }
-
-
 }
 
 template <typename E>
@@ -121,14 +120,12 @@ E List<E>::remove(int i) {
     if(size()!=0) { // tylko jesli nie jest pusta
             for(int j=1; j<(i-1); j++)
             f=f->next;
-            Node<E>* tmp = f->next; // przypisujemy gi do tymczasowego
-            Node<E>* tmp2 = f->next->next; // przypisujemy gi do tymczasowego
-            f->next=tmp2; // przypisujemy go do tymczasowego
+            Node<E>* tmp = f->next; // przypisujemy go do tymczasowego
+            f->next=f->next->next; // przepinamy wskaźnik
             E temp = tmp->elem;
             list_size--;
             delete tmp; // usuwamy element
             return temp; // zwracamy element
-
     }
     else {
     std::string EmptyListException = "Lista jest pusta!";
@@ -149,7 +146,7 @@ int List<E>::size() {
 template <typename E>
 void List<E>::show_list() {
     Node<E>* tmp = front; // wskaznik na poczatek
-    if(tmp!=NULL) { // jesli nie jest pusta
+    if(size()!=0) { // jesli nie jest pusta
     std::cout<<"Elementy listy:"<<std::endl;
     std::cout<<tmp->elem<<std::endl; // wypisujemy pierwszy
         while(tmp->next) { // jesli cos procz pierwszego to tez wypisujemy
@@ -163,6 +160,10 @@ void List<E>::show_list() {
 
 template <typename E>
 void List<E>::test_on(int numbers) {
+if(size()!=0) // jesli nie jest pusta to czyścimy
+for(int i=0; i<=size(); i++)
+remove(1);
+
 for(int i=1; i<=numbers; i++)
 add(0,1); // dodajemy dana ilosc zer, zlozonosc O(1) kazdej operacji, czyli O(n) calego zapelnienia
 
