@@ -26,11 +26,11 @@ Node<E>* end; // wskaznik na koniec kolejki
 int queue_size=0; // rozmiar kolejki
 
 public:
-Queue() { // konstruktor
+Queue() { 
 front = NULL; // inicjalizacja NULLami poczatku i konca
 end = NULL;
 };
-~Queue() {}; // destruktor
+~Queue() {}; 
 void add(const E& elem); // dodaje element na tyl kolejki
 E remove(); // zdejmuje element z poczatku kolejki, wyrzuca wyjatek jesli pusta
 int size(); // zwraca rozmiar kolejki
@@ -40,19 +40,19 @@ void show_queue(); // pokazuje kolejke
 
 template <typename E>
 void Queue<E>::add(const E& elem) {
-    Node<E>* v = new Node<E>; // nowy wezel
-    v->elem=elem; // wpisujemy pozadany element
-    v->next=NULL; // wezel wskazuje na NULL
-    Node<E>* e = end; // wezel pomocniczy, wskazuje na koniec kolejki
+    Node<E>* v = new Node<E>;
+    v->elem=elem; 
+    v->next=NULL; 
+    Node<E>* e = end; 
     if(size()!=0) { // sprawdzamy czy nie jest pusta
-    e->next=v; // dodajemy wezel
-    end=v; // zmieniamy koniec
-    queue_size++;
+    e->next=v; 
+    end=v; 
+    queue_size++; // zwiekszamy rozmiar kolejki o 1
     }
-    else { // jesli nie pusta
+    else { 
     front=v; // ustawiamy nowy poczatek i nowy koniec
     end=v;
-    queue_size++;
+    queue_size++; // zwiekszamy rozmiar kolejki o 1
     }
 }
 
@@ -60,11 +60,11 @@ template <typename E>
 E Queue<E>::remove() {
 /* Wyrzuca wyjątek gdy kolejka jest pusta */
     if(size()!=0) {
-        Node<E>* old=front; // wzkaznik na poczatek
-        front=old->next; // zmieniamy poczatek kolejki
-        queue_size--;
+        Node<E>* old=front; 
+        front=old->next; 
+        queue_size--; // zmniejszamy rozmiar kolejki o 1
         return old->elem; // zwracamy pierwszy element
-        delete old; // usuwamy pierwszy element
+        delete old; 
     }
     else {
     std::string EmptyQueueException = "Kolejka jest pusta!";
@@ -79,7 +79,7 @@ int Queue<E>::size() {
 
 template <typename E>
 void Queue<E>::show_queue() {
-    Node<E>* tmp = front; // wskaznik na koniec
+    Node<E>* tmp = front; 
     if(tmp!=NULL) {
         std::cout<<"Elementy kolejki:"<<std::endl;
         std::cout<<tmp->elem<<std::endl;

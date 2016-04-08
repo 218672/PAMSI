@@ -25,10 +25,10 @@ Node<E>* top; // szczyt stosu
 int stack_size=0; // rozmiar stosu
 
 public:
-Stack() { // konstruktor
+Stack() {
 top=NULL;
 };
-~Stack() {}; // destruktor
+~Stack() {}; 
 void push(const E& elem); // dodaje element na szczyt stosu
 E pop(); // zdejmuje i zwraca element ze szczytu stosu
 int size(); // zwraca rozmiar stosu
@@ -38,20 +38,20 @@ void show_stack(); // wyswietla stos
 
 template <typename E>
 void Stack<E>::push(const E& elem) {
-    Node<E>* v = new Node<E>; // nowy wezel
-    v->elem=elem; // wpisujemy pozadany element
-    v->next=top; // wskaznik na poczatek stosu
-    top=v; // oznaczamy nowy poczatek stosu
-    stack_size++; // zwiekszamy rozmiar stosu
+    Node<E>* v = new Node<E>; 
+    v->elem=elem; 
+    v->next=top; 
+    top=v; 
+    stack_size++; // zwiekszamy rozmiar stosu o 1
 }
 
 template <typename E>
 E Stack<E>::pop() {
 /* Metoda wyrzuca wyjatek gdy stos jest pusty */
     if(size()!=0) { // jesli stos nie jest pusty
-        Node<E>* old=top; // wzkaznik na poczatek
-        top=old->next; // zmieniamy poczatek stosu
-        stack_size--; // zmniejszamy rozmiar stosu
+        Node<E>* old=top; 
+        top=old->next; 
+        stack_size--; // zmniejszamy rozmiar stosu o 1
         return old->elem; // zwroc zdejmowany element
         delete old; // usuwamy pierwszy element
     }
@@ -68,7 +68,7 @@ int Stack<E>::size() {
 
 template <typename E>
 void Stack<E>::show_stack() {
-    Node<E>* tmp = top; // wskaznik na szczyt
+    Node<E>* tmp = top; 
     if(tmp!=NULL) { // jesli stos nie jest pusty
         std::cout<<"Elementy stosu: "<<std::endl;
         std::cout<<tmp->elem<<std::endl;
