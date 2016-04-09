@@ -7,8 +7,8 @@
 
 int main() {
 srand(time(NULL));
-Timer *tim = new Timer();
 int size_of_queue;
+
 std::cout<<"Podaj ile liczb wpisac do tablicy: ";
 std::cin>>size_of_queue;
 
@@ -24,28 +24,32 @@ Queue<int>* que_1 = new Queue<int>(size_of_queue);
 int size_of_arr;
 size_of_arr=que_1->size();
 
-Arr_second_type *arr_1 = new Arr_second_type(size_of_arr);
+Array *arr_1 = new Array(size_of_arr);
 
 delete que_1;
 
 for(int i=0; i<size_of_arr; i++)
 arr_1->add_num((std::rand()%100)+5);
 
-   std::cout<<"Elementy przed posortowaniem: "<<std::endl;
+   std::cout<<std::endl;
+ /*  std::cout<<"Elementy przed posortowaniem: "<<std::endl; // dla miliarda lepiej okomentować
+   arr_1->show_arr();
+   std::cout<<std::endl;
+   std::cout<<std::endl; */
+
+Timer *tim = new Timer();
+
+    tim->tim_start();
+    arr_1->quick_sort(0, size_of_arr-1);
+    tim->tim_stop();
+
+  /*  std::cout<<"Elementy po posortowaniu: "<<std::endl; // dla miliarda lepiej okomentować
     arr_1->show_arr();
-   std::cout<<std::endl;
-   std::cout<<std::endl;
+    std::cout<<std::endl<<std::endl; */
 
-
+    std::cout<<"Czas sortowania: "<<tim->return_time()<<"ms"<<std::endl<<std::endl;
 
 delete tim;
-
-
-    arr_1->quick_sort(0, size_of_arr-1);
-
-    std::cout<<"Elementy po posortowaniu: "<<std::endl;
-    arr_1->show_arr();
-    std::cout<<std::endl;
 
 delete arr_1;
 }
