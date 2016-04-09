@@ -6,6 +6,7 @@
 \usepackage{enumerate}
 \title{\textbf{PAMSI - Sprawozdanie 1}}
 \author{\textbf{Filip Guzy 218672}}
+\date{10 marca 2016}
 
 \begin{document}
 \maketitle
@@ -36,7 +37,8 @@ Jak można zauważyć, z wpisaniem miliarda liczb do tablicy w rozsądnym czasie
 
 \textbf{Złożoność obliczeniowa} \newline
 
-Średni czas operacji inkrementalnego powiększania rozmiarów tablic w większości przypadków zawiera się w O($n^2$) w przypadku powiększania o const=1 oraz w O($n$) przy powiększaniu o większe stałe, natomiast w przypadku algorytmów podwajających średni czas operacji zawiera się w O($n$). \newline
+(Korekty w tym fragmencie wprowadzono dnia 9.04.2016r) \newline
+Średni czas operacji inkrementalnego powiększania rozmiarów tablic w większości przypadków zawiera się w O($n^2$) \newline w przypadku powiększania o pewną stałą. Różnice pomiędzy doborem stałej powiększania wpływają jedynie na przypadek optymistyczny złożoności tego algorytmu, w którym im większa stała, tym początkowo dla małych liczb ich złożoność wynosi O($n$), natomiast w przypadku algorytmów podwajających średni czas operacji zawiera się w O($n$). W kolejnym sprawozdaniu przedstawiono lepszą analizę statystyczną tych algorytmów w celu zobrazowania i ocenienia ich złożoności obliczeniowej. Zawarto tam również wykresy przedstawiające te zależności. \newline
 
 
 \textbf{Wnioski} \newline
