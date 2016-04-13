@@ -16,21 +16,27 @@ long double return_time();
 
 };
 
-class Arr_second_type: public DataStructure {
+class Array: public DataStructure {
 
 private:
 int *arr = NULL; // wskaźnik na miejsce w pamięci
+int *tmp = NULL;
 int counter = 0; // licznik miejsca
 int second_counter=0; // licznik pomocniczy
+int arr_size=0;
 
 public:
 void add_num(int number); // dodaje liczbe do tablicy
-void quick_sort(int left, int right);
+void quick_sort_random(int left, int right); // wybór pivota ze środka tablicy
+void quick_sort_last(int left, int right); // wybór pivota z końca tablicy
+void quick_sort_mean(int left, int right); // wybór pivota na zasadzie środkowy z trzech
 void show_arr();
+void merge(int left, int medium, int right);
+void merge_sort(int left, int right);
 
 
-Arr_second_type(int a);
-~Arr_second_type();
+Array(int a);
+~Array();
 
 };
 
