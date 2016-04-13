@@ -20,7 +20,7 @@ Algorytm sortowania szybkiego bazuje na zasadzie "Dziel i zwyciężaj". Jego dzi
 \item Przypadek optymistyczny: \newline
 Występuje, gdy wybrany pivot zawsze jest medianą sortowanego zbioru. W tym przypadku złożoność obliczeniowa sortowania szybkiego jest rzędu $nlog(n)$. Sytuacja, gdy pivot jest medianą danego zbioru jest w przypadku zwykłego jego losowania praktycznie niemożliwa do zaistnienia (a przynajmniej prawdopodobieństwo tego zdarzenia jest bardzo niskie dla dużych zbiorów). Nie jest możliwe dodanie usprawnienia wyznaczającego medianę, które nie pogorszy złożoności obliczeniowej sortowania.
 \item Przypadek średni: \newline
-Występuje dla równomiernego rozkładu prawdopodobieństwa wyboru pivota z tablicy. Złożoność obliczeniowa tego przypadku wynosi w przybliżeniu $1,39nlogn$, czyli jest o 39\% większa niż w przypadku optymistycznym. Aby mieć pewność uzyskania przypadku średniego wystarczy wybrać element losowy lub ze środka tablicy.\newline
+Występuje dla równomiernego rozkładu prawdopodobieństwa wyboru pivota z tablicy. Złożoność obliczeniowa tego przypadku wynosi w przybliżeniu $1,39nlogn$, czyli jest o 39\% większa niż w przypadku optymistycznym. Aby mieć pewność uzyskania przypadku średniego wystarczy wybrać element ze środka tablicy.\newline
 \item Przypadek pesymistyczny: \newline
 Występuje w sytuacji, gdy wybrany pivot jest najmniejszym lub największym elementem sortowanego zbioru. Złożoność obliczeniowa dla tego przypadku wynosi w przybliżeniu $\frac{n^2}{2}$. Najgorsza z możliwych opcji przypadku pesymistycznego występuje, gdy wybrany przez nas element jest skrajnym elementem posortowanego w przeciwną stronę zbioru. Wtedy złożoność osiąga rząd $n^2$.
 \end{enumerate}
@@ -30,7 +30,7 @@ Występuje w sytuacji, gdy wybrany pivot jest najmniejszym lub największym elem
 \item Wybór pierwszego lub ostatniego elementu tablicy \newline
 Sposób ten jest najefektywniejszy obliczeniowo, ponieważ jego wykonanie jest możliwe w czasie stałym, zatem jego złożoność należy do O(1). Największą jego wadą jest to, że gdy zbiór jest już uporządkowany, to złożoność sortowania będzie przypadkiem pesymistycznym, czyli rzędu $n^2$.
 \item Wybór ze środka lub losowanie elementu tablicy \newline
-Sposób ten jest gwarantem złożoności średniej sortowania. Randomizacja lub wybór ze środka minimalizuje ryzyko wystąpienia sytuacji w której dostajemy złożoność pesymistyczną. Złożoność obliczeniowa tego sposobu wyboru również jest stała, zatem zawiera się w O(1).
+Sposób ten jest gwarantem złożoności średniej sortowania. Randomizacja lub wybór ze środka minimalizuje ryzyko wystąpienia sytuacji w której dostajemy złożoność pesymistyczną. Złożoność obliczeniowa wyboru ze środka zawiera się w O(1), natomiast losowanie powoduje wzrost złożoności sortowania.
 \item Przybliżona mediana \newline
 Sposób polega na wyborze kilku liczb z sortowanego zbioru, a następnie wyznaczeniu z nich mediany. Gwarantuje, że nigdy nie zajdzie sytuacja, w której zostanie wybrany największy lub najmniejszy element. Usprawnia on sortowanie każdego podzbioru, niestety kosztem złożoności obliczeniowej całego algorytmu. Można wykorzystywać różne algorytmy wyznaczające medianę, jednak w sytuacji dużego ryzyka wyboru najmniejszego elementu zwyczajnie lepiej zastosować inny algorytm sortowania. Złożoność takiego sposobu wyboru pivota zależy od implementacji. \newline
 
@@ -40,7 +40,7 @@ Algorytmy sortowania szybkiego wykorzystujące wybór pivota z końca oraz środ
 \newpage
 
 \textbf{Pomiary dla quicksort dla trzech metod pivotowania} \newline \newline
-Poniżej przedstawiono w trzech tabelach serie pomiarów oraz ich czasy wykonania (w ms), a także uśrednione wartości kolejno dla pivotowania poprzez wybór środkowego elementu, wybór elementu skrajnego oraz poprzez medianę.
+Poniżej przedstawiono w trzech tabelach serie pomiarów oraz ich czasy wykonania (w ms), a także uśrednione wartości kolejno dla pivotowania poprzez wybór środkowego elementu, wybór elementu skrajnego oraz poprzez medianę. Sortowano zbiory zawierające elementy z przedziału 0-1000.
 
 \begin{table}[h]
 \centering
@@ -111,7 +111,7 @@ Poniżej przedstawiono również średnie wyniki pomiarów na wykresie w celu po
 Kolorem niebieskim oznaczono quicksort poprzez wybór środkowego elementu, czerwonym - skrajnego, natomiast żółtym - poprzez medianę. Można zauważyć, że usprawnienie algorytmu quicksort liczące medianę nieznacznie pogorszyło jego złożoność obliczeniową. Jak widać z przedstawionych danych, złożoność obliczeniowa sortowania szybkiego wynosi w przybliżeniu $nlogn$. Wszystkie trzy sposoby wyboru pivota dla zróżnicowanych zbiorów gwarantują uzyskanie złożoności średniej. Pomiary dla miliarda w przypadku mediany nie zostały wykonane ze względu na błąd naruszenia ochrony pamięci podczas wykonywania tego algorytmu, którego źródło nie zostało jeszcze wykryte. \newline \newline
 
 \textbf{Algorytm sortowania przez scalanie - mergesort} \newline \newline
-Algorytm sortowania przez scalanie to kolejny algorytm bazujący na metodzie "Dziel i zwyciężaj". Jego działanie polega na podziale sortowanej tablicy na połowy, a następnie kontynuację tego działania na podzbiorach do momentu uzyskania zbiorów jednoelementowych. Następnie wykorzystując działanie rekursji następuje scalanie podzbiorów i jednoczesne sortowanie ich elementów aż do momentu powrotu do jednego zbioru. Średnia złożoność algorytmu mergesort wynosi $nlogn$, nastomiast pesymistyczna $n^2$, jednak wystąpienie tej drugiej jest bardzo mało prawdopodobne. Poniżej przedstawiono czasy sortowania (w ms) tym algorytmem zbiorów o różnych rozmiarach. \newline \newline
+Algorytm sortowania przez scalanie to kolejny algorytm bazujący na metodzie "Dziel i zwyciężaj". Jego działanie polega na podziale sortowanej tablicy na połowy, a następnie kontynuację tego działania na podzbiorach do momentu uzyskania zbiorów jednoelementowych. Następnie wykorzystując działanie rekursji następuje scalanie podzbiorów i jednoczesne sortowanie ich elementów aż do momentu powrotu do jednego zbioru. Średnia złożoność algorytmu mergesort wynosi $nlogn$, nastomiast pesymistyczna $n^2$, jednak wystąpienie tej drugiej jest bardzo mało prawdopodobne. Poniżej przedstawiono czasy sortowania (w ms) tym algorytmem zbiorów o różnych rozmiarach. Sortowano zbiory zawierające elementy z przedziału 0-1000. \newline \newline
 
 \begin{table}[h]
 \centering
