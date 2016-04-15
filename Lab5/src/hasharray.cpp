@@ -1,7 +1,7 @@
 #include "hasharray.hh"
 
 HashArray::HashArray(int number_of_elements) {
-asarr = new AsArray(int number_of_elements);
+asarr = new AsArray(number_of_elements);
 }
 
 ~HashArray::HashArray() {
@@ -17,7 +17,5 @@ int HashArray::hash(std::string name) {
 }
 
 int HashArray::operator[](std::string arg) {
-
 hash(arg);
-
 }

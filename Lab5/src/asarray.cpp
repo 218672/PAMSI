@@ -24,5 +24,7 @@ else
 }
 
 void AsArray::insert(std::string name, int hashed_index) {
-
+List *help_list = new List();
+help_list=arr[hashed_index];
+help_list->add(name, 1);
 }
