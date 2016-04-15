@@ -1,18 +1,20 @@
 #ifndef hasharray_hh
 #define hasharray_hh
 #include "ihasharray.hh"
-#include "asarray.hh"
+#include "list.hh"
+
 
 class HashArray : public IHashArray {
 
 private:
-AsArray *asarr=NULL;
+List *arr=NULL;
 
 public:
 HashArray(int number_of_elements);
 ~HashArray();
 int hash(std::string name);
-int insert_in_asarr(std::string name, int hashed_index);
+int add(std::string name, int hashed_index);
+int remove(std::string name, int hashed_index);
 int operator[](std::string arg);
 
 };
