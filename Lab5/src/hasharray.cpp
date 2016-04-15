@@ -8,7 +8,7 @@ asarr = new AsArray(int number_of_elements);
 delete asarr;
 }
 
-void int insert_in_asarr(std::string name, int hashed_index) {
+void int HashArray::insert_in_asarr(std::string name, int hashed_index) {
 asarr->insert(name, hashed_index);
 }
 
