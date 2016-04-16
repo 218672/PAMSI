@@ -1,10 +1,13 @@
-#include "ilist.hh"
+#include "list.hh"
+#include <iostream>
+#include <string>
 
-void List::add(const std::string& elem, int i) {
+void List::add(const std::string& elem, const int& phone_number, int i) {
 /* Wyrzuca wyjatek jesli uzytkownik poda zly indeks */
     Node* v = new Node;
     Node* tmp = new Node;
     v->elem=elem;
+    v->number=phone_number;
 
     if(i>1 && i<size()+1 && size()!=0) { // jesli nie na pierwsze miejsce i nie dalej niz rozmiar+1, czyli gdzieś w środku
     Node* f = front;
@@ -40,13 +43,13 @@ void List::add(const std::string& elem, int i) {
     }
 }
 
-E List<E>::remove(int i) {
+int List::remove(int i) {
     if(i==1) {
     if(size()!=0) { // jesli nie jest pusta
         Node* old=front;
         front=old->next;
         list_size--; // zmniejszamy rozmiar listy o 1
-        std::string temp=old->elem;
+        int temp=old->number;
         delete old; // usuwamy pierwszy element
         return temp;
     }
@@ -64,7 +67,7 @@ E List<E>::remove(int i) {
             v->next=NULL;
             end=v;
             list_size--;
-            std::string temp= e->elem;
+            int temp = e->number;
             delete e; // zwracamy i usuwamy ostatni
             return temp;
     }
@@ -80,7 +83,7 @@ E List<E>::remove(int i) {
             f=f->next;
             Node* tmp = f->next;
             f->next=f->next->next; // przepinamy wskaźnik
-            std::string temp = tmp->elem;
+            int temp = tmp->number;
             list_size--;
             delete tmp; // usuwamy element i zwracamy
             return temp;
@@ -100,6 +103,31 @@ int List::size() {
     return list_size;
 }
 
+int List::search_by_key(std::string key) {
+    Node* tmp = front;
+    for(int i=1; i<size(); i++) {
+    if(key==tmp->elem) {
+    int number=tmp->number;
+    return number;
+    }
+    else
+    tmp=tmp->next;
+    }
+    return 0;
+}
+
+int List::find_key_position(std::string key) {
+    Node* tmp = front;
+    for(int i=1; i<size(); i++) {
+    if(key==tmp->elem) {
+    return i;
+    }
+    else
+    tmp=tmp->next;
+    }
+return 0;
+}
+
 void List::show_list() {
     Node* tmp = front;
     if(size()!=0) { // jesli nie jest pusta
@@ -113,3 +141,5 @@ void List::show_list() {
     else
         std::cout<<"Lista jest pusta!"<<std::endl;
 }
+
+
