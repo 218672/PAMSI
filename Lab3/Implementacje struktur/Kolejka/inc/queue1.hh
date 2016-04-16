@@ -7,33 +7,72 @@ class Node;
 template <typename E>
 class Queue;
 
+ /*!
+* \brief Klasa węzła kolejki.
+*
+* Zawiera element węzła oraz wskaźnik na następny węzeł.
+*/
 template <typename E>
-class Node { // wezel kolejki
+class Node {
+
 friend class Queue<E>; // przyznajemy dostep do wezla klasie Queue
 
 private:
-E elem; // element wezla
-Node<E>* next; // wskaznik na nastepny wezel
+E elem; /*!< Element kolejki */
+Node<E>* next; /*!< Wskaźnik na kolejny węzeł */
 
 };
 
+ /*!
+* \brief Klasa kolejki.
+*
+* Zawiera metody umożliwiające operacje na kolejce.
+*/
 template <typename E>
 class Queue : public IQueue<E> {
 
 private:
-Node<E>* front; // wskaznik na poczatek kolejki
-Node<E>* end; // wskaznik na koniec kolejki
-int queue_size=0; // rozmiar kolejki
+Node<E>* front; /*!< Wskaźnik na początek kolejki */
+Node<E>* end; /*!< Wskaźnik na koniec kolejki */
+int queue_size=0; /*!< Rozmiar kolejki */
 
 public:
-Queue() { 
+Queue() {
 front = NULL; // inicjalizacja NULLami poczatku i konca
 end = NULL;
 };
-~Queue() {}; 
-void add(const E& elem); // dodaje element na tyl kolejki
-E remove(); // zdejmuje element z poczatku kolejki, wyrzuca wyjatek jesli pusta
-int size(); // zwraca rozmiar kolejki
+~Queue() {};
+
+/**
+ * Funkcja dodająca element do kolejki
+ *
+ * \param[in] element typu E
+ *
+ */
+void add(const E& elem);
+
+/**
+ * Funkcja usuwająca element z kolejki
+ * Wyrzuca wyjątek EmptyQueueException jeśli kolejka jest pusta.
+ *
+ * \return Element typu E
+ *
+ */
+E remove();
+
+/**
+ * Funkcja zwracająca rozmiar kolejki
+ *
+ * \return Rozmiar kolejki typu int
+ *
+ */
+int size();
+
+/**
+ * Funkcja wyświetlająca kolejkę
+ *
+ *
+ */
 void show_queue(); // pokazuje kolejke
 
 };
@@ -41,15 +80,15 @@ void show_queue(); // pokazuje kolejke
 template <typename E>
 void Queue<E>::add(const E& elem) {
     Node<E>* v = new Node<E>;
-    v->elem=elem; 
-    v->next=NULL; 
-    Node<E>* e = end; 
+    v->elem=elem;
+    v->next=NULL;
+    Node<E>* e = end;
     if(size()!=0) { // sprawdzamy czy nie jest pusta
-    e->next=v; 
-    end=v; 
+    e->next=v;
+    end=v;
     queue_size++; // zwiekszamy rozmiar kolejki o 1
     }
-    else { 
+    else {
     front=v; // ustawiamy nowy poczatek i nowy koniec
     end=v;
     queue_size++; // zwiekszamy rozmiar kolejki o 1
@@ -60,11 +99,11 @@ template <typename E>
 E Queue<E>::remove() {
 /* Wyrzuca wyjątek gdy kolejka jest pusta */
     if(size()!=0) {
-        Node<E>* old=front; 
-        front=old->next; 
+        Node<E>* old=front;
+        front=old->next;
         queue_size--; // zmniejszamy rozmiar kolejki o 1
         return old->elem; // zwracamy pierwszy element
-        delete old; 
+        delete old;
     }
     else {
     std::string EmptyQueueException = "Kolejka jest pusta!";
@@ -79,7 +118,7 @@ int Queue<E>::size() {
 
 template <typename E>
 void Queue<E>::show_queue() {
-    Node<E>* tmp = front; 
+    Node<E>* tmp = front;
     if(tmp!=NULL) {
         std::cout<<"Elementy kolejki:"<<std::endl;
         std::cout<<tmp->elem<<std::endl;

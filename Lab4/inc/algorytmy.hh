@@ -2,7 +2,13 @@
 #define algorytmy_hh
 #include "struktura.hh"
 
+ /*!
+* \brief Klasa stopera.
+*
+* Zawiera metody umożliwiające mierzenie czasu w ms. Dokumentacja metod w folderze Lab1.
+*/
 class Timer: public Main_timer {
+
 private:
 long double time_of_start;
 long double time_of_stop;
@@ -16,6 +22,11 @@ long double return_time();
 
 };
 
+ /*!
+* \brief Klasa struktury danych.
+*
+* Zawiera metodę umożliwiającą dodawanie elementów do tablicy. Dokumentacja metody w folderze Lab1.
+*/
 class Array: public DataStructure {
 
 private:

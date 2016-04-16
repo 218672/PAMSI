@@ -6,14 +6,27 @@ using namespace std;
 // Algorytm powiększający tablicę poprzez zmianę rozmiaru o 1 podczas
 // każdorazowego dodawania nowego elementu
 
+
+ /*!
+* \brief Klasa tablica.
+*
+* Zawiera metodę powiększającą tablicę o 1 w przypadku każdego przepełnienia.
+*/
 class Arr {
 
 private:
-int *arr = NULL; // wskaźnik na miejsce w pamięci
-int counter = 0; // licznik miejsca
+int *arr = NULL; /*!< Wskaźnik na miejsce w pamięci dla tablicy */
+int counter = 0; /*!< Licznik miejsca */
 
 public:
-void add_num(int number); // dodaje liczbe do tablicy
+/**
+ * Funkcja dodaje liczbe do tablicy.
+ * W przypadku przepełnienia zwiększa rozmiar o 1.
+ *
+ * \param[in] liczba typu int
+ *
+ */
+void add_num(int number);
 
 Arr(int a);
 ~Arr();

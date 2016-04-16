@@ -7,23 +7,36 @@ class Node;
 template <typename E>
 class Queue;
 
+ /*!
+* \brief Klasa węzła kolejki.
+*
+* Zawiera element węzła oraz wskaźnik na następny węzeł.
+*/
 template <typename E>
-class Node { // wezel kolejki
+class Node {
+
 friend class Queue<E>; // przyznajemy dostep do wezla klasie Queue
 
 private:
-E elem; // element wezla
-Node<E>* next; // wskaznik na nastepny wezel
+E elem; /*!< Element kolejki */
+Node<E>* next; /*!< Wskaźnik na kolejny węzeł */
 
 };
 
+
+ /*!
+* \brief Klasa kolejki.
+*
+* Zawiera metody umożliwiające operacje na kolejce.
+*/
 template <typename E>
 class Queue : public IQueue<E> {
 
+
 private:
-Node<E>* front; // wskaznik na poczatek kolejki
-Node<E>* end; // wskaznik na koniec kolejki
-int queue_size=0; // rozmiar kolejki
+Node<E>* front; /*!< Wskaźnik na początek kolejki */
+Node<E>* end; /*!< Wskaźnik na koniec kolejki */
+int queue_size=0; /*!< Rozmiar kolejki */
 
 public:
 Queue(int new_size) { // konstruktor
@@ -32,10 +45,38 @@ end = NULL;
 queue_size=new_size;
 };
 ~Queue() {}; // destruktor
-void add(const E& elem); // dodaje element na tyl kolejki
-E remove(); // zdejmuje element z poczatku kolejki, wyrzuca wyjatek jesli pusta
-int size(); // zwraca rozmiar kolejki
-void show_queue(); // pokazuje kolejke
+
+/**
+ * Funkcja dodająca element na początek kolejki
+ *
+ * \param[in] element typu E
+ *
+ */
+void add(const E& elem);
+
+/**
+ * Funkcja usuwająca element z kolejki
+ * Wyrzuca wyjątek EmptyQueueException jeśli kolejka jest pusta.
+ *
+ * \return Element typu E
+ *
+ */
+E remove();
+
+/**
+ * Funkcja zwracająca rozmiar kolejki.
+ *
+ * \return Rozmiar kolejki typu int
+ *
+ */
+int size();
+
+/**
+ * Funkcja wyświetlająca kolejke
+ *
+ *
+ */
+void show_queue();
 
 };
 
