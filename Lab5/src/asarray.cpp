@@ -13,14 +13,7 @@ delete hasharr;
 }
 
 int AsArray::operator[](const std::string& key) {
-    try {
-    int number = search(key);
-    return number;
-    }
-    catch (std::string NotFoundException) {
-    std::cout<<NotFoundException<<std::endl;
-    return 0;
-    }
+
 }
 
 void AsArray::insert(const std::string& key, const int& value) {

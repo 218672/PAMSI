@@ -105,7 +105,7 @@ int List::size() {
 
 int List::search_by_key(std::string key) {
     Node* tmp = front;
-    for(int i=1; i<size(); i++) {
+    for(int i=1; i<size()+1; i++) {
     if(key==tmp->elem) {
     int number=tmp->number;
     return number;
@@ -118,14 +118,14 @@ int List::search_by_key(std::string key) {
 
 int List::find_key_position(std::string key) {
     Node* tmp = front;
-    for(int i=1; i<size(); i++) {
+    for(int i=1; i<size()+1; i++) {
     if(key==tmp->elem) {
     return i;
     }
     else
     tmp=tmp->next;
     }
-return 0;
+    return 0;
 }
 
 void List::show_list() {
