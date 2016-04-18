@@ -8,6 +8,7 @@ class IHashArray {
 
 public:
 virtual int hash(std::string surname)=0;
+virtual void realloc_and_rehash()=0;
 virtual ~IHashArray() {}
 
 };

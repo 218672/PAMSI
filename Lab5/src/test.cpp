@@ -3,15 +3,18 @@
 #include "list.hh"
 #include "hasharray.hh"
 #include "asarray.hh"
+#include "timer.hh"
 
 
 int main() {
 
-AsArray *nowa = new AsArray(10);
-nowa->insert("Marek", 123);
-nowa->insert("Wojtek", 321);
+AsArray nowa(100);
+//Timer *tim = new Timer();
 
-delete nowa;
+nowa.insert("Marek", 123);
+nowa.insert("Marian", 321);
+
+std::cout<<nowa["Marek"];
 
 return 0;
 }
