@@ -16,7 +16,7 @@ AsArray(int number_of_elements);
 void insert(const std::string& key, const int& value);
 void remove(const std::string& key);
 int search(const std::string& key);
-bool read_from_file(std::string file_name);
+void read_from_file(std::string file_name, int amount_of_data);
 int operator[](const std::string& key);
 
 };

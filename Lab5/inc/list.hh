@@ -35,6 +35,7 @@ int size(); // zwraca rozmiar listy
 void show_list(); // pokazuje elementy listy
 int search_by_key(std::string key); // sprawdza klucz i przekazuje jego numer
 int find_key_position(std::string key); // szuka pozycji klucza
+std::string get_hashed_key(); // znajduje zhashowany klucz będący identyfikatorem całej listy
 
 };
 

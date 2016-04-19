@@ -142,4 +142,10 @@ void List::show_list() {
         std::cout<<"Lista jest pusta!"<<std::endl;
 }
 
+std::string List::get_hashed_key() {
+    Node *tmp = front;
+    return tmp->elem;
+
+}
+
 

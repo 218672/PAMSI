@@ -1,6 +1,7 @@
 #include "hasharray.hh"
 #include "list.hh"
 #include "asarray.hh"
+#include "timer.hh"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -21,10 +22,12 @@ int AsArray::operator[](const std::string& key) {
 void AsArray::insert(const std::string& key, const int& value) {
     if(hasharr->arr[hasharr->hash(key)].size()==0)
     hasharr->number_of_not_empty_lists++;
-    if(hasharr->number_of_not_empty_lists==hasharr->size_of_arr)
-    hasharr->realloc_and_rehash();
 
     (hasharr->arr[hasharr->hash(key)]).add(key, value, 1);
+
+    if(hasharr->number_of_not_empty_lists==hasharr->size_of_arr) {
+    hasharr->realloc_and_rehash();
+    }
 }
 
 void AsArray::remove(const std::string& key) {
@@ -50,23 +53,32 @@ int AsArray::search(const std::string& key) {
     throw "Nie ma takiego elementu!";
 }
 
-bool AsArray::read_from_file(std::string file_name) {
-    std::fstream file;
-    file.open(file_name.c_str());
+void AsArray::read_from_file(std::string file_name, int amount_of_data) {
+    std::ifstream file;
+    Timer *tim = new Timer();
+    file.open(file_name, std::ios::in);
+
     if(!file.good())
-return false;
+    std::cout<<"Nie udało się otworzyć pliku!"<<std::endl;
 
     std::string name;
     int phone_number;
 
-    while(true) {
+    tim->tim_start();
+    for(int i=0; i<amount_of_data; i++) {
     file>>name>>phone_number;
     if(file.good())
     insert(name, phone_number);
-    else
+    else {
+    std::cout<<"Przerwa w zapisie!"<<std::endl;
     break;
     }
-return true;
+    }
+    tim->tim_stop();
+    std::cout<<"Zapis zakończono."<<std::endl;
+    std::cout<<"Zapis do tablicy asocjacyjnej trwał "<<tim->return_time()<<"ms."<<std::endl;
+
+    delete tim;
 }
 
 

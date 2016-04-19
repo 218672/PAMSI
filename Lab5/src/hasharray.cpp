@@ -2,6 +2,7 @@
 #include "asarray.hh"
 #include "list.hh"
 #include <string>
+#include <iostream>
 
 HashArray::HashArray(int size_of_arr) {
 arr = new List [size_of_arr];
@@ -26,20 +27,22 @@ int HashArray::hash(std::string key) {
 
 void HashArray::realloc_and_rehash() {
 
-        List *new_a = new List [size_of_arr*2];
+        List *new_a = new List [size_of_arr];
+        List help_list;
 
         for (int i=0; i<size_of_arr; i++)
         new_a[i]=arr[i];
 
         delete [] arr;
-        arr = new List [size_of_arr*2];
 
-        for (int i=0; i<size_of_arr; i++)
-        arr[i]=new_a[i];
+        size_of_arr=size_of_arr*2;
+        arr = new List [size_of_arr];
+
+        for (int i=0; i<(size_of_arr/2); i++) {
+        help_list=new_a[i];
+        arr[hash(help_list.get_hashed_key())]=help_list;
+        }
 
         delete [] new_a;
-
-        size_of_arr*=2;
-
 }
 
