@@ -17,7 +17,7 @@ delete []arr;
 int HashArray::hash(std::string key) {
     int g,h=0;
 
-    for (int i=0; i<3; i++) {
+    for (unsigned int i=0; i<3; i++) {
         h=(h << 4) + key[i];
         if ((g=(h & 0xF0000000)))
             h=h^(g | (g >> 24));
@@ -40,7 +40,11 @@ void HashArray::realloc_and_rehash() {
 
         for (int i=0; i<(size_of_arr/2); i++) {
         help_list=new_a[i];
-        arr[hash(help_list.get_hashed_key())]=help_list;
+        while(help_list.size()!=0) {
+        std::string key=help_list.get_hashed_key();
+        int value = help_list.remove(1);
+        arr[hash(key)].add(key, value, 1);
+        }
         }
 
         delete [] new_a;

@@ -4,6 +4,11 @@
 #include <string>
 
 
+ /*!
+* \brief Interfejs tablicy z haszowaniem.
+*
+* Zawiera metody umożliwiające operacje na tablicy.
+*/
 class IHashArray {
 
 public:

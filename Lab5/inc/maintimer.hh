@@ -1,6 +1,11 @@
 #ifndef maintimer_hh
 #define maintimer_hh
 
+ /*!
+* \brief Interfejs stopera.
+*
+* Zawiera metody umożliwiające mierzenie czasu.
+*/
 class Main_timer {
 
 public:

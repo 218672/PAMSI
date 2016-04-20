@@ -81,5 +81,39 @@ void AsArray::read_from_file(std::string file_name, int amount_of_data) {
     delete tim;
 }
 
+void AsArray::search_with_file(std::string file_name, int amount_of_data) {
+    std::ifstream file;
+    Timer *tim = new Timer();
+    file.open(file_name, std::ios::in);
+
+    if(!file.good())
+    std::cout<<"Nie udało się otworzyć pliku!"<<std::endl;
+
+    std::string name;
+    int phone_number;
+
+    tim->tim_start();
+    for(int i=0; i<amount_of_data; i++) {
+    file>>name>>phone_number;
+    if(file.good()) {
+    try {
+    phone_number=search(name);
+    }
+    catch (const char* SearchException) {
+    std::cout<<SearchException<<std::endl;
+    }
+    }
+    else {
+    std::cout<<"Przerwa w odczycie!"<<std::endl;
+    break;
+    }
+    }
+    tim->tim_stop();
+    std::cout<<"Odczyt zakończono."<<std::endl;
+    std::cout<<"Odczyt z tablicy asocjacyjnej trwał "<<tim->return_time()<<"ms."<<std::endl;
+
+    delete tim;
+}
+
 
 

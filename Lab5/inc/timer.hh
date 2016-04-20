@@ -3,6 +3,11 @@
 #include <sys/time.h>
 #include "maintimer.hh"
 
+ /*!
+* \brief Klasa stopera.
+*
+* Zawiera metody umożliwiające mierzenie czasu. Dokładny opis metod w dokumentacji projektu Lab2.
+*/
 class Timer: public Main_timer {
 private:
 long double time_of_start;

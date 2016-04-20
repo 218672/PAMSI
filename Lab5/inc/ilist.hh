@@ -2,7 +2,11 @@
 #define ilist_hh
 #include <string>
 
-
+ /*!
+* \brief Interfejs listy.
+*
+* Zawiera metody umożliwiające operacje na liście.
+*/
 class IList {
 
 public:
