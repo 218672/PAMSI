@@ -110,6 +110,7 @@ Poniżej przedstawiono również średnie wyniki pomiarów na wykresie w celu po
 
 Kolorem niebieskim oznaczono quicksort poprzez wybór środkowego elementu, czerwonym - skrajnego, natomiast żółtym - poprzez medianę. Można zauważyć, że usprawnienie algorytmu quicksort liczące medianę nieznacznie pogorszyło jego złożoność obliczeniową. Jak widać z przedstawionych danych, złożoność obliczeniowa sortowania szybkiego wynosi w przybliżeniu $nlogn$. Wszystkie trzy sposoby wyboru pivota dla zróżnicowanych zbiorów gwarantują uzyskanie złożoności średniej. Pomiary dla miliarda w przypadku mediany nie zostały wykonane ze względu na błąd naruszenia ochrony pamięci podczas wykonywania tego algorytmu, którego źródło nie zostało jeszcze wykryte. \newline \newline
 
+\newpage
 \textbf{Algorytm sortowania przez scalanie - mergesort} \newline \newline
 Algorytm sortowania przez scalanie to kolejny algorytm bazujący na metodzie "Dziel i zwyciężaj". Jego działanie polega na podziale sortowanej tablicy na połowy, a następnie kontynuację tego działania na podzbiorach do momentu uzyskania zbiorów jednoelementowych. Następnie wykorzystując działanie rekursji następuje scalanie podzbiorów i jednoczesne sortowanie ich elementów aż do momentu powrotu do jednego zbioru. Średnia złożoność algorytmu mergesort wynosi $nlogn$, nastomiast pesymistyczna $n^2$, jednak wystąpienie tej drugiej jest bardzo mało prawdopodobne. Poniżej przedstawiono czasy sortowania (w ms) tym algorytmem zbiorów o różnych rozmiarach. Sortowano zbiory zawierające elementy z przedziału 0-1000. \newline \newline
 
@@ -142,6 +143,7 @@ Pomiary dla mergesort przedstawiono również na poniższym wykresie. \newline
 
 Pomiary wykonane dla algorytmu mergesort pokazały, że jest on mniej sprawny od quicksort, jednak jego średnia złożoność obliczeniowa rzędu $nlogn$ jest bardziej prawdopodobna do uzyskania. Nieznaczne różnice w szybkości działania obu algorytmów są wynikiem tego, że sortowanie przez scalanie nie jest sortowaniem "w miejscu", gdyż wykorzystuje do tego zewnętrzny kontener przechowujący tymczasowo sortowane dane. \newline \newline
 
+\newpage
 \textbf{Wnioski} \newline \newline
 Algorytm sortowania szybkiego jest efektywniejszy niż algorytm sortowania przez scalanie, jednak jego złożoność obliczeniowa jest bardziej zagrożona tzw. "ukwadratowieniem", czyli zaistnienem przypadku pesymistycznego. Mergesort z dużym prawdopodobieństwem gwarantuje złożoność średnią, jednak jako algorytm, który nie sortuje "w miejscu" charakteryzuje się niezauważalnie większym czasem sortowania. Sposób wyboru pivota dla sortowania szybkiego ma nieznaczny wpływ na jego złożoność obliczeniową.
 \end{flushleft}
