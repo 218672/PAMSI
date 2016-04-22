@@ -1,6 +1,7 @@
 #ifndef algorytmy_hh
 #define algorytmy_hh
 #include "struktura.hh"
+#include <cstddef>
 
  /*!
 * \brief Klasa stoper.
