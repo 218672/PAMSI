@@ -1,13 +1,16 @@
+#include "runnable.hh"
 #include <iostream>
 #include "queue.hh"
 #include "queue1.hh"
 
-int main() {
+void Runnable::run() {
 
 Queue<int>* queue_1 = new Queue<int>;
 int state, elem;
 
 std::cout<<"Test kolejki."<<std::endl;
+
+
 
 while(1) {
 std::cout<<std::endl;
@@ -19,6 +22,11 @@ std::cout<<"4. Pokaz kolejke"<<std::endl;
 std::cout<<"5. Wyjscie z programu"<<std::endl;
 std::cout<<"Twoj wybor: ";
 std::cin>>state;
+
+if(state==5)
+break;
+
+
 while(std::cin.fail()) {
             std::cin.clear();
             std::cin.ignore(50, '\n');
@@ -55,11 +63,11 @@ while(std::cin.fail()) {
     case 5:
         std::cout<<"Do widzenia!"<<std::endl;
         delete queue_1;
-        return 0;
     default:
         std::cout<<"Zly wybor!"<<std::endl;
         break;
     }
+
 }
 
 }
