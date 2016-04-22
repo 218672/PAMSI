@@ -8,75 +8,109 @@
 void Runnable::run() {
 
 srand(time(NULL));
-int size_of_queue, state;
-
-std::cout<<"Podaj ile liczb wpisac do tablicy: ";
-std::cin>>size_of_queue;
-
-while(std::cin.fail()) {
-    std::cin.clear();
-    std::cin.ignore(50, '\n');
-    std::cout << "Wpisujemy tylko liczby typu int! ";
-    std::cin >> size_of_queue;
-}
-
-Queue<int>* que_1 = new Queue<int>(size_of_queue);
-
+int size_of_queue[]={10, 100, 1000, 1000000};
+Queue<int>* que_1=NULL;
+Array *arr_1 = NULL;
 int size_of_arr;
-size_of_arr=que_1->size();
 
-Array *arr_1 = new Array(size_of_arr);
+for(int k=0; k<4; k++) {
 
-delete que_1;
-
-for(int i=0; i<size_of_arr; i++)
-arr_1->add_num((std::rand()%1000)+0);
-
- /*  std::cout<<std::endl;
-   std::cout<<"Elementy przed posortowaniem: "<<std::endl; // lepiej komentować przy sprawdzaniu danych wejściowych dużych rozmiarów
-   arr_1->show_arr();
-   std::cout<<std::endl; */
-   std::cout<<std::endl;
 
 Timer *tim = new Timer();
 
-    std::cout<<"Wybierz sposób sortowania: "<<std::endl;
-    std::cout<<"1. Quicksort (pivot ze środka tablicy)"<<std::endl;
-    std::cout<<"2. Quicksort (pivot jako skrajny element)"<<std::endl;
-    std::cout<<"3. Quicksort (pivot jako mediana)"<<std::endl;
-    std::cout<<"4. Mergesort"<<std::endl;
-    std::cout<<"Twój wybór: ";
-    std::cin>>state;
-    while(std::cin.fail()) {
-    std::cin.clear();
-    std::cin.ignore(50, '\n');
-    std::cout << "Wpisujemy tylko liczby typu int! ";
-    std::cin >> state;
-    }
+for(int state=1; state<=4; state++) {
 
     switch(state) {
     case 1:
+
+    que_1 = new Queue<int>(size_of_queue[k]);
+
+    size_of_arr=que_1->size();
+
+    delete que_1;
+
+    arr_1 = new Array(size_of_arr);
+
+    for(int i=0; i<size_of_arr; i++)
+    arr_1->add_num((std::rand()%1000)+0);
+
     tim->tim_start();
     arr_1->quick_sort_random(0, size_of_arr-1);
     tim->tim_stop();
+
+    std::cout<<"Czas sortowania quicksort z wybraniem środkowego elementu dla "<<size_of_arr<<" elementów wynosi "<<tim->return_time()<<"ms"<<std::endl<<std::endl;
+
+    delete arr_1;
+
     break;
 
     case 2:
+
+    que_1 = new Queue<int>(size_of_queue[k]);
+
+    size_of_arr=que_1->size();
+
+    delete que_1;
+
+    arr_1 = new Array(size_of_arr);
+
+    for(int i=0; i<size_of_arr; i++)
+    arr_1->add_num((std::rand()%1000)+0);
+
     tim->tim_start();
     arr_1->quick_sort_last(0, size_of_arr-1);
     tim->tim_stop();
+
+    std::cout<<"Czas sortowania quicksort z wybraniem skrajnego elementu dla "<<size_of_arr<<" elementów wynosi "<<tim->return_time()<<"ms"<<std::endl<<std::endl;
+
+    delete arr_1;
+
     break;
 
     case 3:
+
+    que_1 = new Queue<int>(size_of_queue[k]);
+
+    size_of_arr=que_1->size();
+
+    delete que_1;
+
+    arr_1 = new Array(size_of_arr);
+
+    for(int i=0; i<size_of_arr; i++)
+    arr_1->add_num((std::rand()%1000)+0);
+
     tim->tim_start();
     arr_1->quick_sort_mean(0, size_of_arr-1);
     tim->tim_stop();
+
+    std::cout<<"Czas sortowania quicksort z wybraniem elementu jako mediany dla "<<size_of_arr<<" elementów wynosi "<<tim->return_time()<<"ms"<<std::endl<<std::endl;
+
+    delete arr_1;
+
     break;
 
     case 4:
+
+    que_1 = new Queue<int>(size_of_queue[k]);
+
+    size_of_arr=que_1->size();
+
+    delete que_1;
+
+    arr_1 = new Array(size_of_arr);
+
+    for(int i=0; i<size_of_arr; i++)
+    arr_1->add_num((std::rand()%1000)+0);
+
     tim->tim_start();
     arr_1->merge_sort(0, size_of_arr-1);
     tim->tim_stop();
+
+    std::cout<<"Czas sortowania mergesort dla "<<size_of_arr<<" elementów wynosi "<<tim->return_time()<<"ms"<<std::endl<<std::endl;
+
+    delete arr_1;
+
     break;
 
     default:
@@ -84,14 +118,8 @@ Timer *tim = new Timer();
     break;
     }
 
-  /*  std::cout<<"Elementy po posortowaniu: "<<std::endl; // lepiej komentować przy sprawdzaniu danych wejściowych dużych rozmiarów
-    arr_1->show_arr();
-    std::cout<<std::endl<<std::endl; */
+}
 
-    std::cout<<"Czas sortowania: "<<tim->return_time()<<"ms"<<std::endl<<std::endl;
-
-delete tim;
-
-delete arr_1;
+}
 
 }

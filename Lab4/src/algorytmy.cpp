@@ -93,7 +93,7 @@ void Array::quick_sort_last(int left, int right) {
 void Array::quick_sort_mean(int left, int right) {
     int i = left;
     int j = right;
-    int y[] = {arr[left], arr[left+right/2] ,arr[right]};
+    int y[] = {arr[left], arr[(left+right)/2] ,arr[right]};
 
      for (int i=0; i<3; i++) {
      if (y[i]>y[i+1])
