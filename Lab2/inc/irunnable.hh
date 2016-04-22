@@ -9,7 +9,7 @@
 class IRunnable {
 public:
 
-void run();
+virtual void run()=0;
 
 };
 
