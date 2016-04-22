@@ -1,11 +1,12 @@
+#include "runnable.hh"
 #include <iostream>
 #include <algorithm>
 #include "struktura.hh"
 #include "algorytmy.hh"
-#include "queue.hh"
 #include "queue1.hh"
 
-int main() {
+void Runnable::run() {
+
 srand(time(NULL));
 int size_of_queue, state;
 
@@ -92,4 +93,5 @@ Timer *tim = new Timer();
 delete tim;
 
 delete arr_1;
+
 }
