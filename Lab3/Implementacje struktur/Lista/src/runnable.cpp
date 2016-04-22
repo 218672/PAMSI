@@ -28,7 +28,8 @@ while(std::cin.fail()) {
             std::cin>>state;
         }
 
-while(state!=6) {
+if(state==6)
+break;
 
     switch(state) {
     case 1:
@@ -96,7 +97,7 @@ while(state!=6) {
         std::cout<<"Zly wybor!"<<std::endl;
         break;
     }
-    }
+
 }
 
 
