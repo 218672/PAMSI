@@ -2,6 +2,7 @@
 #define timer_hh
 #include <sys/time.h>
 #include "maintimer.hh"
+#include <cstddef>
 
 class Timer: public Main_timer {
 private:

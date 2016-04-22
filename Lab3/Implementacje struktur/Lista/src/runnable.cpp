@@ -1,9 +1,8 @@
-#include <iostream>
-#include "list.hh"
+#include "runnable.hh"
 #include "list1.hh"
-#include "timer.hh"
+#include <iostream>
 
-int main() {
+void Runnable::run() {
 
 List<int>* list_1 = new List<int>;
 int state, position, elem;
@@ -28,6 +27,8 @@ while(std::cin.fail()) {
             std::cout<<"Wpisujemy tylko liczby typu int! ";
             std::cin>>state;
         }
+
+while(state!=6) {
 
     switch(state) {
     case 1:
@@ -90,11 +91,13 @@ while(std::cin.fail()) {
     case 6:
         std::cout<<"Do widzenia!"<<std::endl;
         delete list_1;
-        return 0;
+        break;
     default:
         std::cout<<"Zly wybor!"<<std::endl;
         break;
     }
+    }
 }
+
 
 }

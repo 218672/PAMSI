@@ -2,6 +2,9 @@
 #define list1_hh
 #include "list.hh"
 #include "timer.hh"
+#include <cstddef>
+#include <cstring>
+#include <iostream>
 
 template <typename E>
 class Node;
