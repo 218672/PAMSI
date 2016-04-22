@@ -6,7 +6,7 @@ void Runnable::run() {
 
 List<int>* list_1 = new List<int>;
 int state, position, elem;
-int numbers;
+int numbers[]={10,100,1000,1000000,10000000};
 
 std::cout<<"Test listy."<<std::endl;
 
@@ -79,15 +79,8 @@ break;
         list_1->show_list();
         break;
     case 5:
-        std::cout<<"Ile elementow ma miec przeszukiwana lista? ";
-        std::cin>>numbers;
-        while(std::cin.fail()) {
-        std::cin.clear();
-        std::cin.ignore(50, '\n');
-        std::cout << "Wpisujemy tylko liczby typu int! ";
-        std::cin >> numbers;
-        }
-        list_1->test_on(numbers);
+        for(int i=0; i<5; i++)
+        list_1->test_on(numbers[i]);
         break;
     case 6:
         std::cout<<"Do widzenia!"<<std::endl;
