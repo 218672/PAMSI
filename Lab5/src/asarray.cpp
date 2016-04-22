@@ -76,7 +76,7 @@ void AsArray::read_from_file(std::string file_name, int amount_of_data) {
     }
     tim->tim_stop();
     std::cout<<"Zapis zakończono."<<std::endl;
-    std::cout<<"Zapis do tablicy asocjacyjnej trwał "<<tim->return_time()<<"ms."<<std::endl;
+    std::cout<<"Zapis do tablicy asocjacyjnej "<<amount_of_data<<" elementów trwał "<<tim->return_time()<<"ms."<<std::endl;
 
     delete tim;
 }
@@ -110,7 +110,7 @@ void AsArray::search_with_file(std::string file_name, int amount_of_data) {
     }
     tim->tim_stop();
     std::cout<<"Odczyt zakończono."<<std::endl;
-    std::cout<<"Odczyt z tablicy asocjacyjnej trwał "<<tim->return_time()<<"ms."<<std::endl;
+    std::cout<<"Odczyt z tablicy asocjacyjnej "<<amount_of_data<<" elementów trwał "<<tim->return_time()<<"ms."<<std::endl;
 
     delete tim;
 }

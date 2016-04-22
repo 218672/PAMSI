@@ -7,15 +7,20 @@
 
 void Runnable::run() {
 
-AsArray nowa(10);
+AsArray *nowa = NULL;
 std::string file_name="phonebook.txt";
-int amount_of_data;
+int amount_of_data[]={10, 100, 1000, 10000, 100000};
 
-std::cout<<"Ile danych wpisać do książki telefonicznej? ";
-std::cin>>amount_of_data;
+for(int i=0; i<5; i++) {
 
-nowa.read_from_file(file_name, amount_of_data);
+nowa = new AsArray(10);
 
-nowa.search_with_file(file_name, amount_of_data);
+nowa->read_from_file(file_name, amount_of_data[i]);
+
+nowa->search_with_file(file_name, amount_of_data[i]);
+
+delete nowa;
+
+}
 
 }
