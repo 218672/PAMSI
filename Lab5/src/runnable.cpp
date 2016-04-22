@@ -1,11 +1,11 @@
+#include "runnable.hh"
 #include <iostream>
 #include <string>
 #include "list.hh"
 #include "hasharray.hh"
 #include "asarray.hh"
 
-
-int main() {
+void Runnable::run() {
 
 AsArray nowa(10);
 std::string file_name="phonebook.txt";
@@ -18,5 +18,4 @@ nowa.read_from_file(file_name, amount_of_data);
 
 nowa.search_with_file(file_name, amount_of_data);
 
-return 0;
 }
