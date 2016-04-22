@@ -10,6 +10,7 @@ class IRunnable {
 public:
 
 virtual void run()=0;
+virtual ~IRunnable() {}
 
 };
 

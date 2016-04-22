@@ -11,6 +11,7 @@ class Runnable : public IRunnable {
 
 public:
 void run();
+~Runnable();
 
 };
 

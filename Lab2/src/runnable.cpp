@@ -3,6 +3,8 @@
 #include "algorytmy.hh"
 #include <iostream>
 
+Runnable::~Runnable() {}
+
 void Runnable::run() {
 
 int numbers[]={10, 100, 1000, 10000, 100000, 1000000};
