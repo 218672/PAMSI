@@ -1,8 +1,9 @@
+#include "runnable.hh"
 #include <iostream>
 #include "stack.hh"
 #include "stack1.hh"
 
-int main() {
+void Runnable::run() {
 
 Stack<int>* stack_1 = new Stack<int>;
 int state, elem;
@@ -25,6 +26,9 @@ while(std::cin.fail()) {
             std::cout<<"Wpisujemy tylko liczby typu int! ";
             std::cin>>state;
         }
+
+if(state==5)
+break;
 
     switch(state) {
     case 1:
@@ -55,7 +59,6 @@ while(std::cin.fail()) {
     case 5:
         std::cout<<"Do widzenia!"<<std::endl;
         delete stack_1;
-        return 0;
     default:
         std::cout<<"Zly wybor!"<<std::endl;
         break;
