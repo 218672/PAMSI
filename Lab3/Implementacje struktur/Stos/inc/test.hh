@@ -1,5 +1,5 @@
-#ifndef runnable_hh
-#define runnable_hh
+#ifndef test_hh
+#define test_hh
 #include "irunnable.hh"
 
  /*!
@@ -7,10 +7,10 @@
 *
 * Zawiera metodę umożliwiającą uruchomienie programu.
 */
-class Runnable : public IRunnable {
+class Test : public IRunnable {
 
 public:
-void run();
+void run(int Argc, char* Argv[]);
 
 };
 
