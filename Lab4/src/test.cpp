@@ -1,11 +1,11 @@
-#include "runnable.hh"
+#include "test.hh"
 #include <iostream>
 #include <algorithm>
 #include "struktura.hh"
 #include "algorytmy.hh"
 #include "queue1.hh"
 
-void Runnable::run() {
+void Test::run(int Argc, char* Argv[]) {
 
 srand(time(NULL));
 int size_of_queue[]={10, 100, 1000, 1000000};
