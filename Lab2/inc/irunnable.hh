@@ -9,7 +9,7 @@
 class IRunnable {
 public:
 
-virtual void run()=0;
+virtual void run(int Argc, char* Argv[])=0;
 virtual ~IRunnable() {}
 
 };

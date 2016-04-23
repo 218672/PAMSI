@@ -1,11 +1,11 @@
-#include "runnable.hh"
+#include "test.hh"
 #include "struktura.hh"
 #include "algorytmy.hh"
 #include <iostream>
 
-Runnable::~Runnable() {}
+Test::~Test() {}
 
-void Runnable::run() {
+void Test::run(int Argc, char* Argv[]) {
 
 int numbers[]={10, 100, 1000, 10000, 100000, 1000000};
 int size_of_arr_numbers=6;
