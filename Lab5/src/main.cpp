@@ -1,11 +1,11 @@
-#include "runnable.hh"
+#include "test.hh"
 
 
-int main() {
+int main(int Argc, char* Argv[]) {
 
-Runnable start;
+Test start;
 
-start.run();
+start.run(Argc, Argv);
 
 return 0;
 }

@@ -1,11 +1,11 @@
-#include "runnable.hh"
+#include "test.hh"
 #include <iostream>
 #include <string>
 #include "list.hh"
 #include "hasharray.hh"
 #include "asarray.hh"
 
-void Runnable::run() {
+void Test::run(int Argc, char* Argv[]) {
 
 AsArray *nowa = NULL;
 std::string file_name="phonebook.txt";
