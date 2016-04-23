@@ -2,22 +2,22 @@ Opis folderów projektu:
 
 Implementacje struktur:
 Lista:
-inc - pliki nagłówkowe zawierające interfejs listy (list.hh) oraz implementacje listy (list1.hh)
-src - plik do testowania struktury test.cpp
+inc - pliki nagłówkowe zawierające interfejs listy (list.hh), implementacje listy (list1.hh), interfejs IRunnable (irunnable.hh) oraz klasę testową (test.hh)
+src - plik do testowania struktury test.cpp oraz plik główny main.cpp
 obj - pliki obiektowe projektu
 
 Budujemy używając Makefile.
 
 Stos:
-inc - pliki nagłówkowe zawierające interfejs stosu (stack.hh) oraz implementacje stosu (stack1.hh)
-src - plik do testowania struktury test.cpp
+inc - pliki nagłówkowe zawierające interfejs stosu (stack.hh),implementacje stosu (stack1.hh), interfejs IRunnable (irunnable.hh) oraz klasę testową (test.hh)
+src - plik do testowania struktury test.cpp oraz plik główny main.cpp
 obj - pliki obiektowe projektu
 
 Budujemy używając Makefile.
 
 Kolejka:
-inc - pliki nagłówkowe zawierające interfejs kolejki (queue.hh) oraz implementacje kolejki (queue.hh)
-src - plik do testowania struktury test.cpp
+inc - pliki nagłówkowe zawierające interfejs kolejki (queue.hh), implementacje kolejki (queue.hh), interfejs IRunnable (irunnable.hh) oraz klasę testową (test.hh)
+src - plik do testowania struktury test.cpp,  oraz plik główny main.cpp
 obj - pliki obiektowe projektu
 
 Budujemy używając Makefile.
