@@ -1,7 +1,10 @@
 #ifndef tree_hh
 #define tree_hh
+#include "itree.hh"
+#include <cstddef>
 
 class Node {
+friend class RBTree;
 private:
 int elem;
 char color;
@@ -18,10 +21,13 @@ Node* root=NULL;
 Node* sentinel=NULL;
 
 public:
-Tree();
-~Tree();
+RBTree();
+~RBTree();
 void add(const int& elem);
 int find(const int& elem);
+void release(Node* n);
+void rotate_left(Node* n);
+void rotate_right(Node* n);
 
 };
 
