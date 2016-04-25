@@ -1,17 +1,15 @@
 #include "test.hh"
 #include "tree.hh"
 #include "timer.hh"
-#include <ctime>
 #include <iostream>
 
 void Test::run(int Argc, char* Argv[]) {
 
-    srand(time(NULL));
     Timer* tim = new Timer();
     RBTree *tree;
     int *help_arr;
 
-    int amount_of_data[]={10, 100, 1000, 10000, 100000, 1000000};
+    int amount_of_data[]={10,100,1000,10000,100000,1000000};
 
     std::cout<<"Test operacji na drzewie czerwono czarnym."<<std::endl<<std::endl;
 
@@ -30,11 +28,18 @@ void Test::run(int Argc, char* Argv[]) {
     tim->tim_stop();
     std::cout<<"Czas dodania "<<amount_of_data[k]<<" losowych liczb do drzewa wynosi "<<tim->return_time()<<"ms."<<std::endl<<std::endl;
 
+
     tim->tim_start();
-    for(int i=0; i<amount_of_data[k]; i++)
-    tree->find(help_arr[i]);
+    for(int i=0; i<amount_of_data[k]; i++) {
+    try {
+    tree->find(-1);
+    }
+    catch(const char* Exception) {
+
+    }
+    }
     tim->tim_stop();
-    std::cout<<"Czas wyszukania "<<amount_of_data[k]<<" wrzuconych liczb do drzewa wynosi "<<tim->return_time()<<"ms."<<std::endl<<std::endl;
+    std::cout<<"Czas przeszukania drzewa "<<amount_of_data[k]<<" elementów wynosi "<<tim->return_time()<<"ms."<<std::endl<<std::endl;
 
     delete tree;
     delete help_arr;
