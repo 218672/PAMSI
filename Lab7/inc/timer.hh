@@ -1,6 +1,7 @@
 #ifndef timer_hh
 #define timer_hh
 #include <sys/time.h>
+#include <cstddef>
 #include "maintimer.hh"
 
  /*!
