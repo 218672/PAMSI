@@ -3,6 +3,7 @@
 #include "igraph.hh"
 #include "list.hh"
 #include "queue.hh"
+#include "priorityqueue.hh"
 
  /*!
 * \brief Klasa grafu.
@@ -107,7 +108,7 @@ void visit_DFS(int i, const int& v);
  *
  * \return liczba przebytych sciezek
  */
-int BBsearch(const int &v);
+void BBsearch(const int &v);
 
 /**
  * Metoda przeszukująca graf wszerz wykorzystująca branch and bound with extended list
@@ -115,7 +116,7 @@ int BBsearch(const int &v);
  * \param[in] element typu int
  *
  */
-int BBsearch_with_extended_list(const int &v);
+void BBsearch_with_extended_list(const int &v);
 
 
 };
