@@ -5,13 +5,18 @@ class Neuron {
 
 private:
 
-int weight;
+double weight;
+unsigned char value;
 
 public:
 
-void set_weight(int weight);
+void set_weight(double weight);
 
-int get_weight();
+double get_weight();
+
+void set_value(unsigned char value);
+
+unsigned char get_value();
 
 Neuron();
 
