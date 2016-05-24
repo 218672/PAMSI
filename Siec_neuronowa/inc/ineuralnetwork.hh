@@ -1,27 +1,21 @@
-#ifndef neuralnetwork_hh
-#define neuralnetwork_hh
-#include "ineuralnetwork.hh"
+#ifndef ineuralnetwork_hh
+#define ineuralnetwork_hh
 #include "neuron.hh"
-#include <vector>
+#include <fstream>
 
-typedef std::vector<Neuron> Neurons;
+enum Layers {input, hidden, output};
 
-class NeuralNetwork : public INeuralNetwork {
+class INeuralNetwork {
 
-private:
-Neurons *layers;
-float beta;
 public:
 
-void add_neuron_to_layer(Neuron& neuron, Layers layer);
+virtual void add_neuron_to_layer(Neuron& neuron, Layers layer)=0;
 
-void learn_from_file(std::string file_name);
+virtual void learn_from_files(std::string input_data_file_name, std::string output_data_file_name)=0;
 
-int recognize(int picture[]);
+virtual int recognize(std::string test_data_file_name)=0;
 
-NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer);
-
-~NeuralNetwork();
+virtual ~INeuralNetwork() {}
 
 };
 
