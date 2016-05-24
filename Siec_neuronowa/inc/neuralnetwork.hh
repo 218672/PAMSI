@@ -10,7 +10,7 @@ class NeuralNetwork : public INeuralNetwork {
 
 private:
 Neurons *layers;
-
+float beta;
 public:
 
 void add_neuron_to_layer(Neuron& neuron, Layers layer);

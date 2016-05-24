@@ -5,34 +5,44 @@ Neuron::Neuron() {
 
 weight=(((rand() % 1000000L) / 1700.0) - 9.8)*0.0015;
 
-value='0';
-
 }
 
 Neuron::~Neuron() {
 
 }
 
-void Neuron::set_weight(double weight) {
+void Neuron::set_weight(float weight) {
 
 this->weight=weight;
 
 }
 
-double Neuron::get_weight() {
+float Neuron::get_weight() {
 
 return weight;
 
 }
 
-void Neuron::set_value(unsigned char value) {
+void Neuron::set_input(float input) {
 
-this->value=value;
+this->input=input;
 
 }
 
-unsigned char Neuron::get_value() {
+float Neuron::get_input() {
 
-return value;
+return input;
+
+}
+
+void Neuron::set_output(float output) {
+
+this->output=output;
+
+}
+
+float Neuron::get_output() {
+
+return output;
 
 }

@@ -5,23 +5,32 @@ class Neuron {
 
 private:
 
-double weight;
-unsigned char value;
+float weight;
+
+float input;
+
+float output;
 
 public:
 
-void set_weight(double weight);
+void set_weight(float weight);
 
-double get_weight();
+float get_weight();
 
-void set_value(unsigned char value);
+void set_input(float input);
 
-unsigned char get_value();
+float get_input();
+
+void set_output(float output);
+
+float get_output();
 
 Neuron();
 
 ~Neuron();
 
 };
+
+#endif
 
 #endif
