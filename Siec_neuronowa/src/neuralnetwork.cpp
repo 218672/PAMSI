@@ -39,7 +39,7 @@ layers[layer].push_back(neuron);
 
 }
 
-void NeuralNetwork::learn(int input[], int output) {
+void NeuralNetwork::learn_from_file(std::string file_name) {
 
 }
 

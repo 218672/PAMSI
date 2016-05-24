@@ -15,7 +15,7 @@ public:
 
 void add_neuron_to_layer(Neuron& neuron, Layers layer);
 
-void learn(int input[], int output);
+void learn_from_file(std::string file_name);
 
 int recognize(int picture[]);
 
