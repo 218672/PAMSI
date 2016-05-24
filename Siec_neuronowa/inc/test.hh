@@ -2,6 +2,7 @@
 #define test_hh
 #include "irunnable.hh"
 
+/* Klasa test */
 class Test : public IRunnable {
 
 public:
