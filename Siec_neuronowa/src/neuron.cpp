@@ -11,14 +11,38 @@ Neuron::~Neuron() {
 
 }
 
-void Neuron::set_weight(int weight) {
+void Neuron::set_weight(float weight) {
 
 this->weight=weight;
 
 }
 
-int Neuron::get_weight() {
+float Neuron::get_weight() {
 
 return weight;
+
+}
+
+void Neuron::set_input(float input) {
+
+this->input=input;
+
+}
+
+float Neuron::get_input() {
+
+return input;
+
+}
+
+void Neuron::set_output(float output) {
+
+this->output=output;
+
+}
+
+float Neuron::get_output() {
+
+return output;
 
 }
