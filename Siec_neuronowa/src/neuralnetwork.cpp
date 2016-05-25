@@ -19,17 +19,18 @@ layers[2].reserve(size_of_output_layer);
 
 
 for(int i=0; i<size_of_input_layer; i++) {
-    Neuron neuron;
+    Neuron neuron(size_of_hidden_layer-1);
     layers[0].push_back(neuron);
 }
 
+
 for(int i=0; i<size_of_hidden_layer; i++) {
-    Neuron neuron;
+    Neuron neuron(size_of_hidden_layer-1);
     layers[1].push_back(neuron);
 }
 
 for(int i=0; i<size_of_output_layer; i++) {
-    Neuron neuron;
+    Neuron neuron(size_of_hidden_layer-1);
     layers[2].push_back(neuron);
 }
 
@@ -88,13 +89,19 @@ if(input_data.good() && output_data.good()) {
                 (layers[j].at(k)).set_input(0.0);
 
                 for(unsigned int l=0; l<layers[j-1].size(); l++)
-                (layers[j].at(k)).set_input( (layers[j].at(k)).get_input() + (layers[j-1].at(l)).get_output() * (layers[j].at(k)).get_weight() );
+                (layers[j].at(k)).set_input( (layers[j].at(k)).get_input() + (layers[j-1].at(l)).get_output() * (layers[j].at(k)).get_weight(l) );
 
-                (layers[j].at(k)).set_output(1.0/(1.0+exp(beta*((-1)*(layers[j].at(k)).get_input()))));
+                (layers[j].at(k)).set_output(activation_function((layers[j].at(k)).get_input()));
 
             }
 
         }
+
+        /***  Porownanie wartosci otrzymanych z oczekiwanymi  ***/
+        for(unsigned int j=0;j<layers[2].size();j++)
+        (layers[2].at(j)).set_error(/* wartosc oczekiwana dla danego neuronu odjac*/ (layers[2].at(j)).get_output());
+
+
 
     }
 
@@ -110,4 +117,8 @@ std::cout<<"Nie uzyskano dostępu do plików uczących, uczenie przerwane."<<std
 
 int NeuralNetwork::recognize(std::string test_data_file_name) {
   return 1;
+}
+
+float NeuralNetwork::activation_function(float input) {
+  return 1.0/(1.0+exp(beta*((-1)*input)));
 }

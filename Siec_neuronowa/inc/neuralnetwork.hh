@@ -22,6 +22,8 @@ void learn_from_files(std::string input_data_file_name, std::string output_data_
 
 int recognize(std::string test_data_file_name);
 
+float activation_function(float input);
+
 NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer);
 
 ~NeuralNetwork();
