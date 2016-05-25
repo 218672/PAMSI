@@ -11,6 +11,33 @@
 
 NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer) {
 
+layer_sizes[0] = size_of_input_layer;
+layer_sizes[1] = size_of_hidden_layer;
+layer_sizes[2] = size_of_output_layer;
+
+W = new float** [3];
+
+W[0] = new float* [size_of_input_layer];
+W[1] = new float* [size_of_hidden_layer];
+W[2] = new float* [size_of_output_layer];
+
+for(int i=0; i<size_of_input_layer; i++)
+W[0][i] = new float [1];
+
+for(int i=0; i<size_of_hidden_layer; i++)
+W[1][i] = new float [size_of_input_layer];
+
+for(int i=0; i<size_of_output_layer; i++)
+W[2][i] = new float [size_of_hidden_layer];
+
+for(int i=1;i<3;i++)
+ for(int j=0;j<layer_sizes[i];j++)
+  for(int k=0;k<=layer_sizes[i-1];k++)
+  {
+   W[i][j][k] =  (((rand() % 1000000L) / 1700.0) - 9.8)*0.0015;
+   if(W[i][j][k] == 0.0) W[i][j][k] = 0.01492;
+  }
+
 layers = new Neurons[3];
 
 layers[0].reserve(size_of_input_layer);
@@ -19,18 +46,18 @@ layers[2].reserve(size_of_output_layer);
 
 
 for(int i=0; i<size_of_input_layer; i++) {
-    Neuron neuron(size_of_hidden_layer-1);
+    Neuron neuron;
     layers[0].push_back(neuron);
 }
 
 
 for(int i=0; i<size_of_hidden_layer; i++) {
-    Neuron neuron(size_of_hidden_layer-1);
+    Neuron neuron;
     layers[1].push_back(neuron);
 }
 
 for(int i=0; i<size_of_output_layer; i++) {
-    Neuron neuron(size_of_hidden_layer-1);
+    Neuron neuron;
     layers[2].push_back(neuron);
 }
 
@@ -38,6 +65,21 @@ for(int i=0; i<size_of_output_layer; i++) {
 }
 
 NeuralNetwork::~NeuralNetwork() {
+
+for(int i=0; i<layer_sizes[0]; i++)
+delete [] W[0][i];
+
+for(int i=0; i<layer_sizes[1]; i++)
+delete [] W[1][i];
+
+for(int i=0; i<layer_sizes[2]; i++)
+delete [] W[2][i];
+
+delete [] W[0];
+delete [] W[1];
+delete [] W[2];
+
+delete [] W;
 
 delete [] layers;
 
@@ -57,7 +99,6 @@ std::ifstream output_data;
 unsigned char pixel;
 int input_value=0;
 int output_value=0;
-double delta=0;
 
 input_data.open(input_data_file_name, std::ios::binary);
 output_data.open(output_data_file_name, std::ios::in);
@@ -89,7 +130,7 @@ if(input_data.good() && output_data.good()) {
                 (layers[j].at(k)).set_input(0.0);
 
                 for(unsigned int l=0; l<layers[j-1].size(); l++)
-                (layers[j].at(k)).set_input( (layers[j].at(k)).get_input() + (layers[j-1].at(l)).get_output() * (layers[j].at(k)).get_weight(l) );
+                (layers[j].at(k)).set_input( (layers[j].at(k)).get_input() + (layers[j-1].at(l)).get_output() * W[j][k][l] );
 
                 (layers[j].at(k)).set_output(activation_function((layers[j].at(k)).get_input()));
 

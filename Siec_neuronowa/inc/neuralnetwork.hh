@@ -12,6 +12,10 @@ private:
 
 Neurons *layers;
 
+int layer_sizes[3];
+
+float ***W;
+
 float beta;
 
 public:
