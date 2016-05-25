@@ -18,6 +18,8 @@ float ***W;
 
 float beta;
 
+int *pattern;
+
 public:
 
 void add_neuron_to_layer(Neuron& neuron, Layers layer);

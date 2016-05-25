@@ -1,4 +1,4 @@
-#include "neuralnetwork.hh"
+  #include "neuralnetwork.hh"
 
 #include <fstream>
 #include <iostream>
@@ -115,10 +115,12 @@ if(input_data.good() && output_data.good()) {
 
         }
 
+        pattern=new int[OUTPUT_LENGTH];
+
         for(unsigned int j=0; j<OUTPUT_LENGTH; j++) {
 
             output_data>>output_value;
-            layers[2].at(j).set_input(output_value);
+            pattern[j]=output_value;
 
         }
 
@@ -140,7 +142,7 @@ if(input_data.good() && output_data.good()) {
 
         /***  Porownanie wartosci otrzymanych z oczekiwanymi  ***/
         for(unsigned int j=0;j<layers[2].size();j++)
-        (layers[2].at(j)).set_error(/* wartosc oczekiwana dla danego neuronu odjac*/ (layers[2].at(j)).get_output());
+        (layers[2].at(j)).set_error(pattern[j] - (layers[2].at(j)).get_output());
 
 
 
