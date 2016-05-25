@@ -14,9 +14,11 @@ Neurons *layers;
 
 int layer_sizes[3];
 
-float ***W;
+float ***W, ***W1, ***W2;
 
-float beta;
+float beta, alfa, eta;
+
+float **delta;
 
 int *pattern;
 

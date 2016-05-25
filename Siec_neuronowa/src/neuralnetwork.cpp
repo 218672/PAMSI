@@ -11,6 +11,16 @@
 
 NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer) {
 
+pattern = new int[OUTPUT_LENGTH];
+delta = new float* [3];
+
+eta=0.1;
+alfa=0.5;
+
+delta[0] = new float [size_of_input_layer];
+delta[1] = new float [size_of_hidden_layer];
+delta[2] = new float [size_of_output_layer];
+
 layer_sizes[0] = size_of_input_layer;
 layer_sizes[1] = size_of_hidden_layer;
 layer_sizes[2] = size_of_output_layer;
@@ -29,6 +39,36 @@ W[1][i] = new float [size_of_input_layer];
 
 for(int i=0; i<size_of_output_layer; i++)
 W[2][i] = new float [size_of_hidden_layer];
+
+W1 = new float** [3];
+
+W1[0] = new float* [size_of_input_layer];
+W1[1] = new float* [size_of_hidden_layer];
+W1[2] = new float* [size_of_output_layer];
+
+for(int i=0; i<size_of_input_layer; i++)
+W1[0][i] = new float [1];
+
+for(int i=0; i<size_of_hidden_layer; i++)
+W1[1][i] = new float [size_of_input_layer];
+
+for(int i=0; i<size_of_output_layer; i++)
+W1[2][i] = new float [size_of_hidden_layer];
+
+W2 = new float** [3];
+
+W2[0] = new float* [size_of_input_layer];
+W2[1] = new float* [size_of_hidden_layer];
+W2[2] = new float* [size_of_output_layer];
+
+for(int i=0; i<size_of_input_layer; i++)
+W2[0][i] = new float [1];
+
+for(int i=0; i<size_of_hidden_layer; i++)
+W2[1][i] = new float [size_of_input_layer];
+
+for(int i=0; i<size_of_output_layer; i++)
+W2[2][i] = new float [size_of_hidden_layer];
 
 for(int i=1;i<3;i++)
  for(int j=0;j<layer_sizes[i];j++)
@@ -66,6 +106,14 @@ for(int i=0; i<size_of_output_layer; i++) {
 
 NeuralNetwork::~NeuralNetwork() {
 
+delete [] pattern;
+
+delete [] delta[0];
+delete [] delta[1];
+delete [] delta[2];
+
+delete delta;
+
 for(int i=0; i<layer_sizes[0]; i++)
 delete [] W[0][i];
 
@@ -80,6 +128,36 @@ delete [] W[1];
 delete [] W[2];
 
 delete [] W;
+
+for(int i=0; i<layer_sizes[0]; i++)
+delete [] W1[0][i];
+
+for(int i=0; i<layer_sizes[1]; i++)
+delete [] W1[1][i];
+
+for(int i=0; i<layer_sizes[2]; i++)
+delete [] W1[2][i];
+
+delete [] W1[0];
+delete [] W1[1];
+delete [] W1[2];
+
+delete [] W1;
+
+for(int i=0; i<layer_sizes[0]; i++)
+delete [] W2[0][i];
+
+for(int i=0; i<layer_sizes[1]; i++)
+delete [] W2[1][i];
+
+for(int i=0; i<layer_sizes[2]; i++)
+delete [] W2[2][i];
+
+delete [] W2[0];
+delete [] W2[1];
+delete [] W2[2];
+
+delete [] W2;
 
 delete [] layers;
 
@@ -115,8 +193,6 @@ if(input_data.good() && output_data.good()) {
 
         }
 
-        pattern=new int[OUTPUT_LENGTH];
-
         for(unsigned int j=0; j<OUTPUT_LENGTH; j++) {
 
             output_data>>output_value;
@@ -124,7 +200,7 @@ if(input_data.good() && output_data.good()) {
 
         }
 
-        /***  Pojedyncze przetworzenie  ***/
+        /*  Pojedyncze przetworzenie  */
         for(unsigned int j=1; j<3; j++) {
 
             for(unsigned int k=0; k<layers[j].size(); k++) {
@@ -140,11 +216,36 @@ if(input_data.good() && output_data.good()) {
 
         }
 
-        /***  Porownanie wartosci otrzymanych z oczekiwanymi  ***/
-        for(unsigned int j=0;j<layers[2].size();j++)
-        (layers[2].at(j)).set_error(pattern[j] - (layers[2].at(j)).get_output());
+        /*  Porownanie wartosci otrzymanych z oczekiwanymi  */
+        for(unsigned int i=0;i<layers[2].size();i++)
+        (layers[2].at(i)).set_error(pattern[i] - (layers[2].at(i)).get_output());
 
+        /* Obliczanie błędów na neuronach */
 
+        /* warstwa wyjściowa */
+        for(unsigned int i=0; i<layers[2].size(); i++)
+            delta[2][i] = (pattern[i]-(layers[2].at(i)).get_output()) * (layers[2].at(i)).get_output()*(1.0-(layers[2].at(i)).get_output());
+
+        /* warstwa ukryta */
+        for(unsigned int i=0; i<layers[1].size(); i++) {
+
+            delta[1][i] = 0.0;
+            for(unsigned int k=0; k<layers[2].size();k++)
+            delta[1][i] += (layers[1].at(i)).get_output()*(1.0-(layers[1].at(i)).get_output()) * delta[2][k] * W[2][k][i];
+
+        }
+
+        /* Adaptacja wag */
+
+        for(unsigned int i=1;i<3;i++)
+            for(unsigned int j=0;j<layers[i].size();j++)
+                for(unsigned int k=0; k<layers[i-1].size(); k++) {
+
+                W2[i][j][k]  = W[i][j][k];
+                W [i][j][k] += eta * delta[i][j] * (layers[i-1].at(k)).get_output() + alfa*(W[i][j][k]-W1[i][j][k]);
+                W1[i][j][k]  = W2[i][j][k];
+
+                }
 
     }
 
