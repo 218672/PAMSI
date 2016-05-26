@@ -4,7 +4,8 @@
 #include <iostream>
 #include <cmath>
 
-#define MIN_DELTA 0.01
+#define MIN_ERROR 0.05
+#define MIN_DELTA 0.05
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
 #define TRAINING_SET_SIZE 10000
@@ -27,56 +28,63 @@ layer_sizes[2] = size_of_output_layer;
 
 W = new float** [3];
 
-W[0] = new float* [size_of_input_layer];
-W[1] = new float* [size_of_hidden_layer];
-W[2] = new float* [size_of_output_layer];
+for(int i=0; i<3; i++) {
 
-for(int i=0; i<size_of_input_layer; i++)
-W[0][i] = new float [1];
+W[i] = new float* [layer_sizes[i]];
 
-for(int i=0; i<size_of_hidden_layer; i++)
-W[1][i] = new float [size_of_input_layer];
+    for(int j=0; j<layer_sizes[i]; j++) {
 
-for(int i=0; i<size_of_output_layer; i++)
-W[2][i] = new float [size_of_hidden_layer];
+    if(i==0)
+    W[i][j] = new float [1];
+    else
+    W[i][j] = new float [layer_sizes[i-1]];
+
+    }
+}
 
 W1 = new float** [3];
 
-W1[0] = new float* [size_of_input_layer];
-W1[1] = new float* [size_of_hidden_layer];
-W1[2] = new float* [size_of_output_layer];
+for(int i=0; i<3; i++) {
 
-for(int i=0; i<size_of_input_layer; i++)
-W1[0][i] = new float [1];
+W1[i] = new float* [layer_sizes[i]];
 
-for(int i=0; i<size_of_hidden_layer; i++)
-W1[1][i] = new float [size_of_input_layer];
+    for(int j=0; j<layer_sizes[i]; j++) {
 
-for(int i=0; i<size_of_output_layer; i++)
-W1[2][i] = new float [size_of_hidden_layer];
+    if(i==0)
+    W1[i][j] = new float [1];
+    else
+    W1[i][j] = new float [layer_sizes[i-1]];
+
+    }
+}
 
 W2 = new float** [3];
 
-W2[0] = new float* [size_of_input_layer];
-W2[1] = new float* [size_of_hidden_layer];
-W2[2] = new float* [size_of_output_layer];
+for(int i=0; i<3; i++) {
 
-for(int i=0; i<size_of_input_layer; i++)
-W2[0][i] = new float [1];
+W2[i] = new float* [layer_sizes[i]];
 
-for(int i=0; i<size_of_hidden_layer; i++)
-W2[1][i] = new float [size_of_input_layer];
+    for(int j=0; j<layer_sizes[i]; j++) {
 
-for(int i=0; i<size_of_output_layer; i++)
-W2[2][i] = new float [size_of_hidden_layer];
+    if(i==0)
+    W2[i][j] = new float [1];
+    else
+    W2[i][j] = new float [layer_sizes[i-1]];
 
-for(int i=1;i<3;i++)
- for(int j=0;j<layer_sizes[i];j++)
-  for(int k=0;k<=layer_sizes[i-1];k++)
-  {
-   W[i][j][k] =  (((rand() % 1000000L) / 1700.0) - 9.8)*0.0015;
-   if(W[i][j][k] == 0.0) W[i][j][k] = 0.01492;
-  }
+    }
+}
+
+for(int i=1; i<3;i++) {
+    for(int j=0; j<layer_sizes[i]; j++) {
+        for(int k=0; k<layer_sizes[i-1]; k++) {
+
+            W[i][j][k] =  (((rand() % 1000000L) / 1700.0) - 9.8)*0.0015;
+            if(W[i][j][k] == 0.0)
+            W[i][j][k] = 0.01492;
+
+        }
+    }
+}
 
 layers = new Neurons[3];
 
@@ -89,7 +97,6 @@ for(int i=0; i<size_of_input_layer; i++) {
     Neuron neuron;
     layers[0].push_back(neuron);
 }
-
 
 for(int i=0; i<size_of_hidden_layer; i++) {
     Neuron neuron;
@@ -177,6 +184,7 @@ std::ifstream output_data;
 unsigned char pixel;
 int input_value=0;
 int output_value=0;
+int error_counter=0;
 
 input_data.open(input_data_file_name, std::ios::binary);
 output_data.open(output_data_file_name, std::ios::in);
@@ -202,6 +210,9 @@ if(input_data.good() && output_data.good()) {
 
         }
 
+while(error_counter!=0) {
+
+    error_counter=0;
         /*  Pojedyncze przetworzenie  */
         for(unsigned int j=1; j<3; j++) {
 
@@ -219,8 +230,12 @@ if(input_data.good() && output_data.good()) {
         }
 
         /*  Porownanie wartosci otrzymanych z oczekiwanymi  */
-        for(unsigned int i=0;i<layers[2].size();i++)
+        for(unsigned int i=0; i<layers[2].size(); i++) {
         (layers[2].at(i)).set_error(pattern[i] - (layers[2].at(i)).get_output());
+            if(pattern[i] - (layers[2].at(i)).get_output()>MIN_ERROR)
+            error_counter++;
+        }
+
 
         /* Obliczanie błędów na neuronach */
 
@@ -250,8 +265,10 @@ if(input_data.good() && output_data.good()) {
                 }
             }
         }
+} // uczenie się jednego wektora
 
-        /* Obliczanie błędu sieci */
+
+        /* Obliczanie błędu sieci dla epoki */
 
         for(unsigned int j=0;j<layers[2].size();j++) {
 
@@ -262,7 +279,12 @@ if(input_data.good() && output_data.good()) {
 
         learning_vectors++;
 
-    }
+        if(ERMS<=MIN_DELTA) {
+        std::cout<<"Proces uczenia zakończony"<<std::endl;
+        break;
+        }
+
+ }
 
 
 
