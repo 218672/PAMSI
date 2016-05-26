@@ -181,6 +181,8 @@ int output_value=0;
 input_data.open(input_data_file_name, std::ios::binary);
 output_data.open(output_data_file_name, std::ios::in);
 
+int learning_vectors=1; //Ilosc wektorow uczacych
+
 if(input_data.good() && output_data.good()) {
 
     for(unsigned int i=0; i<TRAINING_SET_SIZE; i++) {
@@ -254,9 +256,11 @@ if(input_data.good() && output_data.good()) {
         for(unsigned int j=0;j<layers[2].size();j++) {
 
         RMS += ( (pattern[j] - (layers[2].at(j)).get_output()) * (pattern[j] - (layers[2].at(j)).get_output()) );
-        ERMS = sqrt(RMS/(double)(OUTPUT_LENGTH*layers[2].size()));
+        ERMS = sqrt(RMS/(double)(learning_vectors*layers[2].size()));
 
         }
+
+        learning_vectors++;
 
     }
 
