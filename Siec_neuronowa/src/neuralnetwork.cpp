@@ -249,7 +249,18 @@ if(input_data.good() && output_data.good()) {
             }
         }
 
+        /* Obliczanie błędu sieci */
+
+        for(unsigned int j=0;j<layers[2].size();j++) {
+
+        RMS += ( (pattern[j] - (layers[2].at(j)).get_output()) * (pattern[j] - (layers[2].at(j)).get_output()) );
+        ERMS = sqrt(RMS/(double)(OUTPUT_LENGTH*layers[2].size()));
+
+        }
+
     }
+
+
 
     input_data.close();
     output_data.close();

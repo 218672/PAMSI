@@ -22,6 +22,8 @@ float **delta;
 
 int *pattern;
 
+float RMS, ERMS;
+
 public:
 
 void add_neuron_to_layer(Neuron& neuron, Layers layer);
