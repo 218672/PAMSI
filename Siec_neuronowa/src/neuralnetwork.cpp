@@ -237,8 +237,8 @@ if(input_data.good() && output_data.good()) {
 
         /* Adaptacja wag */
 
-        for(unsigned int i=1;i<3;i++)
-            for(unsigned int j=0;j<layers[i].size();j++)
+        for(unsigned int i=1;i<3;i++) {
+            for(unsigned int j=0;j<layers[i].size();j++) {
                 for(unsigned int k=0; k<layers[i-1].size(); k++) {
 
                 W2[i][j][k]  = W[i][j][k];
@@ -246,6 +246,8 @@ if(input_data.good() && output_data.good()) {
                 W1[i][j][k]  = W2[i][j][k];
 
                 }
+            }
+        }
 
     }
 
