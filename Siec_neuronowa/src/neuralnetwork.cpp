@@ -4,8 +4,8 @@
 #include <iostream>
 #include <cmath>
 
-#define MIN_ERROR 0.05
-#define MIN_DELTA 0.05
+#define MIN_ERROR 0.01
+#define MIN_DELTA 0.01
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
 #define TRAINING_SET_SIZE 10000
@@ -15,8 +15,9 @@ NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, 
 pattern = new int[OUTPUT_LENGTH];
 delta = new float* [3];
 
-eta=0.1;
-alfa=0.5;
+eta=0.3;
+alfa=0.75;
+beta=1.5;
 
 delta[0] = new float [size_of_input_layer];
 delta[1] = new float [size_of_hidden_layer];
@@ -193,12 +194,16 @@ int learning_vectors=1; //Ilosc wektorow uczacych
 
 if(input_data.good() && output_data.good()) {
 
+do {
+
     for(unsigned int i=0; i<TRAINING_SET_SIZE; i++) {
 
         for(unsigned int j=0; j<INPUT_LENGTH; j++) {
 
             input_data>>pixel;
             input_value = (float) pixel;
+            if(input_value>0)
+            input_value=1;
             (layers[0].at(j)).set_input(input_value);
 
         }
@@ -207,86 +212,81 @@ if(input_data.good() && output_data.good()) {
 
             output_data>>output_value;
             pattern[j]=output_value;
-
         }
 
-while(error_counter!=0) {
 
-    error_counter=0;
+        do {
+            error_counter=0;
         /*  Pojedyncze przetworzenie  */
-        for(unsigned int j=1; j<3; j++) {
+            for(unsigned int j=1; j<3; j++) {
 
-            for(unsigned int k=0; k<layers[j].size(); k++) {
+                for(unsigned int k=0; k<layers[j].size(); k++) {
 
-                (layers[j].at(k)).set_input(0.0);
+                    (layers[j].at(k)).set_input(0.0);
 
-                for(unsigned int l=0; l<layers[j-1].size(); l++)
-                (layers[j].at(k)).set_input( (layers[j].at(k)).get_input() + (layers[j-1].at(l)).get_output() * W[j][k][l] );
+                    for(unsigned int l=0; l<layers[j-1].size(); l++)
+                        (layers[j].at(k)).set_input( (layers[j].at(k)).get_input() + (layers[j-1].at(l)).get_output() * W[j][k][l] );
 
-                (layers[j].at(k)).set_output(activation_function((layers[j].at(k)).get_input()));
+                    (layers[j].at(k)).set_output(activation_function((layers[j].at(k)).get_input()));
+
+                }
 
             }
 
-        }
-
-        /*  Porownanie wartosci otrzymanych z oczekiwanymi  */
-        for(unsigned int i=0; i<layers[2].size(); i++) {
-        (layers[2].at(i)).set_error(pattern[i] - (layers[2].at(i)).get_output());
-            if(pattern[i] - (layers[2].at(i)).get_output()>MIN_ERROR)
-            error_counter++;
-        }
+            /*  Porownanie wartosci otrzymanych z oczekiwanymi  */
+            for(unsigned int i=0; i<layers[2].size(); i++) {
+                (layers[2].at(i)).set_error(pattern[i] - (layers[2].at(i)).get_output());
+                if(pattern[i] - (layers[2].at(i)).get_output()>MIN_ERROR)
+                error_counter++;
+            }
 
 
-        /* Obliczanie błędów na neuronach */
+            /* Obliczanie błędów na neuronach */
 
-        /* warstwa wyjściowa */
-        for(unsigned int i=0; i<layers[2].size(); i++)
-            delta[2][i] = (pattern[i]-(layers[2].at(i)).get_output()) * (layers[2].at(i)).get_output()*(1.0-(layers[2].at(i)).get_output());
+            /* warstwa wyjściowa */
+            for(unsigned int i=0; i<layers[2].size(); i++)
+                delta[2][i] = (pattern[i]-(layers[2].at(i)).get_output()) * (layers[2].at(i)).get_output()*(1.0-(layers[2].at(i)).get_output());
 
-        /* warstwa ukryta */
-        for(unsigned int i=0; i<layers[1].size(); i++) {
+            /* warstwa ukryta */
+            for(unsigned int i=0; i<layers[1].size(); i++) {
 
             delta[1][i] = 0.0;
             for(unsigned int k=0; k<layers[2].size();k++)
-            delta[1][i] += (layers[1].at(i)).get_output()*(1.0-(layers[1].at(i)).get_output()) * delta[2][k] * W[2][k][i];
+                delta[1][i] += (layers[1].at(i)).get_output()*(1.0-(layers[1].at(i)).get_output()) * delta[2][k] * W[2][k][i];
 
-        }
+            }
 
         /* Adaptacja wag */
 
-        for(unsigned int i=1;i<3;i++) {
-            for(unsigned int j=0;j<layers[i].size();j++) {
-                for(unsigned int k=0; k<layers[i-1].size(); k++) {
+            for(unsigned int i=1;i<3;i++) {
+                for(unsigned int j=0;j<layers[i].size();j++) {
+                    for(unsigned int k=0; k<layers[i-1].size(); k++) {
 
-                W2[i][j][k]  = W[i][j][k];
-                W [i][j][k] += eta * delta[i][j] * (layers[i-1].at(k)).get_output() + alfa*(W[i][j][k]-W1[i][j][k]);
-                W1[i][j][k]  = W2[i][j][k];
+                    W2[i][j][k]  = W[i][j][k];
+                    W [i][j][k] += eta * delta[i][j] * (layers[i-1].at(k)).get_output() + alfa*(W[i][j][k]-W1[i][j][k]);
+                    W1[i][j][k]  = W2[i][j][k];
 
+                    }
                 }
             }
+            //std::cout<<"Liczba znaczacych bledow na neuronach wyjsciowych: "<<error_counter<<std::endl;
         }
-} // uczenie się jednego wektora
+        while(error_counter!=0);
 
+    } // koniec wektora uczącego
 
-        /* Obliczanie błędu sieci dla epoki */
+         /* Obliczanie błędu sieci dla epoki */
 
         for(unsigned int j=0;j<layers[2].size();j++) {
 
         RMS += ( (pattern[j] - (layers[2].at(j)).get_output()) * (pattern[j] - (layers[2].at(j)).get_output()) );
         ERMS = sqrt(RMS/(double)(learning_vectors*layers[2].size()));
-
         }
 
         learning_vectors++;
 
-        if(ERMS<=MIN_DELTA) {
-        std::cout<<"Proces uczenia zakończony"<<std::endl;
-        break;
-        }
-
- }
-
-
+} // koniec epoki
+while(ERMS>=MIN_DELTA);
 
     input_data.close();
     output_data.close();
