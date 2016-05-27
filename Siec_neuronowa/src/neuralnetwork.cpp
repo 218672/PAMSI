@@ -5,10 +5,10 @@
 #include <cmath>
 
 #define MIN_ERROR 0.01
-#define MIN_DELTA 0.01
+#define MIN_ERMS 0.01
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
-#define TRAINING_SET_SIZE 10000
+#define TRAINING_SET_SIZE 1000
 
 NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer) {
 
@@ -177,7 +177,7 @@ layers[layer].push_back(neuron);
 
 }
 
-void NeuralNetwork::learn_from_files(std::string input_data_file_name, std::string output_data_file_name) {
+void NeuralNetwork::learn_from_files(std::vector<std::string> input_data_file_names, std::vector<std::string> output_data_file_names) {
 
 std::ifstream input_data;
 std::ifstream output_data;
@@ -187,14 +187,17 @@ int input_value=0;
 int output_value=0;
 int error_counter=0;
 
-input_data.open(input_data_file_name, std::ios::binary);
-output_data.open(output_data_file_name, std::ios::in);
-
-int learning_vectors=1; //Ilosc wektorow uczacych
-
-if(input_data.good() && output_data.good()) {
+int learning_vectors=10000; //Ilosc wektorow uczacych
 
 do {
+
+    for(int f=0; f<10; f++) {
+
+    input_data.open(input_data_file_names.at(f), std::ios::binary);
+    output_data.open(output_data_file_names.at(f), std::ios::in);
+
+    if(input_data.good() && output_data.good()) {
+
 
     for(unsigned int i=0; i<TRAINING_SET_SIZE; i++) {
 
@@ -202,8 +205,8 @@ do {
 
             input_data>>pixel;
             input_value = (float) pixel;
-            if(input_value>0)
-            input_value=1;
+            //if(input_value>0)
+            //input_value=1;
             (layers[0].at(j)).set_input(input_value);
 
         }
@@ -236,7 +239,7 @@ do {
             /*  Porownanie wartosci otrzymanych z oczekiwanymi  */
             for(unsigned int i=0; i<layers[2].size(); i++) {
                 (layers[2].at(i)).set_error(pattern[i] - (layers[2].at(i)).get_output());
-                if(pattern[i] - (layers[2].at(i)).get_output()>MIN_ERROR)
+                if(pattern[i] - (layers[2].at(i)).get_output()>MIN_ERROR || pattern[i] - (layers[2].at(i)).get_output()<(-1)*MIN_ERROR)
                 error_counter++;
             }
 
@@ -275,25 +278,26 @@ do {
 
     } // koniec wektora uczącego
 
-         /* Obliczanie błędu sieci dla epoki */
-
-        for(unsigned int j=0;j<layers[2].size();j++) {
-
-        RMS += ( (pattern[j] - (layers[2].at(j)).get_output()) * (pattern[j] - (layers[2].at(j)).get_output()) );
-        ERMS = sqrt(RMS/(double)(learning_vectors*layers[2].size()));
-        }
-
-        learning_vectors++;
-
-} // koniec epoki
-while(ERMS>=MIN_DELTA);
-
     input_data.close();
     output_data.close();
 
+    std::cout<<"Nauczono cyfre "<<f<<"..."<<std::endl;
+
+    }
+    else
+    std::cout<<"Nie uzyskano dostępu do plików uczących, uczenie przerwane."<<std::endl;
 }
-else
-std::cout<<"Nie uzyskano dostępu do plików uczących, uczenie przerwane."<<std::endl;
+
+         /* Obliczanie błędu sieci dla epoki */
+
+        for(unsigned int j=0;j<layers[2].size();j++)
+        RMS += ( (pattern[j] - (layers[2].at(j)).get_output()) * (pattern[j] - (layers[2].at(j)).get_output()) );
+        ERMS = sqrt(RMS/(double)(learning_vectors*layers[2].size()));
+        std::cout<<"ERMS: "<<ERMS<<std::endl;
+
+
+} // koniec epoki
+while(ERMS>=MIN_ERMS);
 
 
 }
