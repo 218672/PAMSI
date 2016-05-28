@@ -4,11 +4,9 @@
 #include <iostream>
 #include <cmath>
 
-#define MIN_ERROR 0.010
-#define MIN_ERMS 0.0010
+#define MIN_ERMS 0.010
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
-#define TRAINING_SET_SIZE 1
 
 NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer) {
 
@@ -181,26 +179,20 @@ std::ifstream output_data;
 unsigned char pixel;
 int input_value = 0;
 int output_value = 0;
-int error_counter = 0;
 int ages = 0;
 
-int learning_vectors=10; //Ilosc wektorow uczacych
+int learning_vectors = 10; //Ilosc wektorow uczacych
 
 do {
 
-    for(int f=0; f<10; f++) {
-
-    //std::cout<<"Rozpoczęto uczenie wektorów przedstawiających cyfrę "<<f<<"..."<<std::endl<<std::endl;
+for(int f=0; f<10; f++) {
 
     input_data.open(input_data_file_names.at(f), std::ios::binary);
     output_data.open(output_data_file_names.at(f), std::ios::in);
 
     if(input_data.good() && output_data.good()) {
 
-
-    for(unsigned int i=0; i<TRAINING_SET_SIZE; i++) {
-
-        for(unsigned int j=0; j<INPUT_LENGTH; j++) {
+            for(unsigned int j=0; j<INPUT_LENGTH; j++) {
 
             input_data>>pixel;
             input_value = (float) pixel;
@@ -209,19 +201,18 @@ do {
             (layers[0].at(j)).set_input(input_value);
             (layers[0].at(j)).set_output(input_value);
 
-        }
+            }
 
-        for(unsigned int j=0; j<OUTPUT_LENGTH; j++) {
+            for(unsigned int j=0; j<OUTPUT_LENGTH; j++) {
 
             output_data>>output_value;
             pattern[j]=output_value;
 
-        }
+            }
+
+    //std::cout<<"Rozpoczęto uczenie wektorów przedstawiających cyfrę "<<f<<"..."<<std::endl<<std::endl;
 
 
-        do {
-
-            error_counter=0;
 
             /*  Pojedyncze przetworzenie  */
             for(unsigned int j=1; j<3; j++) {
@@ -240,23 +231,21 @@ do {
             }
 
             /*  Porownanie wartosci otrzymanych z oczekiwanymi  */
-            for(unsigned int j=0; j<layers[2].size(); j++) {
-                (layers[2].at(j)).set_error(pattern[j] - (layers[2].at(j)).get_output());
-                if((pattern[j] - (layers[2].at(j)).get_output()>MIN_ERROR) || (pattern[j] - (layers[2].at(j)).get_output()<(-1)*MIN_ERROR))
-                error_counter++;
-            }
+            for(unsigned int j=0; j<layers[2].size(); j++)
+                layers[2].at(j).set_error(pattern[j] - (layers[2].at(j)).get_output());
 
 
             /* Obliczanie błędów na neuronach */
 
             /* warstwa wyjściowa */
             for(unsigned int j=0; j<layers[2].size(); j++)
-                delta[2][j] = (pattern[j]-(layers[2].at(j)).get_output()) * (layers[2].at(j)).get_output()*(1.0-(layers[2].at(j)).get_output());
+                delta[2][j] = (pattern[j]-(layers[2].at(j)).get_output()) * (layers[2].at(j)).get_output() * (1.0-(layers[2].at(j)).get_output());
 
             /* warstwa ukryta */
             for(unsigned int j=0; j<layers[1].size(); j++) {
 
             delta[1][j] = 0.0;
+
             for(unsigned int k=0; k<layers[2].size();k++)
                 delta[1][j] += (layers[1].at(j)).get_output()*(1.0-(layers[1].at(j)).get_output()) * delta[2][k] * W[2][k][j];
 
@@ -276,29 +265,28 @@ do {
                 }
             }
 
-        }
-        while(error_counter!=0);
 
     //std::cout<<"Zakończono uczenie wektorów przedstawiających cyfrę "<<f<<"..."<<std::endl<<std::endl;
-    } // koniec wektora uczącego
+    // koniec wektora uczącego
 
     input_data.close();
     output_data.close();
 
-    }
+}
     else
     std::cout<<"Nie uzyskano dostępu do plików uczących, uczenie przerwane."<<std::endl;
 }
-    ages++;
 
-    std::cout<<"Liczba epok uczenia: "<<ages<<std::endl;
+        ages++;
+
+        std::cout<<"Numer aktualnej epoki uczącej: "<<ages<<std::endl;
+
          /* Obliczanie błędu sieci dla epoki */
         RMS=0;
         for(unsigned int j=0;j<layers[2].size();j++)
         RMS += ( (pattern[j] - (layers[2].at(j)).get_output()) * (pattern[j] - (layers[2].at(j)).get_output()) );
-        ERMS = sqrt(RMS/((double)(learning_vectors*layers[2].size())));
+        ERMS = sqrt(RMS/((float)(learning_vectors*layers[2].size())));
         std::cout<<"ERMS: "<<ERMS<<std::endl;
-
 
 } // koniec epoki
 while(ERMS>=MIN_ERMS);

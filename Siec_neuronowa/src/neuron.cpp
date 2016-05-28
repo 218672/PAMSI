@@ -2,7 +2,11 @@
 #include <cstdlib>
 
 Neuron::Neuron() {
-error=1;
+
+error = 0.0;
+input = 0.0;
+output = 0.0;
+
 }
 
 Neuron::~Neuron() {
