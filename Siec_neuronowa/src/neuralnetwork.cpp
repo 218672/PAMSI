@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 
-#define MIN_ERMS 0.010
+#define MIN_ERMS 0.1
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
 
@@ -295,6 +295,28 @@ while(ERMS>=MIN_ERMS);
 }
 
 int NeuralNetwork::recognize(std::string test_data_file_name) {
+
+  std::ifstream test_data;
+  unsigned char pixel;
+  test = new float[INPUT_LENGTH];
+  int test_value;
+
+  test_data.open(test_data_file_name, std::ios::binary);
+
+  if(test_data.good()) {
+
+    for(unsigned int j=0; j<INPUT_LENGTH; j++) {
+
+    test_data>>pixel;
+    test_value = (float) pixel;
+    if(test_value>0)
+    test_value=1;
+    test[j]=test_value;
+
+    }
+
+  }
+
   return 1;
 }
 
