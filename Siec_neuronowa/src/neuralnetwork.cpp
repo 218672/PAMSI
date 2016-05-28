@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 
-#define MIN_ERMS 0.1
+#define MIN_ERMS 0.096
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
 
@@ -13,9 +13,9 @@ NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, 
 pattern = new int[OUTPUT_LENGTH];
 delta = new float* [3];
 
-eta=0.3;
-alfa=0.75;
-beta=1.5;
+eta=0.1;
+alfa=0.6;
+beta=0.9;
 
 delta[0] = new float [size_of_input_layer];
 delta[1] = new float [size_of_hidden_layer];
@@ -294,30 +294,69 @@ while(ERMS>=MIN_ERMS);
 
 }
 
-int NeuralNetwork::recognize(std::string test_data_file_name) {
+void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
 
   std::ifstream test_data;
   unsigned char pixel;
-  test = new float[INPUT_LENGTH];
   int test_value;
+  float output = 0.0;
+  int number = 0;
 
-  test_data.open(test_data_file_name, std::ios::binary);
 
-  if(test_data.good()) {
+for(int f=0; f<10; f++) {
 
+    test_data.open(test_data_file_names.at(f), std::ios::binary);
+
+    if(test_data.good()) {
+
+    for(int i=0; i<2; i++)
     for(unsigned int j=0; j<INPUT_LENGTH; j++) {
 
     test_data>>pixel;
     test_value = (float) pixel;
     if(test_value>0)
     test_value=1;
-    test[j]=test_value;
+    (layers[0].at(j)).set_input(test_value);
+    (layers[0].at(j)).set_output(test_value);
 
     }
 
-  }
+    /*  Pojedyncze przetworzenie  */
+    for(unsigned int j=1; j<3; j++) {
 
-  return 1;
+        for(unsigned int k=0; k<layers[j].size(); k++) {
+
+            (layers[j].at(k)).set_input(0.0);
+
+            for(unsigned int l=0; l<layers[j-1].size(); l++)
+                (layers[j].at(k)).set_input( (layers[j].at(k)).get_input() + (layers[j-1].at(l)).get_output() * W[j][k][l] );
+
+            (layers[j].at(k)).set_output(activation_function((layers[j].at(k)).get_input()));
+
+        }
+
+    }
+
+      for(unsigned int i=0; i<layers[2].size(); i++) {
+      std::cout<<layers[2].at(i).get_output()<<" ";
+        if((layers[2].at(i)).get_output()>output) {
+        output=(layers[2].at(i)).get_output();
+        number=i;
+        }
+      }
+
+      std::cout<<"Rozpoznano cyfre: "<<number<<std::endl<<std::endl;
+
+    output = 0.0;
+    number = 0;
+
+    test_data.close();
+
+  }
+  else
+  std::cout<<"Nie można otworzyć pliku z danymi do testowania, przerwano."<<std::endl;
+}
+
 }
 
 float NeuralNetwork::activation_function(float input) {

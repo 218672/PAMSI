@@ -4,6 +4,7 @@
 #define SIZE_OF_HIDDEN_LAYER 4
 #define SIZE_OF_OUTPUT_LAYER 10
 #include <vector>
+#include <iostream>
 
 void Test::run(int argc, char *argv[]) {
 
@@ -11,6 +12,8 @@ NeuralNetwork *ann = new NeuralNetwork(SIZE_OF_INPUT_LAYER, SIZE_OF_HIDDEN_LAYER
 
 std::vector<std::string> input_files;
 std::vector<std::string> output_files;
+
+int state;
 
 input_files.push_back("data0.bin");
 input_files.push_back("data1.bin");
@@ -34,8 +37,37 @@ output_files.push_back("out7.dat");
 output_files.push_back("out8.dat");
 output_files.push_back("out9.dat");
 
-ann->learn_from_files(input_files, output_files);
 
-delete ann;
+while(1) {
+
+if(state==3)
+break;
+
+std::cout<<"Co robimy?"<<std::endl<<std::endl;
+
+std::cout<<"1. Uczenie sieci."<<std::endl;
+std::cout<<"2. Rozpoznawanie przykładowego zbioru 0-9"<<std::endl;
+std::cout<<"3. Wyjście."<<std::endl;
+std::cout<<"Twój wybór: ";
+
+std::cin>>state;
+
+    switch(state) {
+        case 1:
+        ann->learn_from_files(input_files, output_files);
+        break;
+        case 2:
+        ann->recognize(input_files);
+        break;
+        case 3:
+        delete ann;
+        break;
+        default:
+        std::cout<<"Zły wybór."<<std::endl;
+        break;
+
+    }
+
+}
 
 }
