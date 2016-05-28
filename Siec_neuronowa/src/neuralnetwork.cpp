@@ -1,10 +1,11 @@
-  #include "neuralnetwork.hh"
+#include "neuralnetwork.hh"
 
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
-#define MIN_ERMS 0.096
+#define MIN_ERMS 0.0956
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
 
@@ -13,9 +14,9 @@ NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, 
 pattern = new int[OUTPUT_LENGTH];
 delta = new float* [3];
 
-eta=0.1;
+eta=0.2;
 alfa=0.6;
-beta=0.9;
+beta=1.2;
 
 delta[0] = new float [size_of_input_layer];
 delta[1] = new float [size_of_hidden_layer];
@@ -210,10 +211,6 @@ for(int f=0; f<10; f++) {
 
             }
 
-    //std::cout<<"Rozpoczęto uczenie wektorów przedstawiających cyfrę "<<f<<"..."<<std::endl<<std::endl;
-
-
-
             /*  Pojedyncze przetworzenie  */
             for(unsigned int j=1; j<3; j++) {
 
@@ -266,9 +263,6 @@ for(int f=0; f<10; f++) {
             }
 
 
-    //std::cout<<"Zakończono uczenie wektorów przedstawiających cyfrę "<<f<<"..."<<std::endl<<std::endl;
-    // koniec wektora uczącego
-
     input_data.close();
     output_data.close();
 
@@ -276,6 +270,7 @@ for(int f=0; f<10; f++) {
     else
     std::cout<<"Nie uzyskano dostępu do plików uczących, uczenie przerwane."<<std::endl;
 }
+
 
         ages++;
 
@@ -288,9 +283,13 @@ for(int f=0; f<10; f++) {
         ERMS = sqrt(RMS/((float)(learning_vectors*layers[2].size())));
         std::cout<<"ERMS: "<<ERMS<<std::endl;
 
+
+
 } // koniec epoki
 while(ERMS>=MIN_ERMS);
 
+for(unsigned int i=0; i<layers[2].size(); i++)
+      std::cout<<layers[2].at(i).get_output()<<" ";
 
 }
 
@@ -298,7 +297,7 @@ void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
 
   std::ifstream test_data;
   unsigned char pixel;
-  int test_value;
+  float test_value;
   float output = 0.0;
   int number = 0;
 
@@ -309,7 +308,7 @@ for(int f=0; f<10; f++) {
 
     if(test_data.good()) {
 
-    for(int i=0; i<2; i++)
+    for(int i=0; i<1; i++)
     for(unsigned int j=0; j<INPUT_LENGTH; j++) {
 
     test_data>>pixel;
@@ -320,6 +319,8 @@ for(int f=0; f<10; f++) {
     (layers[0].at(j)).set_output(test_value);
 
     }
+
+
 
     /*  Pojedyncze przetworzenie  */
     for(unsigned int j=1; j<3; j++) {
