@@ -22,7 +22,7 @@ float **delta;
 
 int *pattern;
 
-float RMS, ERMS, vRMS, vERMS;
+float E;
 
 float *test;
 
