@@ -5,7 +5,7 @@
 #include <cmath>
 #include <algorithm>
 
-#define MIN_ERMS 0.01
+#define MIN_ERMS 0.0955
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
 
@@ -184,12 +184,15 @@ unsigned char pixel;
 int input_value = 0;
 int output_value = 0;
 int ages = 0;
+int erms_error_number=10;
 
 int learning_vectors = 10; //Ilosc wektorow uczacych
 
-for(int f=0; f<1; f++) {
-
 do {
+erms_error_number=10;
+
+for(int f=0; f<10; f++) {
+
 
     input_data.open(input_data_file_names.at(f), std::ios::binary);
     output_data.open(output_data_file_names.at(f), std::ios::in);
@@ -265,37 +268,39 @@ do {
                 }
             }
 
-
     input_data.close();
     output_data.close();
 
-}
+    }
     else
     std::cout<<"Nie uzyskano dostępu do plików uczących, uczenie przerwane."<<std::endl;
 
-
-
-        ages++;
-
-        std::cout<<"Numer aktualnej epoki uczącej: "<<ages<<std::endl;
 
          /* Obliczanie błędu sieci dla epoki */
         RMS=0;
         for(unsigned int j=0;j<layers[2].size();j++)
         RMS += ( (pattern[j] - (layers[2].at(j)).get_output()) * (pattern[j] - (layers[2].at(j)).get_output()) );
         ERMS = sqrt(RMS/((float)(learning_vectors*layers[2].size())));
+        if(ERMS<=MIN_ERMS)
+        erms_error_number--;
         std::cout<<"ERMS: "<<ERMS<<std::endl;
+}
 
+        ages++;
+
+        std::cout<<"Numer aktualnej epoki uczącej: "<<ages<<std::endl;
+
+        for(unsigned int i=0; i<layers[2].size(); i++)
+      std::cout<<layers[2].at(i).get_output()<<" ";
 
 } // koniec epoki
-while(ERMS>=MIN_ERMS);
+while(erms_error_number);
 
 ages=0;
 
-}
 
-for(unsigned int i=0; i<layers[2].size(); i++)
-      std::cout<<layers[2].at(i).get_output()<<" ";
+
+
 
 }
 
@@ -308,13 +313,13 @@ void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
   int number = 0;
 
 
-for(int f=0; f<1; f++) {
+for(int f=2; f<3; f++) {
 
     test_data.open(test_data_file_names.at(f), std::ios::binary);
 
     if(test_data.good()) {
 
-    //for(int i=0; i<3; i++)
+    for(int i=0; i<3; i++)
     for(unsigned int j=0; j<INPUT_LENGTH; j++) {
 
     test_data>>pixel;
