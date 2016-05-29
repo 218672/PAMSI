@@ -5,7 +5,7 @@
 #include <cmath>
 #include <algorithm>
 
-#define MIN_ERMS 0.4515
+#define MIN_E 0.4515
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
 
@@ -239,7 +239,7 @@ for(int f=0; f<10; f++) {
             /*  Porownanie wartosci otrzymanych z oczekiwanymi  */
             for(unsigned int j=0; j<layers[2].size(); j++) {
                 layers[2].at(j).set_error(pattern[j] - (layers[2].at(j)).get_output());
-                errors[f]+=0.5*(pattern[j] - (layers[2].at(j)).get_output())*(pattern[j] - (layers[2].at(j)).get_output());
+                errors[f]+=(0.5*((layers[2].at(j)).get_output()-pattern[j])*((layers[2].at(j)).get_output()-pattern[j]));
 
                 }
 
@@ -298,7 +298,7 @@ for(int f=0; f<10; f++) {
 
 
 } // koniec epoki
-while(E>=MIN_ERMS);
+while(E>=MIN_E);
 
 ages=0;
 
@@ -318,7 +318,7 @@ void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
   int number = 0;
 
 
-for(int f=2; f<3; f++) {
+for(int f=3; f<4; f++) {
 
     test_data.open(test_data_file_names.at(f), std::ios::binary);
 
