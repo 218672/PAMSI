@@ -5,7 +5,7 @@
 #include <cmath>
 #include <algorithm>
 
-#define MIN_ERMS 0.0956
+#define MIN_ERMS 0.01
 #define INPUT_LENGTH 784
 #define OUTPUT_LENGTH 10
 
@@ -42,6 +42,18 @@ W[i] = new float* [layer_sizes[i]];
     }
 }
 
+for(int i=1; i<3;i++) {
+    for(int j=0; j<layer_sizes[i]; j++) {
+        for(int k=0; k<layer_sizes[i-1]; k++) {
+
+            W[i][j][k] =  (((rand() % 1000000) / 1700.0) - 9.8)*0.0015;
+            if(W[i][j][k] == 0.0)
+            W[i][j][k] = 0.01492;
+
+        }
+    }
+}
+
 W1 = new float** [3];
 
 for(int i=0; i<3; i++) {
@@ -57,6 +69,7 @@ W1[i] = new float* [layer_sizes[i]];
 
     }
 }
+
 
 W2 = new float** [3];
 
@@ -74,17 +87,7 @@ W2[i] = new float* [layer_sizes[i]];
     }
 }
 
-for(int i=1; i<3;i++) {
-    for(int j=0; j<layer_sizes[i]; j++) {
-        for(int k=0; k<layer_sizes[i-1]; k++) {
 
-            W[i][j][k] =  (((rand() % 1000000L) / 1700.0) - 9.8)*0.0015;
-            if(W[i][j][k] == 0.0)
-            W[i][j][k] = 0.01492;
-
-        }
-    }
-}
 
 layers = new Neurons[3];
 
@@ -184,9 +187,9 @@ int ages = 0;
 
 int learning_vectors = 10; //Ilosc wektorow uczacych
 
-do {
+for(int f=0; f<1; f++) {
 
-for(int f=0; f<10; f++) {
+do {
 
     input_data.open(input_data_file_names.at(f), std::ios::binary);
     output_data.open(output_data_file_names.at(f), std::ios::in);
@@ -200,7 +203,7 @@ for(int f=0; f<10; f++) {
             if(input_value>0)
             input_value=1;
             (layers[0].at(j)).set_input(input_value);
-            (layers[0].at(j)).set_output(input_value);
+            (layers[0].at(j)).set_output(activation_function(input_value));
 
             }
 
@@ -269,7 +272,7 @@ for(int f=0; f<10; f++) {
 }
     else
     std::cout<<"Nie uzyskano dostępu do plików uczących, uczenie przerwane."<<std::endl;
-}
+
 
 
         ages++;
@@ -284,9 +287,12 @@ for(int f=0; f<10; f++) {
         std::cout<<"ERMS: "<<ERMS<<std::endl;
 
 
-
 } // koniec epoki
 while(ERMS>=MIN_ERMS);
+
+ages=0;
+
+}
 
 for(unsigned int i=0; i<layers[2].size(); i++)
       std::cout<<layers[2].at(i).get_output()<<" ";
@@ -302,13 +308,13 @@ void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
   int number = 0;
 
 
-for(int f=0; f<10; f++) {
+for(int f=0; f<1; f++) {
 
     test_data.open(test_data_file_names.at(f), std::ios::binary);
 
     if(test_data.good()) {
 
-    for(int i=0; i<1; i++)
+    //for(int i=0; i<3; i++)
     for(unsigned int j=0; j<INPUT_LENGTH; j++) {
 
     test_data>>pixel;
@@ -316,14 +322,14 @@ for(int f=0; f<10; f++) {
     if(test_value>0)
     test_value=1;
     (layers[0].at(j)).set_input(test_value);
-    (layers[0].at(j)).set_output(test_value);
+    (layers[0].at(j)).set_output(activation_function(test_value));
 
     }
 
 
 
     /*  Pojedyncze przetworzenie  */
-    for(unsigned int j=1; j<3; j++) {
+    for(int j=1; j<3; j++) {
 
         for(unsigned int k=0; k<layers[j].size(); k++) {
 
