@@ -40,26 +40,30 @@ output_files.push_back("out9.dat");
 
 while(1) {
 
-if(state==3)
+if(state==4)
 break;
 
 std::cout<<"Co robimy?"<<std::endl<<std::endl;
 
-std::cout<<"1. Uczenie sieci."<<std::endl;
-std::cout<<"2. Rozpoznawanie przykładowego zbioru 0-9"<<std::endl;
-std::cout<<"3. Wyjście."<<std::endl;
+std::cout<<"1. Wczytanie plików uczących."<<std::endl;
+std::cout<<"2. Uczenie sieci."<<std::endl;
+std::cout<<"3. Rozpoznawanie przykładowego zbioru 0-9"<<std::endl;
+std::cout<<"4. Wyjście."<<std::endl;
 std::cout<<"Twój wybór: ";
 
 std::cin>>state;
 
     switch(state) {
         case 1:
-        ann->learn_from_files(input_files, output_files);
+        ann->load_training_set(input_files, output_files);
         break;
         case 2:
-        ann->recognize(input_files);
+        ann->learn();
         break;
         case 3:
+        ann->recognize(input_files);
+        break;
+        case 4:
         delete ann;
         break;
         default:
