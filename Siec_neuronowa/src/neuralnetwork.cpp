@@ -5,10 +5,10 @@
 #include <cmath>
 #include <algorithm>
 
-#define MAX_ERROR 0.1
-#define INPUT_LENGTH 784
-#define OUTPUT_LENGTH 10
-#define TRAINING_SET_SIZE 10
+#define MAX_ERROR 0.66
+#define INPUT_LENGTH 42
+#define OUTPUT_LENGTH 2
+#define TRAINING_SET_SIZE 2
 
 NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer) {
 
@@ -52,35 +52,46 @@ layer_sizes[0] = size_of_input_layer;
 layer_sizes[1] = size_of_hidden_layer;
 layer_sizes[2] = size_of_output_layer;
 
-W = new float** [3];
+weight_i_h = new float * [size_of_input_layer];
 
-for(int i=0; i<3; i++) {
+for(int i=0; i<size_of_input_layer; i++) {
 
-W[i] = new float* [layer_sizes[i]];
+weight_i_h[i] = new float [size_of_hidden_layer];
 
-    for(int j=0; j<layer_sizes[i]; j++) {
+}
 
-    if(i==0)
-    W[i][j] = new float [1];
-    else
-    W[i][j] = new float [layer_sizes[i-1]];
+weight_h_o = new float * [size_of_hidden_layer];
+
+for(int i=0; i<size_of_hidden_layer; i++) {
+
+weight_h_o[i] = new float [size_of_output_layer];
+
+}
+
+for(int i=0; i<size_of_input_layer; i++) {
+
+    for(int j=0; j<size_of_hidden_layer; j++) {
+
+    weight_i_h[i][j]=(((rand() % 1000000) / 1700.0) - 9.8)*0.0015;
+    if(weight_i_h[i][j]==0)
+    weight_i_h[i][j]=0.0124;
 
     }
 }
 
-for(int i=1; i<3;i++) {
-    for(int j=0; j<layer_sizes[i]; j++) {
-        for(int k=0; k<layer_sizes[i-1]; k++) {
+for(int i=0; i<size_of_hidden_layer; i++) {
 
-            W[i][j][k] =  (((rand() % 1000000) / 1700.0) - 9.8)*0.0015;
-            if(W[i][j][k] == 0.0)
-            W[i][j][k] = 0.01492;
+    for(int j=0; j<size_of_output_layer; j++) {
 
-        }
+    weight_h_o[i][j]=(((rand() % 1000000) / 1700.0) - 9.8)*0.0015;
+    if(weight_h_o[i][j]==0)
+    weight_h_o[i][j]=0.0124;
+
     }
 }
 
 }
+
 
 NeuralNetwork::~NeuralNetwork() {
 
@@ -109,22 +120,20 @@ delete []output_patterns;
 delete []output_errors;
 delete []hidden_errors;
 
+for(int i=0; i<layer_sizes[0]; i++) {
 
-for(int i=0; i<layer_sizes[0]; i++)
-delete [] W[0][i];
+delete []weight_i_h[i];
 
-for(int i=0; i<layer_sizes[1]; i++)
-delete [] W[1][i];
+}
 
-for(int i=0; i<layer_sizes[2]; i++)
-delete [] W[2][i];
+for(int i=0; i<layer_sizes[1]; i++) {
 
-delete [] W[0];
-delete [] W[1];
-delete [] W[2];
+delete []weight_h_o[i];
 
-delete [] W;
+}
 
+delete []weight_i_h;
+delete []weight_h_o;
 
 }
 
@@ -133,22 +142,19 @@ void NeuralNetwork::load_training_set(std::vector<std::string> input_data_file_n
 std::ifstream input_data;
 std::ifstream output_data;
 
-unsigned char pixel;
 float input_value = 0.0;
 float output_value = 0.0;
 
-for(int f=0; f<10; f++) {
+for(int f=0; f<TRAINING_SET_SIZE; f++) {
 
-    input_data.open(input_data_file_names.at(f), std::ios::binary);
+    input_data.open(input_data_file_names.at(f), std::ios::in);
     output_data.open(output_data_file_names.at(f), std::ios::in);
 
     if(input_data.good() && output_data.good()) {
 
-
         for(unsigned int i=0; i<INPUT_LENGTH; i++) {
 
-            input_data>>pixel;
-            input_value = (float) pixel;
+            input_data>>input_value;
             if(input_value>0)
             input_value = 1;
 
@@ -163,7 +169,6 @@ for(int f=0; f<10; f++) {
             output_patterns[f][i] = output_value;
 
         }
-
 
     input_data.close();
     output_data.close();
@@ -181,6 +186,8 @@ std::cout<<"Wczytano dane treningowe."<<std::endl;
 
 void NeuralNetwork::learn() {
 
+int epochs=0;
+
 std::cout<<"Trwa uczenie..."<<std::endl;
 
 while(!check_if_answer_is_correct()) {
@@ -189,35 +196,40 @@ for(int i=0; i<TRAINING_SET_SIZE; i++) {
 			forward_pass(i);
 			backward_pass(i);
 		}
+		epochs++;
+		std::cout<<"Epoki: "<<epochs<<std::endl;
 }
+
 
 		if(check_if_answer_is_correct())
 			std::cout<<"Nauka została zakończona"<<std::endl;
-        else
-            std::cout<<"Nauka nie została zakończona, należy spróbować ponownie."<<std::endl;
+
+    std::cout<<"Wyjścia sieci: "<< std::endl;
+	for(int i=0; i<layer_sizes[2]; i++)
+		std::cout<<output_layer[1][i] <<"   ";
 }
 
 
 void NeuralNetwork::forward_pass(int pattern) {
 
-	float tmp=0;
+	float tmp=0.0;
 
     /* Propagacja w przód z warstwy wejściowej do warstwy ukrytej */
 	for(int i=0; i<layer_sizes[1]; i++) {
 		for(int j=0; j<layer_sizes[0]; j++) {
-			tmp += (input_layer[pattern][j] * W[1][i][j]);
+			tmp += (input_layer[pattern][j] * weight_i_h[j][i]);
 		}
 		hidden_layer[i] = activation_function(tmp + bias[i]);
-		tmp = 0;
+		tmp = 0.0;
 	}
 
     /* Propagacja w przód z warstwy ukrytej do warstwy wyjściowej */
 	for(int i=0; i<layer_sizes[2]; i++) {
 		for(int j=0; j<layer_sizes[1]; j++) {
-			tmp += (hidden_layer[j] * W[2][i][j]);
+			tmp += (hidden_layer[j] * weight_h_o[j][i]);
 		}
 		output_layer[pattern][i] = activation_function(tmp + bias[i + layer_sizes[1]]);
-		tmp = 0;
+		tmp = 0.0;
 	}
 
 }
@@ -233,7 +245,7 @@ void NeuralNetwork::backward_pass(int pattern) {
     /* Wyliczanie błędów na warstwie ukrytej */
 	for(int i=0; i<layer_sizes[1]; i++) {
 		for(int j=0; j<layer_sizes[2]; j++) {
-			tmp += (output_errors[j] * W[2][j][i]);
+			tmp += (output_errors[j] * weight_h_o[i][j]);
 		}
 	hidden_errors[i] = hidden_layer[i] * (1-hidden_layer[i]) * tmp;
 	tmp = 0.0;
@@ -244,10 +256,12 @@ void NeuralNetwork::backward_pass(int pattern) {
 	for (int i=0; i<layer_sizes[1]; i++)
 		length += hidden_layer[i]*hidden_layer[i];
 
-	if (length<=0.1) length = 0.1;
+	if (length<=0.1)
+        length = 0.1;
+
 	for(int i=0; i<layer_sizes[1]; i++) {
 		for(int j=0; j<layer_sizes[2]; j++) {
-			W[2][j][i] += (eta * output_errors[j] * hidden_layer[i] / length);
+			weight_h_o[i][j] += (eta * output_errors[j] * hidden_layer[i] / length);
 		}
 	}
 
@@ -261,10 +275,12 @@ void NeuralNetwork::backward_pass(int pattern) {
 	for (int i=0; i<layer_sizes[0]; i++)
 		length += input_layer[pattern][i]*input_layer[pattern][i];
 
-	if (length<=0.1) length = 0.1;
+	if (length<=0.1)
+        length = 0.1;
+
 	for(int i=0; i<layer_sizes[0]; i++) {
 		for(int j=0; j<layer_sizes[1]; j++) {
-			W[1][j][i] += (eta * hidden_errors[j] * input_layer[pattern][i] / length);
+			weight_i_h[i][j] += (eta * hidden_errors[j] * input_layer[pattern][i] / length);
 		}
 	}
 
@@ -282,6 +298,8 @@ bool NeuralNetwork::check_if_answer_is_correct() {
         error -= tmp;
 	else
         error += tmp;
+
+    std::cout<<error<<" "<<std::endl;
 
 	if(error > MAX_ERROR)
 	return 0;
@@ -309,18 +327,20 @@ bool NeuralNetwork::check_if_answer_is_correct() {
 
 void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
 
-    std::ifstream test_data;
- //   unsigned char pixel;
+  //  std::ifstream test_data;
+   // unsigned char pixel;
   //  float test_value;
- //   bool read_flag=0;
+   // bool read_flag=0;
 
-    test_data.open(test_data_file_names.at(1), std::ios::binary);
 
-//for(int f=0; f<10; f++) {
 
- /*   if(input_data.good() && output_data.good()) {
+//for(int f=0; f<TRAINING_SET_SIZE; f++) {
+
+ //   test_data.open(test_data_file_names.at(4), std::ios::binary);
+
+/*    if(test_data.good()) {
         read_flag=1;
-        for(int num=0; num<2; nym++)
+        for(int num=0; num<2; num++)
         for(int i=0; i<INPUT_LENGTH; i++) {
 
             test_data>>pixel;
@@ -337,17 +357,17 @@ void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
     else
     std::cout<<"Nie uzyskano dostępu do zestawu uczącego, przerwano odczyt danych"<<std::endl;
 */
-    if(1) {
+    if(true) {
 
     forward_pass(1);
 
 	std::cout<<"Wyjścia sieci: "<< std::endl;
 	for(int i=0; i<layer_sizes[2]; i++)
-		std::cout<<output_layer[1][i] <<"   ";
+		std::cout<<output_layer[1][i] <<"  ";
 
 
     }
-
+   // test_data.close();
 //}
 
 

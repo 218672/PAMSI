@@ -11,7 +11,7 @@ int layer_sizes[3];
 
 float learning_rate;
 
-float ***W;
+float **weight_i_h, **weight_h_o;
 
 float eta;
 

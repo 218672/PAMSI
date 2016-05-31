@@ -1,8 +1,8 @@
 #include "test.hh"
 #include "neuralnetwork.hh"
-#define SIZE_OF_INPUT_LAYER 784
-#define SIZE_OF_HIDDEN_LAYER 4
-#define SIZE_OF_OUTPUT_LAYER 10
+#define SIZE_OF_INPUT_LAYER 42
+#define SIZE_OF_HIDDEN_LAYER 8
+#define SIZE_OF_OUTPUT_LAYER 2
 #include <vector>
 #include <iostream>
 
@@ -15,16 +15,12 @@ std::vector<std::string> output_files;
 
 int state;
 
-input_files.push_back("data0.bin");
-input_files.push_back("data1.bin");
-input_files.push_back("data2.bin");
-input_files.push_back("data3.bin");
-input_files.push_back("data4.bin");
-input_files.push_back("data5.bin");
-input_files.push_back("data6.bin");
-input_files.push_back("data7.bin");
-input_files.push_back("data8.bin");
-input_files.push_back("data9.bin");
+input_files.push_back("0.dat");
+input_files.push_back("1.dat");
+input_files.push_back("2.dat");
+input_files.push_back("3.dat");
+input_files.push_back("4.dat");
+input_files.push_back("5.dat");
 
 output_files.push_back("out0.dat");
 output_files.push_back("out1.dat");
@@ -32,10 +28,6 @@ output_files.push_back("out2.dat");
 output_files.push_back("out3.dat");
 output_files.push_back("out4.dat");
 output_files.push_back("out5.dat");
-output_files.push_back("out6.dat");
-output_files.push_back("out7.dat");
-output_files.push_back("out8.dat");
-output_files.push_back("out9.dat");
 
 
 while(1) {
