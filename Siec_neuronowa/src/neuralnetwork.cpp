@@ -21,7 +21,7 @@ bias = new float [size_of_hidden_layer+size_of_output_layer];
 number_of_biases=size_of_hidden_layer+size_of_output_layer;
 
 for(int i=0; i<size_of_hidden_layer+size_of_output_layer; i++)
-bias[i]=1;
+bias[i]=(((rand() % 1000000) / 1700.0) - 9.8)*0.0015;
 
 input_patterns = new float* [TRAINING_SET_SIZE];
 output_patterns = new float* [TRAINING_SET_SIZE];
@@ -44,7 +44,7 @@ for(int i=0; i<TRAINING_SET_SIZE; i++) {
 }
 
 
-eta=0.1;
+eta=0.5;
 
 tmp1 = tmp2 = 0.0;
 
@@ -144,6 +144,7 @@ for(int f=0; f<10; f++) {
 
     if(input_data.good() && output_data.good()) {
 
+
         for(unsigned int i=0; i<INPUT_LENGTH; i++) {
 
             input_data>>pixel;
@@ -162,26 +163,38 @@ for(int f=0; f<10; f++) {
             output_patterns[f][i] = output_value;
 
         }
+
+
+    input_data.close();
+    output_data.close();
+
     }
     else
     std::cout<<"Nie uzyskano dostępu do zestawu uczącego, przerwano odczyt danych"<<std::endl;
 
 }
 
+std::cout<<"Wczytano dane treningowe."<<std::endl;
+
 }
 
 
 void NeuralNetwork::learn() {
 
+std::cout<<"Trwa uczenie..."<<std::endl;
+
+while(!check_if_answer_is_correct()) {
+
 for(int i=0; i<TRAINING_SET_SIZE; i++) {
 			forward_pass(i);
 			backward_pass(i);
 		}
+}
+
 		if(check_if_answer_is_correct())
 			std::cout<<"Nauka została zakończona"<<std::endl;
         else
             std::cout<<"Nauka nie została zakończona, należy spróbować ponownie."<<std::endl;
-
 }
 
 
@@ -192,7 +205,7 @@ void NeuralNetwork::forward_pass(int pattern) {
     /* Propagacja w przód z warstwy wejściowej do warstwy ukrytej */
 	for(int i=0; i<layer_sizes[1]; i++) {
 		for(int j=0; j<layer_sizes[0]; j++) {
-			tmp += (input_layer[pattern][j] * W[1][j][i]);
+			tmp += (input_layer[pattern][j] * W[1][i][j]);
 		}
 		hidden_layer[i] = activation_function(tmp + bias[i]);
 		tmp = 0;
@@ -201,7 +214,7 @@ void NeuralNetwork::forward_pass(int pattern) {
     /* Propagacja w przód z warstwy ukrytej do warstwy wyjściowej */
 	for(int i=0; i<layer_sizes[2]; i++) {
 		for(int j=0; j<layer_sizes[1]; j++) {
-			tmp += (hidden_layer[j] * W[2][j][i]);
+			tmp += (hidden_layer[j] * W[2][i][j]);
 		}
 		output_layer[pattern][i] = activation_function(tmp + bias[i + layer_sizes[1]]);
 		tmp = 0;
@@ -220,7 +233,7 @@ void NeuralNetwork::backward_pass(int pattern) {
     /* Wyliczanie błędów na warstwie ukrytej */
 	for(int i=0; i<layer_sizes[1]; i++) {
 		for(int j=0; j<layer_sizes[2]; j++) {
-			tmp += (output_errors[j] * W[2][i][j]);
+			tmp += (output_errors[j] * W[2][j][i]);
 		}
 	hidden_errors[i] = hidden_layer[i] * (1-hidden_layer[i]) * tmp;
 	tmp = 0.0;
@@ -234,7 +247,7 @@ void NeuralNetwork::backward_pass(int pattern) {
 	if (length<=0.1) length = 0.1;
 	for(int i=0; i<layer_sizes[1]; i++) {
 		for(int j=0; j<layer_sizes[2]; j++) {
-			W[2][i][j] += (eta * output_errors[j] * hidden_layer[i] / length);
+			W[2][j][i] += (eta * output_errors[j] * hidden_layer[i] / length);
 		}
 	}
 
@@ -251,7 +264,7 @@ void NeuralNetwork::backward_pass(int pattern) {
 	if (length<=0.1) length = 0.1;
 	for(int i=0; i<layer_sizes[0]; i++) {
 		for(int j=0; j<layer_sizes[1]; j++) {
-			W[1][i][j] += (eta * hidden_errors[j] * input_layer[pattern][i] / length);
+			W[1][j][i] += (eta * hidden_errors[j] * input_layer[pattern][i] / length);
 		}
 	}
 
@@ -281,6 +294,7 @@ bool NeuralNetwork::check_if_answer_is_correct() {
                 error -= tmp;
 			else
                 error += tmp;
+            std::cout<<error<<" "<<std::endl;
 			if(error>MAX_ERROR) {
 				tmp1 = i;
 				tmp2 = j;
