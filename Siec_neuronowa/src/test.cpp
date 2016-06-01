@@ -1,7 +1,7 @@
 #include "test.hh"
 #include "neuralnetwork.hh"
-#define SIZE_OF_INPUT_LAYER 42
-#define SIZE_OF_HIDDEN_LAYER 8
+#define SIZE_OF_INPUT_LAYER 49
+#define SIZE_OF_HIDDEN_LAYER 4
 #define SIZE_OF_OUTPUT_LAYER 2
 #include <vector>
 #include <iostream>

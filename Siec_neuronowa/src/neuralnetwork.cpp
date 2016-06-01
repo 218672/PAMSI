@@ -5,9 +5,9 @@
 #include <cmath>
 #include <algorithm>
 
-#define MAX_ERROR 0.66
-#define INPUT_LENGTH 42
-#define OUTPUT_LENGTH 2
+#define MAX_ERROR 0.01
+#define INPUT_LENGTH 784
+#define OUTPUT_LENGTH 3
 #define TRAINING_SET_SIZE 2
 
 NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer) {
@@ -44,7 +44,7 @@ for(int i=0; i<TRAINING_SET_SIZE; i++) {
 }
 
 
-eta=0.5;
+eta=0.9;
 
 tmp1 = tmp2 = 0.0;
 
@@ -145,7 +145,7 @@ std::ifstream output_data;
 float input_value = 0.0;
 float output_value = 0.0;
 
-for(int f=0; f<TRAINING_SET_SIZE; f++) {
+for(int f=0; f<2; f++) {
 
     input_data.open(input_data_file_names.at(f), std::ios::in);
     output_data.open(output_data_file_names.at(f), std::ios::in);
@@ -359,11 +359,11 @@ void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
 */
     if(true) {
 
-    forward_pass(1);
+    forward_pass(0);
 
 	std::cout<<"Wyjścia sieci: "<< std::endl;
 	for(int i=0; i<layer_sizes[2]; i++)
-		std::cout<<output_layer[1][i] <<"  ";
+		std::cout<<output_layer[0][i] <<"  ";
 
 
     }
