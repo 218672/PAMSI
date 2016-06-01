@@ -1,8 +1,8 @@
 #include "test.hh"
 #include "neuralnetwork.hh"
 #define SIZE_OF_INPUT_LAYER 49
-#define SIZE_OF_HIDDEN_LAYER 4
-#define SIZE_OF_OUTPUT_LAYER 2
+#define SIZE_OF_HIDDEN_LAYER 28
+#define SIZE_OF_OUTPUT_LAYER 3
 #include <vector>
 #include <iostream>
 
@@ -21,6 +21,11 @@ input_files.push_back("2.dat");
 input_files.push_back("3.dat");
 input_files.push_back("4.dat");
 input_files.push_back("5.dat");
+input_files.push_back("6.dat");
+input_files.push_back("7.dat");
+input_files.push_back("8.dat");
+input_files.push_back("9.dat");
+
 
 output_files.push_back("out0.dat");
 output_files.push_back("out1.dat");
@@ -28,7 +33,10 @@ output_files.push_back("out2.dat");
 output_files.push_back("out3.dat");
 output_files.push_back("out4.dat");
 output_files.push_back("out5.dat");
-
+output_files.push_back("out6.dat");
+output_files.push_back("out7.dat");
+output_files.push_back("out8.dat");
+output_files.push_back("out9.dat");
 
 while(1) {
 
