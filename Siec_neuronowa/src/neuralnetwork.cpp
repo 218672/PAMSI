@@ -7,8 +7,8 @@
 
 #define MAX_ERROR 0.2
 #define INPUT_LENGTH 49
-#define OUTPUT_LENGTH 3
-#define TRAINING_SET_SIZE 3
+#define OUTPUT_LENGTH 10
+#define TRAINING_SET_SIZE 10
 
 NeuralNetwork::NeuralNetwork(int size_of_input_layer, int size_of_hidden_layer, int size_of_output_layer) {
 
@@ -25,6 +25,7 @@ bias[i]=(((rand() % 1000000) / 1700.0) - 9.8)*0.0015;
 
 input_patterns = new float* [TRAINING_SET_SIZE];
 output_patterns = new float* [TRAINING_SET_SIZE];
+test_patterns = new float* [TRAINING_SET_SIZE];
 
 hidden_errors = new float [size_of_hidden_layer];
 output_errors = new float [size_of_output_layer];
@@ -40,6 +41,7 @@ for(int i=0; i<TRAINING_SET_SIZE; i++) {
 
     input_patterns[i] = new float [INPUT_LENGTH];
     output_patterns[i] = new float [OUTPUT_LENGTH];
+    test_patterns[i] = new float [INPUT_LENGTH];
 
 }
 
@@ -137,20 +139,23 @@ delete []weight_h_o;
 
 }
 
-void NeuralNetwork::load_training_set(std::vector<std::string> input_data_file_names, std::vector<std::string> output_data_file_names) {
+void NeuralNetwork::load_training_set(std::vector<std::string> input_data_file_names, std::vector<std::string> output_data_file_names, std::vector<std::string> test_data_file_names) {
 
 std::ifstream input_data;
 std::ifstream output_data;
+std::ifstream test_data;
 
 float input_value = 0.0;
 float output_value = 0.0;
+float test_value = 0.0;
 
 for(int f=0; f<TRAINING_SET_SIZE; f++) {
 
     input_data.open(input_data_file_names.at(f), std::ios::in);
     output_data.open(output_data_file_names.at(f), std::ios::in);
+    test_data.open(test_data_file_names.at(f), std::ios::in);
 
-    if(input_data.good() && output_data.good()) {
+    if(input_data.good() && output_data.good() && test_data.good()) {
 
         for(unsigned int i=0; i<INPUT_LENGTH; i++) {
 
@@ -158,6 +163,14 @@ for(int f=0; f<TRAINING_SET_SIZE; f++) {
 
             input_patterns[f][i]=input_value;
             input_layer[f][i]=input_value;
+
+        }
+
+        for(unsigned int i=0; i<INPUT_LENGTH; i++) {
+
+            test_data>>test_value;
+
+            test_patterns[f][i]=test_value;
 
         }
 
@@ -170,6 +183,7 @@ for(int f=0; f<TRAINING_SET_SIZE; f++) {
 
     input_data.close();
     output_data.close();
+    test_data.close();
 
     }
     else
@@ -323,51 +337,23 @@ bool NeuralNetwork::check_if_answer_is_correct() {
 
 }
 
-void NeuralNetwork::recognize(std::vector<std::string> test_data_file_names) {
+void NeuralNetwork::recognize() {
 
-  //  std::ifstream test_data;
-   // unsigned char pixel;
-  //  float test_value;
-   // bool read_flag=0;
-
-
-
-//for(int f=0; f<TRAINING_SET_SIZE; f++) {
-
- //   test_data.open(test_data_file_names.at(4), std::ios::binary);
-
-/*    if(test_data.good()) {
-        read_flag=1;
-        for(int num=0; num<2; num++)
-        for(int i=0; i<INPUT_LENGTH; i++) {
-
-            test_data>>pixel;
-            test_value = (float) pixel;
-            if(test_value>0)
-            test_value = 1;
-
-            input_layer[f][i]=test_value;
-
+for(int i=0; i<TRAINING_SET_SIZE; i++) {
+    for(int j=0; j<INPUT_LENGTH; j++) {
+        input_layer[i][j]=test_patterns[i][j];
         }
+}
+int element;
 
+std::cout<<"Wybierz element zbioru walidacyjnego w celu sprawdzenia sieci (0-9): ";
+std::cin>>element;
 
-    }
-    else
-    std::cout<<"Nie uzyskano dostępu do zestawu uczącego, przerwano odczyt danych"<<std::endl;
-*/
-    if(true) {
-
-    forward_pass(2);
+    forward_pass(element);
 
 	std::cout<<"Wyjścia sieci: "<< std::endl;
 	for(int i=0; i<layer_sizes[2]; i++)
-		std::cout<<output_layer[2][i] <<"  ";
-
-
-    }
-   // test_data.close();
-//}
-
+		std::cout<<i<<": "<<output_layer[element][i] <<"  ";
 
 }
 
