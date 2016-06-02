@@ -55,3 +55,19 @@ Ocena: 4
 # Lab5 - sortowanie
 
 # Lab6 - tablica asocjacyjna
+
+Zadanie wykonane poprawnie, choć nie udało się potwierdzić O(1).
+
+Ocena: 5-
+
+# Lab7 - drzewa
+
+Ocena: 5
+
+# Lab8 - grafy (bfs,dfs)
+
+Ocena: 5
+
+# Lab9 - grafy (b&b)
+
+Ocena: 5
